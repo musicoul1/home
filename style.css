@@ -1,4 +1,4 @@
-/* style.css (Complete - Updated Auth Pop-up Alignment) */
+/* style.css (Complete - Updated Auth Pop-up Alignment and Dropdowns) */
 
 /* Base Styles */
 body {
@@ -409,18 +409,14 @@ footer {
     color: #eee;
 }
 
-.auth-forms {
-    width: 100%; /* Make forms take full width */
-}
-
-.auth-forms form {
+.auth-forms > form {
     display: none; /* Initially hide all forms */
     flex-direction: column;
     gap: 20px; /* Increased spacing between form elements */
     align-items: stretch; /* Stretch form elements */
 }
 
-.auth-forms form.active {
+.auth-forms > form.active {
     display: flex;
 }
 
@@ -449,7 +445,8 @@ footer {
 
 .input-group input[type="email"],
 .input-group input[type="password"],
-.input-group input[type="text"] {
+.input-group input[type="text"],
+.input-group select {
     padding: 14px; /* Larger input padding */
     border: 1px solid #777; /* Slightly lighter border */
     border-radius: 8px; /* More rounded inputs */
@@ -461,22 +458,35 @@ footer {
     transition: border-color 0.3s ease;
 }
 
-.input-group input::placeholder {
+.input-group input::placeholder,
+.input-group select::placeholder {
     color: #999; /* Style placeholder text */
     opacity: 1; /* Firefox */
 }
 
-.input-group input:-ms-input-placeholder { /* Internet Explorer 10-11 */
+.input-group input:-ms-input-placeholder,
+.input-group select:-ms-input-placeholder { /* Internet Explorer 10-11 */
     color: #999;
 }
 
-.input-group input::-ms-input-placeholder { /* Microsoft Edge */
+.input-group input::-ms-input-placeholder,
+.input-group select::-ms-input-placeholder { /* Microsoft Edge */
     color: #999;
 }
 
-.input-group input:focus {
+.input-group input:focus,
+.input-group select:focus {
     border-color: gold; /* Highlight on focus */
     outline: none; /* Remove default focus outline */
+}
+
+.input-group select {
+    appearance: none;
+    background-image: url('data:image/svg+xml;charset=UTF-8,<svg fill="%23eee" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 15px;
+    padding-right: 30px;
 }
 
 .auth-button {
@@ -488,6 +498,7 @@ footer {
     font-size: 1.1em;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    /* style.css (Complete - Updated Auth Pop-up Alignment and Dropdowns) - Continued */
     font-weight: bold;
     margin-top: 15px; /* Add space above the button */
     width: 100%; /* Make button take full width */
@@ -512,9 +523,7 @@ footer {
     align-items: center;
     justify-content: center;
     gap: 12px; /* More space for the icon */
-    margin-top: 20px; /* More
-    /* style.css (Complete - Updated Auth Pop-up Alignment) - Continued */
-
+    margin-top: 20px; /* More space above Google button */
     width: 100%; /* Make Google button take full width */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
 }
@@ -739,7 +748,8 @@ footer {
 
     .input-group input[type="email"],
     .input-group input[type="password"],
-    .input-group input[type="text"] {
+    .input-group input[type="text"],
+    .input-group select {
         padding: 12px;
         font-size: 0.95em;
         width: 90%; /* Ensure full width on mobile */

@@ -392,6 +392,214 @@ nav {
     margin-top: 16px;
 }
 
+/* Auth Popup Styles */
+.auth-popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1001;
+    justify-content: center;
+    align-items: center;
+}
+
+.auth-container {
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    color: white;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.auth-container .close-popup {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    color: #ccc;
+    cursor: pointer;
+}
+
+.auth-tabs {
+    display: flex;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #555;
+}
+
+.auth-tabs button {
+    flex: 1;
+    background: transparent;
+    color: white;
+    border: none;
+    padding: 15px 0;
+    font-size: 1em;
+    font-weight: 500;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.auth-tabs button.active {
+    color: rgb(255, 203, 47);
+    border-bottom: 2px solid rgb(255, 203, 47);
+}
+
+.auth-tabs button:hover {
+    color: #ddd;
+}
+
+.auth-forms form {
+    display: none;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.auth-forms form.active {
+    display: flex;
+}
+
+.auth-forms h2 {
+    font-size: 2em;
+    margin-bottom: 20px;
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+}
+
+.auth-forms .input-group {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.auth-forms label {
+    font-size: 0.9em;
+    margin-bottom: 5px;
+    color: #ccc;
+}
+
+.auth-forms input[type="text"],
+.auth-forms input[type="email"],
+.auth-forms input[type="password"],
+.auth-forms select {
+    padding: 10px;
+    border: 1px solid #555;
+    border-radius: 5px;
+    background-color: #333;
+    color: white;
+    font-family: 'Raleway', sans-serif;
+    font-size: 1em;
+}
+
+.auth-forms .auth-button {
+    background-color: rgb(255, 203, 47);
+    color: black;
+    border: none;
+    border-radius: 5px;
+    padding: 12px 20px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 600;
+    font-family: 'Raleway', sans-serif;
+    transition: background-color 0.3s ease;
+}
+
+.auth-forms .auth-button:hover {
+    background-color: white;
+    color: black;
+}
+
+.auth-forms .google-auth-button {
+    background-color: #4285f4;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 12px 20px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 500;
+    font-family: 'Raleway', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.auth-forms .google-auth-button:hover {
+    background-color: #357ae8;
+}
+
+.auth-forms .google-auth-button i {
+    margin-right: 10px;
+}
+
+/* Footer Styles */
+footer {
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 30px 20px;
+    text-align: center;
+    margin-top: 40px;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.footer-logo {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.footer-logo img {
+    width: 60px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.footer-logo span {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px 0;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.footer-links li a {
+    color: white;
+    text-decoration: none;
+    font-size: 1em;
+    transition: color 0.3s ease;
+}
+
+.footer-links li a:hover {
+    color: gold;
+}
+
+footer p {
+    font-size: 0.9em;
+    margin-top: 10px;
+}
+
 /* Responsive Styles */
 /* Desktop Styles */
 @media (min-width: 992px) {

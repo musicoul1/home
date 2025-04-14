@@ -18,42 +18,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const googleLoginBtn = document.querySelector('#login-form .google-auth-button');
     const googleSignupBtn = document.querySelector('#signup-form .google-auth-button');
 
-    // Firebase Configuration (Replace with your actual config)
-    const firebaseConfig = {
-        apiKey: "AIzaSyBaDBLoe2Wi2WgmJfPRXoEP-ZSgkVhMxVI",
-        authDomain: "musicoul-15025.firebaseapp.com",
-        projectId: "musicoul-15025",
-        storageBucket: "musicoul-15025.firebasestorage.app",
-        messagingSenderId: "863099041367",
-        appId: "1:863099041367:web:c3d61399489a219611d512",
-        measurementId: "G-WBPE697N9Q"
-    };
-
-    let auth;
-
-    // Initialize Firebase
-    try {
-        firebase.initializeApp(firebaseConfig);
-        auth = firebase.auth();
-
-        // Listen for authentication state changes
-        auth.onAuthStateChanged((user) => {
-            if (user) {
-                console.log("User is signed in:", user);
-                // Update UI for logged-in user (e.g., hide login button, show profile link)
-                updateLoggedInUI(user);
-            } else {
-                console.log("User is signed out");
-                // Update UI for logged-out user (e.g., show login button)
-                updateLoggedOutUI();
-            }
-        });
-    } catch (error) {
-        console.error("Firebase initialization error:", error);
-        // Handle initialization error (e.g., display a message to the user)
-        alert("Failed to initialize Firebase. Please check your configuration.");
-    }
-
     function showNotification(message) {
         const notificationDiv = document.createElement('div');
         notificationDiv.classList.add('notification');
@@ -71,8 +35,8 @@ document.addEventListener('DOMContentLoaded', function() {
         if (logoutBtn) logoutBtn.style.display = 'inline-block';
         if (sideNavLogoutBtn) sideNavLogoutBtn.style.display = 'inline-block';
         // You might want to show a user profile link or display user info here
-        console.log("Logged in as:", user.displayName || user.email);
-        showNotification(`Logged in as ${user.displayName || user.email}`);
+        console.log("Logged in as:", user ? (user.displayName || user.email) : 'User Data Unavailable');
+        showNotification(`Logged in as ${user ? (user.displayName || user.email) : 'User'}`);
     }
 
     function updateLoggedOutUI() {
@@ -84,152 +48,91 @@ document.addEventListener('DOMContentLoaded', function() {
         // You might want to hide user-specific elements here
     }
 
-    function showNotification(message) {
-        const notificationDiv = document.createElement('div');
-        notificationDiv.classList.add('notification');
-        notificationDiv.textContent = message;
-        document.body.appendChild(notificationDiv);
-        setTimeout(() => {
-            notificationDiv.remove();
-        }, 3000); // Remove after 3 seconds
-    }
-
-    function updateLoggedInUI(user) {
-        // Example: Hide login buttons, show logout button
-        if (loginBtn) loginBtn.style.display = 'none';
-        if (sideNavLoginBtn) sideNavLoginBtn.style.display = 'none';
-        if (logoutBtn) logoutBtn.style.display = 'inline-block';
-        if (sideNavLogoutBtn) sideNavLogoutBtn.style.display = 'inline-block';
-        // You might want to show a user profile link or display user info here
-        console.log("Logged in as:", user.displayName || user.email);
-        showNotification(`Logged in as ${user.displayName || user.email}`); // ADD THIS LINE
-    }
-
     // Event listener for Login form submission
-    if (loginForm && auth) {
+    if (loginForm) {
         loginForm.addEventListener('submit', (e) => {
             e.preventDefault();
             const email = loginForm.querySelector('#login-email').value;
             const password = loginForm.querySelector('#login-password').value;
 
-            auth.signInWithEmailAndPassword(email, password)
-                .then((userCredential) => {
-                    // Signed in successfully
-                    const user = userCredential.user;
-                    console.log("Login successful:", user);
-                    closeAuthPopup(); // Close the pop-up
-                    showNotification(`Logged in as ${user.displayName || user.email}`); // ADD THIS LINE
-                    // The auth.onAuthStateChanged listener will handle UI updates
-                })
-                .catch((error) => {
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
-                    console.error("Login failed:", errorCode, errorMessage);
-                    alert(`Login Failed: ${errorMessage}`); // Replace with better UI feedback
-                });
+            // Replace with your actual login logic
+            console.log("Login attempted with:", email, password);
+            // Simulate successful login for UI update (replace with actual auth)
+            const fakeUser = { email: email };
+            updateLoggedInUI(fakeUser);
+            closeAuthPopup();
+            showNotification(`Logged in as ${fakeUser.email}`);
+            // If login fails, show an error message
+            // alert("Login Failed: Incorrect credentials.");
         });
     }
 
     // Event listener for Sign Up form submission
-    if (signupForm && auth) {
+    if (signupForm) {
         signupForm.addEventListener('submit', (e) => {
             e.preventDefault();
             const name = signupForm.querySelector('#signup-name').value;
             const email = signupForm.querySelector('#signup-email').value;
             const password = signupForm.querySelector('#signup-password').value;
 
-            auth.createUserWithEmailAndPassword(email, password)
-                .then((userCredential) => {
-                    // Signed up successfully
-                    const user = userCredential.user;
-                    console.log("Signup successful:", user);
-                    // Update user's display name
-                    return user.updateProfile({
-                        displayName: name
-                    });
-                })
-                .then(() => {
-                    closeAuthPopup(); // Close the pop-up after updating profile
-                    showNotification(`Signed up as ${name}`); // ADD THIS LINE
-                    // The auth.onAuthStateChanged listener will handle UI updates
-                })
-                .catch((error) => {
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
-                    console.error("Signup failed:", errorCode, errorMessage);
-                    alert(`Signup Failed: ${errorMessage}`); // Replace with better UI feedback
-                });
+            // Replace with your actual signup logic
+            console.log("Signup attempted with:", name, email, password);
+            // Simulate successful signup for UI update (replace with actual auth)
+            const fakeUser = { displayName: name, email: email };
+            updateLoggedInUI(fakeUser);
+            closeAuthPopup();
+            showNotification(`Signed up as ${name}`);
+            // If signup fails, show an error message
+            // alert("Signup Failed: Email already in use.");
         });
     }
 
-    if (googleLoginBtn && auth) {
+    if (googleLoginBtn) {
         googleLoginBtn.addEventListener('click', () => {
-            const provider = new firebase.auth.GoogleAuthProvider();
-            auth.signInWithPopup(provider)
-                .then((result) => {
-                    // User signed in with Google.
-                    const user = result.user;
-                    console.log("Logged in with Google:", user);
-                    closeAuthPopup();
-                    showNotification(`Logged in with Google as ${user.displayName || user.email}`); // ADD THIS LINE
-                    // The auth.onAuthStateChanged listener will handle UI updates
-                }).catch((error) => {
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
-                    console.error("Google Sign-in failed:", errorCode, errorMessage);
-                    alert(`Google Sign-in Failed: ${errorMessage}`);
-                });
+            // Replace with your actual Google login logic
+            console.log("Google login attempted.");
+            // Simulate Google login success
+            const fakeUser = { displayName: "Google User", email: "google@example.com" };
+            updateLoggedInUI(fakeUser);
+            closeAuthPopup();
+            showNotification(`Logged in with Google as ${fakeUser.displayName}`);
+            // If Google login fails, show an error message
+            // alert("Google Sign-in Failed.");
         });
     }
 
-    if (googleSignupBtn && auth) {
+    if (googleSignupBtn) {
         googleSignupBtn.addEventListener('click', () => {
-            const provider = new firebase.auth.GoogleAuthProvider();
-            auth.signInWithPopup(provider)
-                .then((result) => {
-                    // User signed up with Google.
-                    const user = result.user;
-                    console.log("Signed up with Google:", user);
-                    closeAuthPopup();
-                    showNotification(`Signed up with Google as ${user.displayName || user.email}`); // ADD THIS LINE
-                    // The auth.onAuthStateChanged listener will handle UI updates
-                }).catch((error) => {
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
-                    console.error("Google Sign-up failed:", errorCode, errorMessage);
-                    alert(`Google Sign-up Failed: ${errorMessage}`);
-                });
+            // Replace with your actual Google signup logic
+            console.log("Google signup attempted.");
+            // Simulate Google signup success
+            const fakeUser = { displayName: "New Google User", email: "newgoogle@example.com" };
+            updateLoggedInUI(fakeUser);
+            closeAuthPopup();
+            showNotification(`Signed up with Google as ${fakeUser.displayName}`);
+            // If Google signup fails, show an error message
+            // alert("Google Sign-up Failed.");
         });
     }
 
     // Logout Functionality
-    if (logoutBtn && auth) {
+    if (logoutBtn) {
         logoutBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            auth.signOut()
-                .then(() => {
-                    console.log("User signed out successfully.");
-                    showNotification("Logged out successfully."); // ADD THIS LINE
-                    // The auth.onAuthStateChanged listener will handle UI updates
-                }).catch((error) => {
-                    console.error("Sign out error:", error);
-                    alert(`Sign out failed: ${error.message}`);
-                });
+            // Replace with your actual logout logic
+            console.log("User logged out.");
+            updateLoggedOutUI();
+            showNotification("Logged out successfully.");
         });
     }
 
-    if (sideNavLogoutBtn && auth) {
+    if (sideNavLogoutBtn) {
         sideNavLogoutBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            auth.signOut()
-                .then(() => {
-                    console.log("User signed out from side nav successfully.");
-                    showNotification("Logged out successfully."); // ADD THIS LINE
-                    // The auth.onAuthStateChanged listener will handle UI updates
-                }).catch((error) => {
-                    console.error("Side nav sign out error:", error);
-                    alert(`Sign out failed from side nav: ${error.message}`);
-                });
+            // Replace with your actual logout logic
+            console.log("User logged out from side nav.");
+            updateLoggedOutUI();
+            showNotification("Logged out successfully.");
         });
     }
 
@@ -315,135 +218,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
-
-    // Event listener for Login form submission
-    if (loginForm && auth) {
-        loginForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const email = loginForm.querySelector('#login-email').value;
-            const password = loginForm.querySelector('#login-password').value;
-
-            auth.signInWithEmailAndPassword(email, password)
-                .then((userCredential) => {
-                    // Signed in successfully
-                    const user = userCredential.user;
-                    console.log("Login successful:", user);
-                    closeAuthPopup(); // Close the pop-up
-                    showNotification(`Logged in as ${user.displayName || user.email}`);
-                    // The auth.onAuthStateChanged listener will handle UI updates
-                })
-                .catch((error) => {
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
-                    console.error("Login failed:", errorCode, errorMessage);
-                    alert(`Login Failed: ${errorMessage}`); // Replace with better UI feedback
-                });
-        });
-    }
-
-    // Event listener for Sign Up form submission
-    if (signupForm && auth) {
-        signupForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const name = signupForm.querySelector('#signup-name').value;
-            const email = signupForm.querySelector('#signup-email').value;
-            const password = signupForm.querySelector('#signup-password').value;
-
-            auth.createUserWithEmailAndPassword(email, password)
-                .then((userCredential) => {
-                    // Signed up successfully
-                    const user = userCredential.user;
-                    console.log("Signup successful:", user);
-                    // Update user's display name
-                    return user.updateProfile({
-                        displayName: name
-                    });
-                })
-                .then(() => {
-                    closeAuthPopup(); // Close the pop-up after updating profile
-                    showNotification(`Signed up as ${name}`);
-                    // The auth.onAuthStateChanged listener will handle UI updates
-                })
-                .catch((error) => {
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
-                    console.error("Signup failed:", errorCode, errorMessage);
-                    alert(`Signup Failed: ${errorMessage}`); // Replace with better UI feedback
-                });
-        });
-    }
-
-    // Google Sign-in Logic
-    if (googleLoginBtn && auth) {
-        googleLoginBtn.addEventListener('click', () => {
-            const provider = new firebase.auth.GoogleAuthProvider();
-            auth.signInWithPopup(provider)
-                .then((result) => {
-                    // User signed in with Google.
-                    const user = result.user;
-                    console.log("Logged in with Google:", user);
-                    closeAuthPopup();
-                    showNotification(`Logged in with Google as ${user.displayName || user.email}`);
-                    // The auth.onAuthStateChanged listener will handle UI updates
-                }).catch((error) => {
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
-                    console.error("Google Sign-in failed:", errorCode, errorMessage);
-                    alert(`Google Sign-in Failed: ${errorMessage}`);
-                });
-        });
-    }
-
-    if (googleSignupBtn && auth) {
-        googleSignupBtn.addEventListener('click', () => {
-            const provider = new firebase.auth.GoogleAuthProvider();
-            auth.signInWithPopup(provider)
-                .then((result) => {
-                    // User signed up with Google.
-                    const user = result.user;
-                    console.log("Signed up with Google:", user);
-                    closeAuthPopup();
-                    showNotification(`Signed up with Google as ${user.displayName || user.email}`);
-                    // The auth.onAuthStateChanged listener will handle UI updates
-                }).catch((error) => {
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
-                    console.error("Google Sign-up failed:", errorCode, errorMessage);
-                    alert(`Google Sign-up Failed: ${errorMessage}`);
-                });
-        });
-    }
-
-    // Logout Functionality
-    if (logoutBtn && auth) {
-        logoutBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            auth.signOut()
-                .then(() => {
-                    console.log("User signed out successfully.");
-                    showNotification("Logged out successfully.");
-                    // The auth.onAuthStateChanged listener will handle UI updates
-                }).catch((error) => {
-                    console.error("Sign out error:", error);
-                    alert(`Sign out failed: ${error.message}`);
-                });
-        });
-    }
-
-    if (sideNavLogoutBtn && auth) {
-        sideNavLogoutBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            auth.signOut()
-                .then(() => {
-                    console.log("User signed out from side nav successfully.");
-                    showNotification("Logged out successfully.");
-                    // The auth.onAuthStateChanged listener will handle UI updates
-                }).catch((error) => {
-                    console.error("Side nav sign out error:", error);
-                    alert(`Sign out failed from side nav: ${error.message}`);
-                });
-        });
-    }
 
     // FAQ Accordion Functionality (remains the same)
     const faqItems = document.querySelectorAll('.faq-item');

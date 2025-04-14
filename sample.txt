@@ -1,0 +1,85 @@
+/* password-styles.css */
+
+#password-popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+#password-popup {
+    background-color: #333;
+    color: #eee;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    width: 80%;
+    max-width: 400px;
+}
+
+#password-popup h2 {
+    font-size: 2em;
+    margin-bottom: 20px;
+    color: #ffc107;
+    font-family: 'Playfair Display', serif;
+}
+
+#password-popup label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+    color: #ccc;
+    text-align: left;
+}
+
+#password-popup input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #555;
+    border-radius: 5px;
+    background-color: #444;
+    color: #eee;
+    font-size: 1em;
+    box-sizing: border-box;
+}
+
+#password-popup button {
+    background-color: #ffc107;
+    color: #212121;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
+}
+
+#password-popup button:hover {
+    background-color: #ffd54f;
+    transform: translateY(-2px);
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
+}
+
+#password-popup p#password-error {
+    color: #f44336;
+    margin-top: 10px;
+    font-size: 1em;
+}
+
+
+
+
+
+
+
+
+html
+
