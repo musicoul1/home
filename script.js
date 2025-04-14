@@ -146,16 +146,16 @@ document.addEventListener('DOMContentLoaded', function() {
         lastScrollTop = scrollTop;
     });
 
-    window.addEventListener('scroll', function() {
-        const exploreCourses = document.querySelector('.explore-courses');
-        const rect = exploreCourses.getBoundingClientRect();
+    // window.addEventListener('scroll', function() {
+    //     const exploreCourses = document.querySelector('.explore-courses');
+    //     const rect = exploreCourses.getBoundingClientRect();
 
-        if (rect.top <= window.innerHeight / 2) {
-            body.style.backgroundImage = "url('Resources/Homepage/music-background1.jpg')";
-        } else {
-            body.style.backgroundImage = "url('Resources/Homepage/music-background.jpg')";
-        }
-    });
+    //     if (rect.top <= window.innerHeight / 2) {
+    //         body.style.backgroundImage = "url('Resources/Homepage/music-background1.jpg')";
+    //     } else {
+    //         body.style.backgroundImage = "url('Resources/Homepage/music-background.jpg')";
+    //     }
+    // });
 
     hamburger.addEventListener('click', () => {
         sideNav.style.right = '0px';
