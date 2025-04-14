@@ -10,17 +10,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        /* Basic styling for the close button */
-        .side-nav .close-btn {
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            font-size: 24px;
-            color: white;
-            cursor: pointer;
-        }
-    </style>
 </head>
 <body>
     <nav>
@@ -34,7 +23,7 @@
             <a href="coming-soon.html" aria-label="See upcoming Events" data-page="events">Events</a>
             <a href="coming-soon.html" aria-label="Learn more About Us" data-page="about">About Us</a>
             <a href="coming-soon.html" aria-label="Contact Us" data-page="contact">Contact</a>
-            <a href="coming-soon.html" aria-label="Login to your account" data-page="login">Login</a>
+            <!-- <a href="coming-soon.html" aria-label="Login to your account" data-page="login" class="auth-trigger">Login</a> -->
         </div>
         <div class="hamburger" aria-label="Toggle navigation menu" role="button" tabindex="0">
             <i class="fas fa-bars"></i>
@@ -47,7 +36,7 @@
         <a href="coming-soon.html" aria-label="See upcoming Events" data-page="events">Events</a>
         <a href="coming-soon.html" aria-label="Learn more About Us" data-page="about">About Us</a>
         <a href="coming-soon.html" aria-label="Contact Us" data-page="contact">Contact</a>
-        <a href="coming-soon.html" aria-label="Login to your account" data-page="login">Login</a>
+        <!-- <a href="coming-soon.html" aria-label="Login to your account" data-page="login" class="auth-trigger">Login</a> -->
     </div>
 
     <main>
@@ -130,7 +119,7 @@
                         </ul>
                     </div>
                 </div>
-                <div class="course-card" data-pricing="Paid" data-type="Live" data-exam="2" data-subject="Piano/Harmonium">
+                <!-- <div class="course-card" data-pricing="Paid" data-type="Live" data-exam="2" data-subject="Piano/Harmonium">
                     <img src="Resources/Courses/e3.jpeg" alt="Praveshika Pratham [Exam-2]">
                     <div class="course-tags">
                         <span class="tag paid">Paid</span>
@@ -160,8 +149,8 @@
                             <li>Assessments</li>
                         </ul>
                     </div>
-                </div>
-                <div class="course-card" data-pricing="Free" data-type="Recorded" data-exam="3" data-subject="Tabla">
+                </div> -->
+                <!-- <div class="course-card" data-pricing="Free" data-type="Recorded" data-exam="3" data-subject="Tabla">
                     <img src="Resources/Courses/e3.jpeg" alt="Praveshika Purna [Exam-3]">
                     <div class="course-tags">
                         <span class="tag free">Free</span>
@@ -189,7 +178,7 @@
                             <li>Self-Assessment Quizzes</li>
                         </ul>
                     </div>
-                </div>
+                </div> -->
                 <div class="course-card" data-pricing="Paid" data-type="Live" data-exam="4" data-subject="Singing">
                     <img src="Resources/Courses/e4.jpeg" alt="Madhyama Pratham [Exam-4]">
                     <div class="course-tags">
@@ -206,7 +195,7 @@
                     </div>
                     <div class="button-container">
                         <button class="read-more" data-course="4">All Features</button>
-                        <button class="view-button">Enter</button>
+                        <a href="madhyama-pratham.html" class="enter-button"><button class="view-button">Enter</button></a>
                     </div>
                     <div class="course-details" id="course-details-4">
                         <p class="course-features-title"><strong>Features:</strong></p>
@@ -219,7 +208,7 @@
                         </ul>
                     </div>
                 </div>
-                <div class="course-card" data-pricing="Paid" data-type="Recorded" data-exam="5" data-subject="Piano/Harmonium">
+                <!-- <div class="course-card" data-pricing="Paid" data-type="Recorded" data-exam="5" data-subject="Piano/Harmonium">
                     <img src="Resources/Courses/e5.jpeg" alt="Madhyama Purna [Exam-5]">
                     <div class="course-tags">
                         <span class="tag paid">Paid</span>
@@ -246,7 +235,7 @@
                             <li>Virtual Keyboard Practice</li>
                         </ul>
                     </div>
-                </div>
+                </div> -->
                 <div class="course-card" data-pricing="Paid" data-type="Live" data-exam="6" data-subject="Tabla">
                     <img src="Resources/Courses/e6.jpeg" alt="Visharad Pratham [Exam-6]">
                     <div class="course-tags">
@@ -263,7 +252,7 @@
                     </div>
                     <div class="button-container">
                         <button class="read-more" data-course="6">All Features</button>
-                        <button class="view-button">Enter</button>
+                        <a href="visharad-pratham.html" class="enter-button"><button class="view-button">Enter</button></a>
                     </div>
                     <div class="course-details" id="course-details-6">
                         <p class="course-features-title"><strong>Features:</strong></p>
@@ -275,7 +264,7 @@
                         </ul>
                     </div>
                 </div>
-                <div class="course-card" data-pricing="Paid" data-type="Recorded" data-exam="7" data-subject="Singing">
+                <!-- <div class="course-card" data-pricing="Paid" data-type="Recorded" data-exam="7" data-subject="Singing">
                     <img src="Resources/Courses/e6.jpeg" alt="Visharad Purna [Exam-7]">
                     <div class="course-tags">
                         <span class="tag paid">Paid</span>
@@ -301,7 +290,7 @@
                             <li>Performance Analysis</li>
                         </ul>
                     </div>
-                </div>
+                </div> -->
                 <div class="course-card" data-pricing="Free" data-type="Recorded" data-exam="1" data-subject="Piano/Harmonium">
                     <img src="Resources/Courses/e1.jpeg" alt="Piano [Exam-1]">
                     <div class="course-tags">
@@ -318,7 +307,7 @@
                     </div>
                     <div class="button-container">
                         <button class="read-more" data-course="8">All Features</button>
-                        <button class="view-button">Enter</button>
+                        <a href="piano-prarambhik.html" class="enter-button"><button class="view-button">Enter</button></a>
                     </div>
                     <div class="course-details" id="course-details-8">
                         <p class="course-features-title"><strong>Features:</strong></p>
@@ -332,6 +321,81 @@
             </div>
         </section>
     </main>
+    <div class="auth-popup">
+        <div class="auth-container">
+            <span class="close-popup">&times;</span>
+            <div class="auth-tabs">
+                <button class="login-tab active">Login</button>
+                <button class="signup-tab">Sign Up</button>
+            </div>
+            <div class="auth-forms">
+                <form class="login-form active">
+                    <h2>Login</h2>
+                    <div class="input-group">
+                        <label for="loginEmail">Email:</label>
+                        <input type="email" id="loginEmail" placeholder="Your Email">
+                    </div>
+                    <div class="input-group">
+                        <label for="loginPassword">Password:</label>
+                        <input type="password" id="loginPassword" placeholder="Your Password">
+                    </div>
+                    <button type="submit" class="auth-button">Login</button>
+                    <button type="button" class="google-auth-button google-auth-button">
+                        <i class="fab fa-google"></i> Sign in with Google
+                    </button>
+                </form>
+                <form class="signup-form">
+                    <h2>Sign Up</h2>
+                    <div class="input-group">
+                        <label for="signupName">Full Name:</label>
+                        <input type="text" id="signupName" placeholder="Your Full Name">
+                    </div>
+                    <div class="input-group">
+                        <label for="signupEmail">Email:</label>
+                        <input type="email" id="signupEmail" placeholder="Your Email">
+                    </div>
+                    <div class="input-group">
+                        <label for="signupPassword">Password:</label>
+                        <input type="password" id="signupPassword" placeholder="Choose a Password">
+                    </div>
+                    <div class="input-group">
+                        <label for="confirmPassword">Confirm Password:</label>
+                        <input type="password" id="confirmPassword" placeholder="Confirm Your Password">
+                    </div>
+                    <div class="input-group">
+                        <label for="userRole">Role:</label>
+                        <select id="userRole">
+                            <option value="student">Student</option>
+                            <option value="instructor">Instructor</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="auth-button">Sign Up</button>
+                    <button type="button" class="google-auth-button">
+                        <i class="fab fa-google"></i> Sign up with Google
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <img src="Resources/Homepage/Logo-footer.png" alt="Musicoul Footer Logo">
+                <span>Musicoul</span>
+            </div>
+            <ul class="footer-links">
+                <li><a href="index.html" aria-label="Go to Home page">Home</a></li>
+                <li><a href="courses.html" aria-label="View our Courses">Courses</a></li>
+                <li><a href="coming-soon.html" aria-label="See upcoming Events">Events</a></li>
+                <li><a href="coming-soon.html" aria-label="Learn more About Us">About Us</a></li>
+                <li><a href="coming-soon.html" aria-label="Contact Us">Contact</a></li>
+            </ul>
+            <p>&copy; 2025 Musicoul. All rights reserved.</p>
+        </div>
+    </footer>
+    <script src="https://www.gstatic.com/firebasejs/9.x.x/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.x.x/firebase-auth-compat.js"></script>
     <script src="script.js"></script>
     <script src="courses.js"></script>
 </body>
