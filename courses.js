@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const signupForm = document.getElementById('signup-form');
     const googleLoginBtn = document.querySelector('#login-form .google-auth-button');
     const googleSignupBtn = document.querySelector('#signup-form .google-auth-button');
+    const readMoreButtons = document.querySelectorAll('.read-more');
 
     function showNotification(message) {
         const notificationDiv = document.createElement('div');
@@ -52,8 +53,8 @@ document.addEventListener('DOMContentLoaded', function() {
     if (loginForm) {
         loginForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            const email = loginForm.querySelector('#login-email').value;
-            const password = loginForm.querySelector('#login-password').value;
+            const email = loginForm.querySelector('#loginEmail').value;
+            const password = loginForm.querySelector('#loginPassword').value;
 
             // Replace with your actual login logic
             console.log("Login attempted with:", email, password);
@@ -70,9 +71,9 @@ document.addEventListener('DOMContentLoaded', function() {
     if (signupForm) {
         signupForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            const name = signupForm.querySelector('#signup-name').value;
-            const email = signupForm.querySelector('#signup-email').value;
-            const password = signupForm.querySelector('#signup-password').value;
+            const name = signupForm.querySelector('#signupName').value;
+            const email = signupForm.querySelector('#signupEmail').value;
+            const password = signupForm.querySelector('#signupPassword').value;
 
             // Replace with your actual signup logic
             console.log("Signup attempted with:", name, email, password);
@@ -144,12 +145,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     window.addEventListener('scroll', function() {
         const exploreCourses = document.querySelector('.explore-courses');
-        const rect = exploreCourses.getBoundingClientRect();
-
-        if (rect.top <= window.innerHeight / 2) {
-            body.style.backgroundImage = "url('Resources/Homepage/music-background1.jpg')";
-        } else {
-            body.style.backgroundImage = "url('Resources/Homepage/music-background.jpg')";
+        if (exploreCourses) {
+            const rect = exploreCourses.getBoundingClientRect();
+            if (rect.top <= window.innerHeight / 2) {
+                body.style.backgroundImage = "url('Resources/Homepage/music-background1.jpg')";
+            } else {
+                body.style.backgroundImage = "url('Resources/Homepage/music-background.jpg')";
+            }
         }
     });
 
@@ -237,4 +239,31 @@ document.addEventListener('DOMContentLoaded', function() {
     if (authPopup) {
         authPopup.style.display = 'none';
     }
+
+    // Logic for "All Features" button
+    readMoreButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            const courseCard = this.closest('.course-card');
+            const courseDetails = courseCard.querySelector('.course-details');
+
+            if (courseDetails.style.display === 'block') {
+                courseDetails.style.display = 'none';
+                this.textContent = 'All Features';
+            } else {
+                // Close any other open details
+                readMoreButtons.forEach(otherButton => {
+                    if (otherButton !== this) {
+                        const otherCard = otherButton.closest('.course-card');
+                        const otherDetails = otherCard.querySelector('.course-details');
+                        if (otherDetails) {
+                            otherDetails.style.display = 'none';
+                            otherButton.textContent = 'All Features';
+                        }
+                    }
+                });
+                courseDetails.style.display = 'block';
+                this.textContent = 'Close Features';
+            }
+        });
+    });
 });
