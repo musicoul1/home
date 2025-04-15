@@ -1,4 +1,4 @@
-/* style.css (Complete - Updated Auth Pop-up Alignment and Dropdowns) */
+/* style.css (Complete - Enhanced Explore Courses Section) */
 
 /* Base Styles */
 body {
@@ -12,14 +12,14 @@ body {
     flex-direction: column;
     min-height: 100vh;
     overflow-x: hidden;
-    transition: background-image 0.5s ease-in-out; /* Added smooth transition for background */
+    transition: background-image 0.5s ease-in-out;
 }
 
 /* Navigation Bar */
 nav {
     display: flex;
     align-items: center;
-    justify-content: center; /* Center the links by default for desktop */
+    justify-content: center;
     padding: 20px;
     height: 72px;
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
@@ -36,7 +36,7 @@ nav {
 nav .nav-brand {
     display: flex;
     align-items: center;
-    position: absolute; /* Position brand to the left */
+    position: absolute;
     left: 20px;
 }
 
@@ -56,7 +56,7 @@ nav .nav-links {
     display: flex;
 }
 
-nav .nav-links a.active{
+nav .nav-links a.active {
     color: gold;
     font-weight: 600;
 }
@@ -74,13 +74,13 @@ nav .nav-links a:hover {
 }
 
 .hamburger {
-    display: none; /* Hidden by default */
+    display: none;
     color: white;
     font-size: 1.5em;
     cursor: pointer;
-    position: absolute; /* Position to the right */
+    position: absolute;
     right: 20px;
-    z-index: 11; /* Ensure it's above other nav elements */
+    z-index: 11;
 }
 
 /* Side Navigation */
@@ -95,7 +95,7 @@ nav .nav-links a:hover {
     padding-top: 60px;
     transition: right 0.3s ease;
     z-index: 100;
-    display: block; /* Make it block-level for proper vertical display */
+    display: block;
 }
 
 .side-nav a {
@@ -106,13 +106,13 @@ nav .nav-links a:hover {
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.side-nav a.active{
+.side-nav a.active {
     color: red;
     font-weight: 600;
     background-color: rgba(255, 255, 255, 0.15);
 }
 
-.side-nav a:hover{
+.side-nav a:hover {
     background-color: rgba(255, 255, 255, 0.15);
 }
 
@@ -123,7 +123,7 @@ nav .nav-links a:hover {
     top: 10px;
     right: 20px;
     cursor: pointer;
-    z-index: 101; /* Ensure it's above the side-nav content */
+    z-index: 101;
 }
 
 /* Main Content */
@@ -146,7 +146,9 @@ main {
     transform: translateZ(-1px) scale(2);
     position: relative;
     z-index: 1;
-    margin-top: -20vh;
+    margin-top: -50vh;
+    padding: 10px;
+    box-sizing: border-box;
 }
 
 .hero::before {
@@ -161,42 +163,49 @@ main {
 }
 
 .hero-content {
-    max-width: 800px;
+    max-width: 90%;
     background-color: rgba(0, 0, 0, 0.6);
     backdrop-filter: blur(10px);
     padding: 40px;
     border-radius: 10px;
+    box-sizing: border-box;
 }
 
 .hero h1 {
-    font-size: 3.8em;
-    margin-bottom: 20px;
+    font-size: 3.2em;
+    margin-bottom: 24px;
     font-family: 'Playfair Display', serif;
     line-height: 1.2;
     font-weight: 700;
+    padding: 0px 50px 0px 50px;
 }
 
 .hero p {
-    font-size: 1.3em;
-    margin-bottom: 30px;
+    font-size: 1.2em;
+    margin-bottom: 32px;
     line-height: 1.6;
     font-weight: 400;
 }
 
 .cta-button {
     background-color: red;
+    box-shadow: 0 0 14px red;
     color: white;
-    padding: 15px 30px;
-    border: none;
+    padding: 14px 30px;
+    border: 2px solid red;
     border-radius: 8px;
-    font-size: 1.2em;
+    font-size: 1.1em;
     text-decoration: none;
-    transition: background-color 0.3s ease;
+    transition: 0.3s ease;
     font-weight: 600;
+    margin-bottom: 48px
 }
 
 .cta-button:hover {
-    background-color: darkred;
+    background-color: black;
+    color: white;
+    border: 2px solid white;
+    box-shadow: 0 0 14pxwhite;
 }
 
 /* Divider */
@@ -204,90 +213,124 @@ main {
     width: 80%;
     height: 1px;
     background-color: rgba(255, 255, 255, 0.2);
-    margin: 40px auto;
+    margin: 60px auto;
 }
 
 /* Explore Courses Section */
 .explore-courses {
     text-align: center;
-    margin-top: 32vh;
-    margin-bottom: 20vh;
+    margin-top: 60vh; /* Increased margin to prevent overlap */
+    margin-bottom: 80px;
     position: relative;
     z-index: 2;
     padding: 60px 20px;
+    background-color: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
 
 .explore-courses h2 {
     font-size: 2.8em;
-    margin-bottom: 10px;
+    margin-bottom: 30px;
     font-family: 'Playfair Display', serif;
     font-weight: 700;
+    color: gold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .course-grid {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    padding: 30px;
 }
 
 .course-item {
-    width: 300px;
-    margin: 30px;
-    padding: 20px;
-    border: 1px solid #333;
-    border-radius: 10px;
-    text-align: left;
     background-color: rgba(0, 0, 0, 0.6);
     backdrop-filter: blur(10px);
+    border-radius: 10px;
+    text-align: left;
+    padding: 25px;
+    box-sizing: border-box;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
-.course-item h3 {
-    font-size: 1.7em;
-    margin-bottom: 10px;
-    font-family: 'Playfair Display', serif;
-    font-weight: 600;
+.course-item:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
 }
 
-.course-item p {
-    font-size: 1.1em;
-    margin-bottom: 20px;
-    line-height: 1.6;
-}
-
-.course-link {
-    color: red;
-    text-decoration: none;
-    font-weight: 600;
-    transition: color 0.3s ease;
-}
-
-.course-link:hover {
-    color: darkred;
+.course-image-wrapper {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    margin-bottom: 15px;
 }
 
 .course-image {
     width: 100%;
     height: 200px;
     object-fit: cover;
-    border-radius: 8px;
-    margin-bottom: 5px;
+    transition: transform 0.4s ease-in-out;
+}
+
+.course-item:hover .course-image {
+    transform: scale(1.05);
+}
+
+.course-item h3 {
+    font-size: 1.8em;
+    margin-bottom: 12px;
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+    color: #eee;
+}
+
+.course-item p {
+    font-size: 1.1em;
+    margin-bottom: 20px;
+    line-height: 1.6;
+    color: #ccc;
+}
+
+.course-link {
+    color: gold;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.course-link:hover {
+    color: red;
+}
+
+.course-link i {
+    font-size: 1em;
 }
 
 .view-more-button {
-    background-color: red;
-    color: white;
-    padding: 15px 30px;
+    background-color: gold;
+    color: #222;
+    padding: 16px 32px;
     border: none;
     border-radius: 8px;
-    font-size: 1.2em;
+    font-size: 1.1em;
     text-decoration: none;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, color 0.3s ease;
     font-weight: 600;
-    margin-top: 60px;
+    margin-top: 40px;
+    display: inline-block;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
 }
 
 .view-more-button:hover {
-    background-color: darkred;
+    background-color: #daa520;
+    color: white;
 }
 
 /* Footer */
@@ -328,37 +371,39 @@ footer {
 
 /* Auth Pop-up Styles */
 .auth-popup {
-    display: none; /* Hidden by default */
+    display: none;
     position: fixed;
-    top: 80px; /* Position from the top with margin */
-    left: 50%; /* Center horizontally */
-    transform: translateX(-50%); /* Adjust for centering */
-    width: 24em; /* Adjust width as needed */
-    max-width: 24em;
+    top: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%; /* Make it responsive */
+    max-width: 400px; /* Set a maximum width */
     margin-top: 40px;
-    background-color: rgba(30, 30, 30, 0.9); /* Darker, more immersive background */
-    backdrop-filter: blur(20px); /* Enhanced blur effect */
-    border-radius: 16px; /* More rounded corners */
-    box-shadow: 0 0px 18px rgba(255, 255, 255, 0.582); /* Deeper shadow */
-    color: #f0f0f0; /* Light text for contrast */
-    z-index: 1000; /* Ensure it's on top */
-    overflow: hidden; /* Clip content for rounded corners */
-    padding: 30px; /* Add some padding around the container */
+    background-color: rgba(30, 30, 30, 0.9);
+    backdrop-filter: blur(20px);
+    border-radius: 16px;
+    box-shadow: 0 0px 18px rgba(255, 255, 255, 0.582);
+    color: #f0f0f0;
+    z-index: 1000;
+    overflow: hidden;
+    padding: 30px;
+    box-sizing: border-box;
 }
 
 .auth-container {
     display: flex;
     flex-direction: column;
-    align-items: stretch; /* Stretch items to the full width */
-    justify-content: center; /* Center items vertically */
+    align-items: stretch;
+    justify-content: center;
 }
 
-.auth-forms .input-group .placeholder{
-    width: 24em;
-    max-width: 24em;
+.auth-forms .input-group .placeholder {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
-.auth-forms .heading{
+.auth-forms .heading {
     margin-top: -2px;
     margin-bottom: -1px;
     text-align: center;
@@ -381,8 +426,8 @@ footer {
 
 .auth-tabs {
     display: flex;
-    width: 100%; /* Make tabs take full width */
-    margin-bottom: 30px; /* More space below tabs */
+    width: 100%;
+    margin-bottom: 30px;
     border-bottom: 2px solid #555;
 }
 
@@ -390,19 +435,20 @@ footer {
     background: none;
     color: #bbb;
     border: none;
-    padding: 15px 30px; /* Slightly larger padding */
-    font-size: 1.1em;
+    padding: 15px 20px; /* Adjusted padding */
+    font-size: 1em; /* Adjusted font size */
     cursor: pointer;
     transition: color 0.3s ease;
     font-weight: 500;
-    flex-grow: 1; /* Distribute space evenly */
-    text-align: center; /* Center tab text */
+    flex-grow: 1;
+    text-align: center;
+    box-sizing: border-box;
 }
 
 .auth-tabs button.active {
-    color: gold; /* More visually appealing active color */
+    color: gold;
     font-weight: bold;
-    border-bottom: 4px solid gold; /* More prominent active indicator */
+    border-bottom: 4px solid gold;
 }
 
 .auth-tabs button:hover {
@@ -410,10 +456,10 @@ footer {
 }
 
 .auth-forms > form {
-    display: none; /* Initially hide all forms */
+    display: none;
     flex-direction: column;
-    gap: 20px; /* Increased spacing between form elements */
-    align-items: stretch; /* Stretch form elements */
+    gap: 20px;
+    align-items: stretch;
 }
 
 .auth-forms > form.active {
@@ -421,63 +467,65 @@ footer {
 }
 
 .auth-forms h2 {
-    text-align: left; /* Align heading to the left */
-    margin-bottom: 30px; /* More space below heading */
+    text-align: left;
+    margin-bottom: 20px; /* Adjusted margin */
     font-family: 'Playfair Display', serif;
-    font-size: 2.2em; /* Slightly larger heading */
-    color: gold; /* Consistent with active tab */
-    width: 100%; /* Make heading take full width */
+    font-size: 2em; /* Adjusted font size */
+    color: gold;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .input-group {
     display: flex;
     flex-direction: column;
-    width: 100%; /* Make input groups take full width */
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .input-group label {
-    margin-bottom: 8px; /* More space above input */
+    margin-bottom: 8px;
     font-weight: 600;
     color: #ccc;
-    font-size: 0.95em;
-    text-align: left; /* Align label to the left */
+    font-size: 0.9em; /* Adjusted font size */
+    text-align: left;
 }
 
 .input-group input[type="email"],
 .input-group input[type="password"],
 .input-group input[type="text"],
 .input-group select {
-    padding: 14px; /* Larger input padding */
-    border: 1px solid #777; /* Slightly lighter border */
-    border-radius: 8px; /* More rounded inputs */
+    padding: 12px; /* Adjusted padding */
+    border: 1px solid #777;
+    border-radius: 8px;
     background-color: #444;
     color: #eee;
     box-sizing: border-box;
-    font-size: 1em;
-    width: 100%; /* Make input fields take full width */
+    font-size: 0.95em; /* Adjusted font size */
+    width: 100%;
     transition: border-color 0.3s ease;
 }
 
 .input-group input::placeholder,
 .input-group select::placeholder {
-    color: #999; /* Style placeholder text */
-    opacity: 1; /* Firefox */
+    color: #999;
+    opacity: 1;
 }
 
 .input-group input:-ms-input-placeholder,
-.input-group select:-ms-input-placeholder { /* Internet Explorer 10-11 */
+.input-group select:-ms-input-placeholder {
     color: #999;
 }
 
 .input-group input::-ms-input-placeholder,
-.input-group select::-ms-input-placeholder { /* Microsoft Edge */
+.input-group select::-ms-input-placeholder {
     color: #999;
 }
 
 .input-group input:focus,
 .input-group select:focus {
-    border-color: gold; /* Highlight on focus */
-    outline: none; /* Remove default focus outline */
+    border-color: gold;
+    outline: none;
 }
 
 .input-group select {
@@ -490,68 +538,70 @@ footer {
 }
 
 .auth-button {
-    background-color: gold; /* Visually appealing button color */
-    color: #222; /* Dark text on gold */
-    padding: 16px 24px; /* Larger button padding */
+    background-color: gold;
+    color: #222;
+    padding: 14px 20px; /* Adjusted padding */
     border: none;
-    border-radius: 10px; /* More rounded button */
-    font-size: 1.1em;
+    border-radius: 10px;
+    font-size: 1em; /* Adjusted font size */
     cursor: pointer;
     transition: background-color 0.3s ease;
-    /* style.css (Complete - Updated Auth Pop-up Alignment and Dropdowns) - Continued */
     font-weight: bold;
-    margin-top: 15px; /* Add space above the button */
-    width: 100%; /* Make button take full width */
-    text-align: center; /* Center button text */
+    margin-top: 15px;
+    width: 100%;
+    text-align: center;
+    box-sizing: border-box;
 }
 
 .auth-button:hover {
-    background-color: #daa520; /* Darker shade on hover */
+    background-color: #daa520;
 }
 
 .google-auth-button {
-    background-color: #fff; /* White background for better visibility */
-    color: #222; /* Dark text */
-    padding: 14px 20px;
-    border: 1px solid #ddd; /* Light border */
-    border-radius: 10px; /* Rounded Google button */
-    font-size: 1.1em;
+    background-color: #fff;
+    color: #222;
+    padding: 12px 18px; /* Adjusted padding */
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 0.95em; /* Adjusted font size */
     cursor: pointer;
     transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
     font-weight: bold;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 12px; /* More space for the icon */
-    margin-top: 20px; /* More space above Google button */
-    width: 100%; /* Make Google button take full width */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    gap: 10px; /* Adjusted gap */
+    margin-top: 15px; /* Adjusted margin */
+    width: 100%;
+    box-sizing: border-box;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .google-auth-button:hover {
-    background-color: #f9f9f9; /* Light gray on hover */
+    background-color: #f9f9f9;
     border-color: #ccc;
     color: #333;
 }
 
 .google-auth-button i {
-    font-size: 1.3em; /* Slightly larger Google icon */
-    color: #4285F4; /* Google Blue for the icon */
+    font-size: 1.2em; /* Adjusted font size */
+    color: #4285F4;
 }
 
 .notification {
     position: fixed;
-    top: 20px; /* Adjust as needed */
+    top: 20px;
     left: 50%;
     transform: translateX(-50%);
     background-color: rgba(0, 0, 0, 0.7);
     color: white;
-    padding: 15px 20px;
+    padding: 10px 15px; /* Adjusted padding */
     border-radius: 5px;
-    z-index: 1001; /* Ensure it's above other elements */
+    z-index: 1001;
     opacity: 0;
     animation: fadein 0.3s ease-in-out forwards, fadeout 0.3s ease-in-out 2.7s forwards;
-    text-align: center; /* Center the text within the notification */
+    text-align: center;
+    font-size: 0.9em; /* Adjusted font size */
 }
 
 @keyframes fadein {
@@ -566,59 +616,87 @@ footer {
 
 /* Media Queries */
 
-/* Media queries for tablet */
+/* Desktop View (No specific media query needed for wider screens) */
+
+/* Tablet View */
 @media (max-width: 1024px) {
     nav .nav-links {
-        display: none; /* Hide regular nav links */
+        display: none;
     }
 
     .hamburger {
-        display: block; /* Show hamburger icon */
+        display: block;
     }
 
     .side-nav {
-        display: block; /* Ensure side-nav is block for vertical layout */
+        display: block;
     }
 
     nav {
-        justify-content: space-between; /* Keep brand left, hamburger right */
+        justify-content: space-between;
     }
 
     main {
-        padding-top: 72px; /* Adjust main padding for fixed nav */
+        padding-top: 72px;
     }
 
     .hero {
-        margin-top: 72px; /* Adjust hero margin for fixed nav */
+        margin-top: 72px;
         transform: translateZ(0) scale(1);
         min-height: auto;
-        padding: 50px 25px;
+        padding: 40px 20px;
+    }
+
+    .hero-content {
+        padding: 30px;
+    }
+
+    .hero h1 {
+        font-size: 2.6em;
+        margin-bottom: 15px;
+    }
+
+    .hero p {
+        font-size: 1.1em;
+        margin-bottom: 20px;
+    }
+
+    .cta-button {
+        padding: 12px 25px;
+        font-size: 1em;
+    }
+
+    .divider {
+        margin: 50px auto;
     }
 
     .explore-courses {
-        margin-top: 55px;
-        margin-bottom: 55px;
-        padding: 45px 15px;
+        margin-top: 100px;
+        margin-bottom: 60px;
+        padding: 40px 15px;
+    }
+
+    .explore-courses h2 {
+        font-size: 2.5em;
+        margin-bottom: 20px;
     }
 
     .course-grid {
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: center;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        padding: 20px;
     }
 
     .course-item {
-        width: 45%;
-        margin: 15px 8px;
-        padding: 15px;
+        padding: 20px;
     }
 
-    .course-item img {
-        height: 150px;
+    .course-image {
+        height: 160px;
     }
 
     .course-item h3 {
-        font-size: 1.5em;
+        font-size: 1.6em;
     }
 
     .course-item p {
@@ -627,16 +705,47 @@ footer {
 
     .view-more-button {
         margin-top: 30px;
+        padding: 14px 28px;
+        font-size: 1em;
     }
 
     /* Responsive adjustments for auth pop-up on tablet */
     .auth-popup {
-        width: 24em; /* Adjust width for tablet */
-        max-width: 24em;
+        top: 70px;
+        width: 70%;
+        max-width: 450px;
+    }
+
+    .auth-tabs button {
+        padding: 10px 18px;
+        font-size: 0.95em;
+    }
+
+    .auth-forms h2 {
+        font-size: 1.9em;
+        margin-bottom: 15px;
+    }
+
+    .input-group label {
+        font-size: 0.85em;
+    }
+
+    .input-group input[type="email"],
+    .input-group input[type="password"],
+    .input-group input[type="text"],
+    .input-group select {
+        padding: 10px;
+        font-size: 0.9em;
+    }
+
+    .auth-button,
+    .google-auth-button {
+        padding: 12px 18px;
+        font-size: 0.95em;
     }
 }
 
-/* Media queries for mobile */
+/* Mobile View */
 @media (max-width: 768px) {
     nav .nav-links {
         display: none;
@@ -647,64 +756,72 @@ footer {
     }
 
     .side-nav {
-        display: block; /* Ensure side-nav is block for vertical layout */
+        display: block;
     }
 
     nav {
-        justify-content: space-between; /* Keep brand left, hamburger right */
+        justify-content: space-between;
     }
 
     main {
-        padding-top: 72px; /* Adjust main padding for fixed nav */
+        padding-top: 72px;
     }
 
     .hero {
-        margin-top: 72px; /* Adjust hero margin for fixed nav */
-        padding: 35px 20px;
+        margin-top: 72px;
+        padding: 30px 15px;
     }
 
     .hero-content {
-        padding: 25px;
+        padding: 20px;
     }
 
     .hero h1 {
-        font-size: 2.3em;
+        font-size: 2.2em;
+        margin-bottom: 12px;
     }
 
     .hero p {
+        font-size: 0.95em;
+        margin-bottom: 18px;
+    }
+
+    .cta-button {
+        padding: 10px 20px;
         font-size: 0.9em;
     }
 
     .divider {
-        margin: 25px auto;
+        margin: 40px auto;
     }
 
     .explore-courses {
-        margin-top: 45px;
-        margin-bottom: 45px;
-        padding: 35px 10px;
+        margin-top: 120px;
+        margin-bottom: 50px;
+        padding: 30px 10px;
     }
 
     .explore-courses h2 {
         font-size: 2.2em;
+        margin-bottom: 15px;
     }
 
     .course-grid {
-        flex-direction: column;
-    }
-
-    .course-item {
-        width: 95%;
-        margin: 15px auto;
+        grid-template-columns: 1fr;
+        gap: 25px;
         padding: 15px;
     }
 
-    .course-item img {
+    .course-item {
+        padding: 20px;
+    }
+
+    .course-image {
         height: 180px;
     }
 
     .course-item h3 {
-        font-size: 1.4em;
+        font-size: 1.5em;
     }
 
     .course-item p {
@@ -713,65 +830,103 @@ footer {
 
     .view-more-button {
         margin-top: 30px;
+        padding: 12px 24px;
+        font-size: 0.95em;
     }
 
     /* Responsive adjustments for auth pop-up on mobile */
     .auth-popup {
-        top: 60px; /* Adjust top margin for mobile */
-        width: 80%; /* Adjust width for mobile */
+        top: 60px;
+        width: 95%;
+        max-width: 320px;
     }
 
     .auth-tabs button {
-        padding: 12px 15px;
-        font-size: 1em;
-    }
-
-    .auth-forms .input-group .placeholder{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        width: 18em;
-        max-width: 18em;
+        padding: 8px 12px;
+        font-size: 0.85em;
     }
 
     .auth-forms h2 {
-        font-size: 2em;
-        margin-bottom: 20px;
-        text-align: left; /* Align heading to the left on mobile */
+        font-size: 1.8em;
+        margin-bottom: 12px;
+        text-align: left;
     }
 
     .input-group label {
-        font-size: 0.9em;
-        text-align: left; /* Align label to the left on mobile */
+        font-size: 0.8em;
     }
 
     .input-group input[type="email"],
     .input-group input[type="password"],
     .input-group input[type="text"],
     .input-group select {
-        padding: 12px;
-        font-size: 0.95em;
-        width: 90%; /* Ensure full width on mobile */
+        padding: 8px;
+        font-size: 0.85em;
     }
 
     .auth-button,
     .google-auth-button {
-        padding: 14px 20px;
-        font-size: 1em;
-        width: 100%; /* Ensure full width on mobile */
-        text-align: center; /* Center button text on mobile */
+        padding: 10px 15px;
+        font-size: 0.85em;
     }
 }
 
-/* Small mobile devices */
+/* Smaller Mobile Screens */
 @media (max-width: 400px) {
-    .auth-tabs button {
-        padding: 10px 12px;
+    .hero h1 {
+        font-size: 2em;
+    }
+
+    .hero p {
+        font-size: 0.85em;
+    }
+
+    .cta-button {
+        padding: 8px 16px;
+        font-size: 0.8em;
+    }
+
+    .explore-courses h2 {
+        font-size: 2em;
+    }
+
+    .course-item h3 {
+        font-size: 1.3em;
+    }
+
+    .course-item p {
         font-size: 0.9em;
     }
 
+    .view-more-button {
+        font-size: 0.85em;
+        padding: 10px 20px;
+    }
+
+    .auth-tabs button {
+        font-size: 0.75em;
+        padding: 6px 10px;
+    }
+
     .auth-forms h2 {
-        font-size: 1.8em;
+        font-size: 1.6em;
+    }
+
+    .input-group label {
+        font-size: 0.7em;
+    }
+
+    .input-group input[type="email"],
+    .input-group input[type="password"],
+    .input-group input[type="text"],
+    .input-group select {
+        font-size: 0.75em;
+        padding: 6px;
+    }
+
+    .auth-button,
+    .google-auth-button {
+        font-size: 0.8em;
+        padding: 8px 12px;
     }
 }

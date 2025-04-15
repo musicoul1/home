@@ -26,9 +26,7 @@
             <a href="coming-soon.html" aria-label="See upcoming Events" data-page="events">Events</a>
             <a href="coming-soon.html" aria-label="Learn more About Us" data-page="about">About Us</a>
             <a href="coming-soon.html" aria-label="Contact Us" data-page="contact">Contact</a>
-            <!-- <a href="#" aria-label="Login to your account" data-page="login" id="login-btn">Login</a>
-            <a href="#" aria-label="Logout from your account" data-page="logout" id="logout-btn" style="display: none;">Logout</a> -->
-        </div>
+            </div>
         <div class="hamburger">
             <i class="fas fa-bars"></i>
         </div>
@@ -40,9 +38,7 @@
         <a href="coming-soon.html" aria-label="See upcoming Events" data-page="events">Events</a>
         <a href="coming-soon.html" aria-label="Learn more About Us" data-page="about">About Us</a>
         <a href="coming-soon.html" aria-label="Contact Us" data-page="contact">Contact</a>
-        <!-- <a href="#" aria-label="Login to your account" data-page="login" id="side-nav-login-btn">Login</a>
-        <a href="#" aria-label="Logout from your account" data-page="logout" id="side-nav-logout-btn" style="display: none;">Logout</a> -->
-    </div>
+        </div>
     <main>
         <section class="hero">
             <div class="hero-content">
@@ -58,25 +54,39 @@
             <h2>Explore Our Courses</h2>
             <div class="course-grid">
                 <div class="course-item">
-                    <img src="Resources/Homepage/vocals.jpg" alt="A person singing into a microphone." class="course-image">
+                    <div class="course-image-wrapper">
+                        <img src="Resources/Homepage/vocals.jpg" alt="A person singing into a microphone." class="course-image">
+                    </div>
                     <h3>Vocal Mastery</h3>
                     <p>Refine your voice to its fullest potential.</p>
-                    <a href="courses.html" class="course-link">Explore Vocal Mastery</a>
+                    <a href="courses.html" class="course-link">Learn More <i class="fas fa-arrow-right"></i></a>
                 </div>
                 <div class="course-item">
-                    <img src="Resources/Homepage/harmonium.jpg" alt="Hands playing a harmonium." class="course-image">
+                    <div class="course-image-wrapper">
+                        <img src="Resources/Homepage/harmonium.jpg" alt="Hands playing a harmonium." class="course-image">
+                    </div>
                     <h3>Harmonium Essentials</h3>
                     <p>Create soulful melodies with the harmonium.</p>
-                    <a href="courses.html" class="course-link">Explore Harmonium</a>
+                    <a href="courses.html" class="course-link">Learn More <i class="fas fa-arrow-right"></i></a>
                 </div>
                 <div class="course-item">
-                    <img src="Resources/Homepage/tabla.jpeg" alt="A pair of tabla drums." class="course-image">
+                    <div class="course-image-wrapper">
+                        <img src="Resources/Homepage/tabla.jpeg" alt="A pair of tabla drums." class="course-image">
+                    </div>
                     <h3>Tabla Rhythms</h3>
                     <p>Dive into the world of percussion and rhythm.</p>
-                    <a href="courses.html" class="course-link">Explore Tabla</a>
+                    <a href="courses.html" class="course-link">Learn More <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="course-item">
+                    <div class="course-image-wrapper">
+                        <img src="Resources/Courses/e8.jpg" alt="Piano." class="course-image">
+                    </div>
+                    <h3>Piano Fundamentals</h3>
+                    <p>Master the basics of playing the Piano.</p>
+                    <a href="courses.html" class="course-link">Learn More <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
-            <a href="courses.html" class="view-more-button">View More Courses</a>
+            <a href="courses.html" class="view-more-button">View All Courses</a>
         </section>
 
         <div id="auth-popup" class="auth-popup">
@@ -157,6 +167,5 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
     <script src="script.js"></script>
-    <!-- comment --> 
-</body>
+    </body>
 </html>

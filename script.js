@@ -136,15 +136,15 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    window.addEventListener('scroll', function() {
-        let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        if (scrollTop > lastScrollTop) {
-            navbar.style.transform = 'translateY(-100%)';
-        } else {
-            navbar.style.transform = 'translateY(0)';
-        }
-        lastScrollTop = scrollTop;
-    });
+    // window.addEventListener('scroll', function() {
+    //     let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    //     if (scrollTop > lastScrollTop) {
+    //         navbar.style.transform = 'translateY(-100%)';
+    //     } else {
+    //         navbar.style.transform = 'translateY(0)';
+    //     }
+    //     lastScrollTop = scrollTop;
+    // });
 
     // window.addEventListener('scroll', function() {
     //     const exploreCourses = document.querySelector('.explore-courses');
