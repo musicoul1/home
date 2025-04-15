@@ -196,7 +196,7 @@ main {
     border-radius: 8px;
     font-size: 1.1em;
     text-decoration: none;
-    transition: 0.3s ease;
+    transition: box-shadow 0.3s ease, color 0.3s ease, border 0.3s ease, background-color 0.3s ease;
     font-weight: 600;
     margin-bottom: 48px
 }
@@ -317,11 +317,11 @@ main {
     background-color: gold;
     color: #222;
     padding: 16px 32px;
-    border: none;
+    border: 2px solid gold;
     border-radius: 8px;
     font-size: 1.1em;
     text-decoration: none;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease, box-shadow 0.3s ease;
     font-weight: 600;
     margin-top: 40px;
     display: inline-block;
@@ -329,8 +329,10 @@ main {
 }
 
 .view-more-button:hover {
-    background-color: #daa520;
+    background-color: black;
     color: white;
+    box-shadow: 0 0 14px white;
+    border: 2px solid white;
 }
 
 /* Footer */
