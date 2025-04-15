@@ -5,19 +5,27 @@ document.addEventListener('DOMContentLoaded', function() {
     const sideNav = document.querySelector('.side-nav');
     const closeBtn = document.querySelector('.close-btn');
     const body = document.body;
-    const loginBtn = document.getElementById('login-btn');
+    const loginBtn = document.querySelector('.nav-links a[data-page="login"]');
     const logoutBtn = document.getElementById('logout-btn');
-    const sideNavLoginBtn = document.getElementById('side-nav-login-btn');
+    const sideNavLoginBtn = document.querySelector('.side-nav a[data-page="login"]');
     const sideNavLogoutBtn = document.getElementById('side-nav-logout-btn');
-    const authPopup = document.getElementById('auth-popup');
+    const authPopup = document.querySelector('.auth-popup');
     const closePopupBtn = document.querySelector('.close-popup');
     const authTabs = document.querySelectorAll('.auth-tabs .tab');
     const authForms = document.querySelectorAll('.auth-forms form');
-    const loginForm = document.getElementById('login-form');
-    const signupForm = document.getElementById('signup-form');
+    const loginForm = document.querySelector('.login-form');
+    const signupForm = document.querySelector('.signup-form');
     const googleLoginBtn = document.querySelector('#login-form .google-auth-button');
     const googleSignupBtn = document.querySelector('#signup-form .google-auth-button');
     const readMoreButtons = document.querySelectorAll('.read-more');
+
+    const courseGrid = document.querySelector('.course-grid');
+    const courseSearchInput = document.getElementById('courseSearch');
+    const subjectFilter = document.getElementById('subjectFilter');
+    const pricingFilter = document.getElementById('pricingFilter');
+    const typeFilter = document.getElementById('typeFilter');
+    const examFilter = document.getElementById('examFilter');
+    const filterButton = document.getElementById('filterButton');
 
     function showNotification(message) {
         const notificationDiv = document.createElement('div');
@@ -26,97 +34,71 @@ document.addEventListener('DOMContentLoaded', function() {
         document.body.appendChild(notificationDiv);
         setTimeout(() => {
             notificationDiv.remove();
-        }, 3000); // Remove after 3 seconds
+        }, 3000);
     }
 
     function updateLoggedInUI(user) {
-        // Example: Hide login buttons, show logout button
         if (loginBtn) loginBtn.style.display = 'none';
         if (sideNavLoginBtn) sideNavLoginBtn.style.display = 'none';
-        if (logoutBtn) logoutBtn.style.display = 'inline-block';
-        if (sideNavLogoutBtn) sideNavLogoutBtn.style.display = 'inline-block';
-        // You might want to show a user profile link or display user info here
+        if (logoutBtn) { if (logoutBtn.style) logoutBtn.style.display = 'inline-block'; }
+        if (sideNavLogoutBtn) { if (sideNavLogoutBtn.style) sideNavLogoutBtn.style.display = 'inline-block'; }
         console.log("Logged in as:", user ? (user.displayName || user.email) : 'User Data Unavailable');
         showNotification(`Logged in as ${user ? (user.displayName || user.email) : 'User'}`);
     }
 
     function updateLoggedOutUI() {
-        // Example: Show login buttons, hide logout button
         if (loginBtn) loginBtn.style.display = 'inline-block';
         if (sideNavLoginBtn) sideNavLoginBtn.style.display = 'inline-block';
-        if (logoutBtn) logoutBtn.style.display = 'none';
-        if (sideNavLogoutBtn) sideNavLogoutBtn.style.display = 'none';
-        // You might want to hide user-specific elements here
+        if (logoutBtn) { if (logoutBtn.style) logoutBtn.style.display = 'none'; }
+        if (sideNavLogoutBtn) { if (sideNavLogoutBtn.style) sideNavLogoutBtn.style.display = 'none'; }
     }
 
-    // Event listener for Login form submission
     if (loginForm) {
         loginForm.addEventListener('submit', (e) => {
             e.preventDefault();
             const email = loginForm.querySelector('#loginEmail').value;
             const password = loginForm.querySelector('#loginPassword').value;
-
-            // Replace with your actual login logic
             console.log("Login attempted with:", email, password);
-            // Simulate successful login for UI update (replace with actual auth)
             const fakeUser = { email: email };
             updateLoggedInUI(fakeUser);
             showNotification(`Logged in as ${fakeUser.email}`);
-            // If login fails, show an error message
-            // alert("Login Failed: Incorrect credentials.");
         });
     }
 
-    // Event listener for Sign Up form submission
     if (signupForm) {
         signupForm.addEventListener('submit', (e) => {
             e.preventDefault();
             const name = signupForm.querySelector('#signupName').value;
             const email = signupForm.querySelector('#signupEmail').value;
             const password = signupForm.querySelector('#signupPassword').value;
-
-            // Replace with your actual signup logic
             console.log("Signup attempted with:", name, email, password);
-            // Simulate successful signup for UI update (replace with actual auth)
             const fakeUser = { displayName: name, email: email };
             updateLoggedInUI(fakeUser);
             showNotification(`Signed up as ${name}`);
-            // If signup fails, show an error message
-            // alert("Signup Failed: Email already in use.");
         });
     }
 
     if (googleLoginBtn) {
         googleLoginBtn.addEventListener('click', () => {
-            // Replace with your actual Google login logic
             console.log("Google login attempted.");
-            // Simulate Google login success
             const fakeUser = { displayName: "Google User", email: "google@example.com" };
             updateLoggedInUI(fakeUser);
             showNotification(`Logged in with Google as ${fakeUser.displayName}`);
-            // If Google login fails, show an error message
-            // alert("Google Sign-in Failed.");
         });
     }
 
     if (googleSignupBtn) {
         googleSignupBtn.addEventListener('click', () => {
-            // Replace with your actual Google signup logic
             console.log("Google signup attempted.");
-            // Simulate Google signup success
             const fakeUser = { displayName: "New Google User", email: "newgoogle@example.com" };
             updateLoggedInUI(fakeUser);
             showNotification(`Signed up with Google as ${fakeUser.displayName}`);
-            // If Google signup fails, show an error message
-            // alert("Google Sign-up Failed.");
         });
     }
 
-    // Logout Functionality
     if (logoutBtn) {
         logoutBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            // Replace with your actual logout logic
             console.log("User logged out.");
             updateLoggedOutUI();
             showNotification("Logged out successfully.");
@@ -126,7 +108,6 @@ document.addEventListener('DOMContentLoaded', function() {
     if (sideNavLogoutBtn) {
         sideNavLogoutBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            // Replace with your actual logout logic
             console.log("User logged out from side nav.");
             updateLoggedOutUI();
             showNotification("Logged out successfully.");
@@ -163,107 +144,111 @@ document.addEventListener('DOMContentLoaded', function() {
         sideNav.style.right = '-250px';
     });
 
-    // Removed openAuthPopup function and its event listeners
-    // Removed closeAuthPopup function and its event listeners
-    // Removed event listener to close the pop-up by clicking outside
-
-    // Removed Switch between Login and Sign Up forms logic
-    if (authTabs) {
-        authTabs.forEach(tab => {
-            // Keep the event listener, but its content related to showing/hiding forms is removed
-            tab.addEventListener('click', () => {
-                console.log(`Tab "${tab.getAttribute('data-tab')}" clicked.`);
-                // Add any other logic you want to execute when a tab is clicked
-            });
-        });
-    }
-
-    // The form submission event listeners remain, but the UI logic for the popup is removed
-
-    // FAQ Accordion Functionality (remains the same)
-    const faqItems = document.querySelectorAll('.faq-item');
-
-    faqItems.forEach(item => {
-        const question = item.querySelector('h3');
-        const answer = item.querySelector('p');
-        const icon = question.querySelector('i');
-
-        if (question && answer && icon) {
-            question.addEventListener('click', () => {
-                item.classList.toggle('active');
-                if (item.classList.contains('active')) {
-                    icon.classList.remove('fa-chevron-down');
-                    icon.classList.add('fa-chevron-up');
-                    $(answer).velocity("slideDown", { duration: 300, queue: false });
-                } else {
-                    $(answer).velocity("slideUp", { duration: 200, queue: false, complete: function(){
-                        answer.style.display = 'none';
-                    } });
-                    icon.classList.remove('fa-chevron-up');
-                    icon.classList.add('fa-chevron-down');
-                }
-            });
-        }
-    });
-
-    // Interactive Resource Folders (remains the same)
-    const interactiveFolders = document.querySelectorAll('.resource-folder.interactive');
-    interactiveFolders.forEach(folder => {
-        folder.addEventListener('click', () => {
-            console.log('Interactive folder clicked:', folder.querySelector('h3').textContent);
-        });
-    });
-
-    const multimediaFolders = document.querySelectorAll('.resource-folder.multimedia');
-    multimediaFolders.forEach(folder => {
-        folder.addEventListener('click', () => {
-            console.log('Multimedia folder clicked:', folder.querySelector('h3').textContent);
-        });
-    });
-
-    const theoryFolders = document.querySelectorAll('.resource-folder.theory');
-    theoryFolders.forEach(folder => {
-        folder.addEventListener('click', () => {
-            console.log('Theory folder clicked:', folder.querySelector('h3').textContent);
-        });
-    });
-
-    const driveLinkFolders = document.querySelectorAll('.resource-folder.drive-link');
-    driveLinkFolders.forEach(folder => {
-        folder.addEventListener('click', () => {
-            console.log('Drive Link folder clicked');
-        });
-    });
-
-    // Hide the auth popup element by default
     if (authPopup) {
         authPopup.style.display = 'none';
     }
 
-    // Logic for "All Features" button
     readMoreButtons.forEach(button => {
         button.addEventListener('click', function(e) {
             const courseCard = this.closest('.course-card');
             const courseDetails = courseCard.querySelector('.course-details');
 
-            if (courseDetails.style.display === 'block') {
-                courseDetails.style.display = 'none';
-                this.textContent = 'All Features';
-            } else {
-                // Close any other open details
-                readMoreButtons.forEach(otherButton => {
-                    if (otherButton !== this) {
-                        const otherCard = otherButton.closest('.course-card');
-                        const otherDetails = otherCard.querySelector('.course-details');
-                        if (otherDetails) {
-                            otherDetails.style.display = 'none';
-                            otherButton.textContent = 'All Features';
-                        }
+            readMoreButtons.forEach(otherButton => {
+                if (otherButton !== this) {
+                    const otherCard = otherButton.closest('.course-card');
+                    const otherDetails = otherCard.querySelector('.course-details');
+                    if (otherDetails && otherDetails.style.display === 'block') {
+                        otherDetails.style.display = 'none';
+                        otherButton.textContent = 'All Features';
                     }
-                });
-                courseDetails.style.display = 'block';
-                this.textContent = 'Close Features';
-            }
+                }
+            });
+
+            courseDetails.style.display = courseDetails.style.display === 'block' ? 'none' : 'block';
+            this.textContent = this.textContent === 'All Features' ? 'Close Features' : 'All Features';
         });
     });
+
+    // --- Filtering Logic Based on Tags ---
+    function filterCoursesByTags() {
+        const searchTerm = courseSearchInput.value.toLowerCase();
+        const selectedSubject = subjectFilter.value.toLowerCase();
+        const selectedPricing = pricingFilter.value.toLowerCase();
+        const selectedType = typeFilter.value.toLowerCase();
+        const selectedExam = examFilter.value.toLowerCase();
+
+        const courseCards = document.querySelectorAll('.course-card');
+
+        courseCards.forEach(card => {
+            const title = card.querySelector('h3').textContent.toLowerCase();
+            const description = card.querySelector('p').textContent.toLowerCase();
+            const tags = card.querySelectorAll('.course-tags span');
+            let subjectMatch = selectedSubject === '';
+            let pricingMatch = selectedPricing === '';
+            let typeMatch = selectedType === '';
+            let examMatch = selectedExam === '';
+
+            tags.forEach(tag => {
+                const tagClass = tag.classList[1] ? tag.classList[1].toLowerCase() : ''; // Get the second class
+
+                if (selectedSubject !== '') {
+                    if (selectedSubject === 'piano/harmonium' && tagClass === 'piano-harmonium') {
+                        subjectMatch = true;
+                    } else if (selectedSubject !== 'piano/harmonium' && tagClass === selectedSubject) {
+                        subjectMatch = true;
+                    }
+                } else {
+                    subjectMatch = true; // If 'All' is selected
+                }
+
+                if (selectedPricing !== '' && tagClass === selectedPricing) {
+                    pricingMatch = true;
+                } else if (selectedPricing === '') {
+                    pricingMatch = true; // If 'All' is selected
+                }
+
+                if (selectedType !== '' && tagClass === selectedType) {
+                    typeMatch = true;
+                } else if (selectedType === '') {
+                    typeMatch = true; // If 'All' is selected
+                }
+
+                if (selectedExam !== '') {
+                    if (tagClass.includes(selectedExam.replace('exam ', 'exam-'))) {
+                        examMatch = true;
+                    }
+                } else {
+                    examMatch = true; // If 'All' is selected
+                }
+            });
+
+            const searchMatch = searchTerm === '' || title.includes(searchTerm) || description.includes(searchTerm);
+
+            if (searchMatch && subjectMatch && pricingMatch && typeMatch && examMatch) {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    }
+
+    // Event listeners for filter and search
+    if (courseSearchInput) {
+        courseSearchInput.addEventListener('input', filterCoursesByTags);
+    }
+    if (subjectFilter) {
+        subjectFilter.addEventListener('change', filterCoursesByTags);
+    }
+    if (pricingFilter) {
+        pricingFilter.addEventListener('change', filterCoursesByTags);
+    }
+    if (typeFilter) {
+        typeFilter.addEventListener('change', filterCoursesByTags);
+    }
+    if (examFilter) {
+        examFilter.addEventListener('change', filterCoursesByTags);
+    }
+    if (filterButton) {
+        filterButton.addEventListener('click', filterCoursesByTags);
+    }
 });
