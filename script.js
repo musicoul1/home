@@ -189,88 +189,87 @@ document.addEventListener('DOMContentLoaded', function() {
         sideNavLoginBtn.addEventListener('click', (e) => {
             e.preventDefault(); // Prevent default link behavior
             openAuthPopup();
-        });
-    }
+        });}
 
-    // Event listener to close the pop-up using the close button
-    if (closePopupBtn) {
-        closePopupBtn.addEventListener('click', closeAuthPopup);
-    }
-
-    // Event listener to close the pop-up by clicking outside
-    window.addEventListener('click', (event) => {
-        if (event.target === authPopup) {
-            closeAuthPopup();
+        // Event listener to close the pop-up using the close button
+        if (closePopupBtn) {
+            closePopupBtn.addEventListener('click', closeAuthPopup);
         }
-    });
-
-    // Switch between Login and Sign Up forms
-    authTabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-            authTabs.forEach(t => t.classList.remove('active'));
-            authForms.forEach(form => form.classList.remove('active'));
-
-            tab.classList.add('active');
-            const targetFormId = tab.getAttribute('data-tab') + '-form';
-            const targetForm = document.getElementById(targetFormId);
-            if (targetForm) {
-                targetForm.classList.add('active');
+    
+        // Event listener to close the pop-up by clicking outside
+        window.addEventListener('click', (event) => {
+            if (event.target === authPopup) {
+                closeAuthPopup();
             }
         });
-    });
-
-    // FAQ Accordion Functionality (remains the same)
-    const faqItems = document.querySelectorAll('.faq-item');
-
-    faqItems.forEach(item => {
-        const question = item.querySelector('h3');
-        const answer = item.querySelector('p');
-        const icon = question.querySelector('i');
-
-        if (question && answer && icon) {
-            question.addEventListener('click', () => {
-                item.classList.toggle('active');
-                if (item.classList.contains('active')) {
-                    icon.classList.remove('fa-chevron-down');
-                    icon.classList.add('fa-chevron-up');
-                    $(answer).velocity("slideDown", { duration: 300, queue: false });
-                } else {
-                    $(answer).velocity("slideUp", { duration: 200, queue: false, complete: function(){
-                        answer.style.display = 'none';
-                    } });
-                    icon.classList.remove('fa-chevron-up');
-                    icon.classList.add('fa-chevron-down');
+    
+        // Switch between Login and Sign Up forms
+        authTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                authTabs.forEach(t => t.classList.remove('active'));
+                authForms.forEach(form => form.classList.remove('active'));
+    
+                tab.classList.add('active');
+                const targetFormId = tab.getAttribute('data-tab') + '-form';
+                const targetForm = document.getElementById(targetFormId);
+                if (targetForm) {
+                    targetForm.classList.add('active');
                 }
             });
-        }
-    });
-
-    // Interactive Resource Folders (remains the same)
-    const interactiveFolders = document.querySelectorAll('.resource-folder.interactive');
-    interactiveFolders.forEach(folder => {
-        folder.addEventListener('click', () => {
-            console.log('Interactive folder clicked:', folder.querySelector('h3').textContent);
+        });
+    
+        // FAQ Accordion Functionality (remains the same - assuming this section exists elsewhere)
+        const faqItems = document.querySelectorAll('.faq-item');
+    
+        faqItems.forEach(item => {
+            const question = item.querySelector('h3');
+            const answer = item.querySelector('p');
+            const icon = question.querySelector('i');
+    
+            if (question && answer && icon) {
+                question.addEventListener('click', () => {
+                    item.classList.toggle('active');
+                    if (item.classList.contains('active')) {
+                        icon.classList.remove('fa-chevron-down');
+                        icon.classList.add('fa-chevron-up');
+                        $(answer).velocity("slideDown", { duration: 300, queue: false });
+                    } else {
+                        $(answer).velocity("slideUp", { duration: 200, queue: false, complete: function(){
+                            answer.style.display = 'none';
+                        } });
+                        icon.classList.remove('fa-chevron-up');
+                        icon.classList.add('fa-chevron-down');
+                    }
+                });
+            }
+        });
+    
+        // Interactive Resource Folders (remains the same - assuming this section exists elsewhere)
+        const interactiveFolders = document.querySelectorAll('.resource-folder.interactive');
+        interactiveFolders.forEach(folder => {
+            folder.addEventListener('click', () => {
+                console.log('Interactive folder clicked:', folder.querySelector('h3').textContent);
+            });
+        });
+    
+        const multimediaFolders = document.querySelectorAll('.resource-folder.multimedia');
+        multimediaFolders.forEach(folder => {
+            folder.addEventListener('click', () => {
+                console.log('Multimedia folder clicked:', folder.querySelector('h3').textContent);
+            });
+        });
+    
+        const theoryFolders = document.querySelectorAll('.resource-folder.theory');
+        theoryFolders.forEach(folder => {
+            folder.addEventListener('click', () => {
+                console.log('Theory folder clicked:', folder.querySelector('h3').textContent);
+            });
+        });
+    
+        const driveLinkFolders = document.querySelectorAll('.resource-folder.drive-link');
+        driveLinkFolders.forEach(folder => {
+            folder.addEventListener('click', () => {
+                console.log('Drive Link folder clicked');
+            });
         });
     });
-
-    const multimediaFolders = document.querySelectorAll('.resource-folder.multimedia');
-    multimediaFolders.forEach(folder => {
-        folder.addEventListener('click', () => {
-            console.log('Multimedia folder clicked:', folder.querySelector('h3').textContent);
-        });
-    });
-
-    const theoryFolders = document.querySelectorAll('.resource-folder.theory');
-    theoryFolders.forEach(folder => {
-        folder.addEventListener('click', () => {
-            console.log('Theory folder clicked:', folder.querySelector('h3').textContent);
-        });
-    });
-
-    const driveLinkFolders = document.querySelectorAll('.resource-folder.drive-link');
-    driveLinkFolders.forEach(folder => {
-        folder.addEventListener('click', () => {
-            console.log('Drive Link folder clicked');
-        });
-    });
-});
