@@ -17,6 +17,19 @@ document.addEventListener('DOMContentLoaded', function() {
     const signupForm = document.getElementById('signup-form');
     const googleLoginBtn = document.querySelector('#login-form .google-auth-button');
     const googleSignupBtn = document.querySelector('#signup-form .google-auth-button');
+    const bottomNavMyClass = document.querySelector('.bottom-nav a:nth-child(2)'); // Selects the "My Class" link in bottom nav
+    const overlay = document.querySelector('.overlay'); // Keep this if you added it
+
+    // Define a mapping of subject and exam number to course page URLs
+    const courseMap = {
+        'Singing-1': 'prarambhik.html',
+        'Piano-1': 'piano-prarambhik.html', // Example: Adjust as needed
+        'Tabla-1': 'tabla-prarambhik.html', // Example: Adjust as needed
+        'Singing-2': 'singing-level-2.html', // Example: Adjust as needed
+        'Piano-2': 'piano-level-2.html',   // Example: Adjust as needed
+        'Tabla-2': 'tabla-level-2.html',   // Example: Adjust as needed
+        // Add more mappings for other subjects and exam numbers as needed
+    };
 
     function showNotification(message) {
         const notificationDiv = document.createElement('div');
@@ -136,27 +149,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // window.addEventListener('scroll', function() {
-    //     let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    //     if (scrollTop > lastScrollTop) {
-    //         navbar.style.transform = 'translateY(-100%)';
-    //     } else {
-    //         navbar.style.transform = 'translateY(0)';
-    //     }
-    //     lastScrollTop = scrollTop;
-    // });
-
-    // window.addEventListener('scroll', function() {
-    //     const exploreCourses = document.querySelector('.explore-courses');
-    //     const rect = exploreCourses.getBoundingClientRect();
-
-    //     if (rect.top <= window.innerHeight / 2) {
-    //         body.style.backgroundImage = "url('Resources/Homepage/music-background1.jpg')";
-    //     } else {
-    //         body.style.backgroundImage = "url('Resources/Homepage/music-background.jpg')";
-    //     }
-    // });
-
     hamburger.addEventListener('click', () => {
         sideNav.style.right = '0px';
     });
@@ -169,12 +161,14 @@ document.addEventListener('DOMContentLoaded', function() {
     function openAuthPopup() {
         authPopup.style.display = 'flex';
         body.classList.add('popup-open'); // Optional: Add class to body to prevent scrolling
+        if (overlay) overlay.style.display = 'block'; // Show overlay if it exists
     }
 
     // Close Auth Pop-up
     function closeAuthPopup() {
         authPopup.style.display = 'none';
         body.classList.remove('popup-open'); // Optional: Remove class from body
+        if (overlay) overlay.style.display = 'none'; // Hide overlay if it exists
     }
 
     // Event listeners to open the pop-up
@@ -189,87 +183,116 @@ document.addEventListener('DOMContentLoaded', function() {
         sideNavLoginBtn.addEventListener('click', (e) => {
             e.preventDefault(); // Prevent default link behavior
             openAuthPopup();
-        });}
+        });
+    }
 
-        // Event listener to close the pop-up using the close button
-        if (closePopupBtn) {
-            closePopupBtn.addEventListener('click', closeAuthPopup);
+    // Event listener to close the pop-up using the close button
+    if (closePopupBtn) {
+        closePopupBtn.addEventListener('click', closeAuthPopup);
+    }
+
+    // Event listener to close the pop-up by clicking outside
+    window.addEventListener('click', (event) => {
+        if (event.target === authPopup) {
+            closeAuthPopup();
         }
-    
-        // Event listener to close the pop-up by clicking outside
-        window.addEventListener('click', (event) => {
-            if (event.target === authPopup) {
-                closeAuthPopup();
+    });
+
+    // Switch between Login and Sign Up forms
+    authTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            authTabs.forEach(t => t.classList.remove('active'));
+            authForms.forEach(form => form.classList.remove('active'));
+
+            tab.classList.add('active');
+            const targetFormId = tab.getAttribute('data-tab') + '-form';
+            const targetForm = document.getElementById(targetFormId);
+            if (targetForm) {
+                targetForm.classList.add('active');
             }
-        });
-    
-        // Switch between Login and Sign Up forms
-        authTabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                authTabs.forEach(t => t.classList.remove('active'));
-                authForms.forEach(form => form.classList.remove('active'));
-    
-                tab.classList.add('active');
-                const targetFormId = tab.getAttribute('data-tab') + '-form';
-                const targetForm = document.getElementById(targetFormId);
-                if (targetForm) {
-                    targetForm.classList.add('active');
-                }
-            });
-        });
-    
-        // FAQ Accordion Functionality (remains the same - assuming this section exists elsewhere)
-        const faqItems = document.querySelectorAll('.faq-item');
-    
-        faqItems.forEach(item => {
-            const question = item.querySelector('h3');
-            const answer = item.querySelector('p');
-            const icon = question.querySelector('i');
-    
-            if (question && answer && icon) {
-                question.addEventListener('click', () => {
-                    item.classList.toggle('active');
-                    if (item.classList.contains('active')) {
-                        icon.classList.remove('fa-chevron-down');
-                        icon.classList.add('fa-chevron-up');
-                        $(answer).velocity("slideDown", { duration: 300, queue: false });
-                    } else {
-                        $(answer).velocity("slideUp", { duration: 200, queue: false, complete: function(){
-                            answer.style.display = 'none';
-                        } });
-                        icon.classList.remove('fa-chevron-up');
-                        icon.classList.add('fa-chevron-down');
-                    }
-                });
-            }
-        });
-    
-        // Interactive Resource Folders (remains the same - assuming this section exists elsewhere)
-        const interactiveFolders = document.querySelectorAll('.resource-folder.interactive');
-        interactiveFolders.forEach(folder => {
-            folder.addEventListener('click', () => {
-                console.log('Interactive folder clicked:', folder.querySelector('h3').textContent);
-            });
-        });
-    
-        const multimediaFolders = document.querySelectorAll('.resource-folder.multimedia');
-        multimediaFolders.forEach(folder => {
-            folder.addEventListener('click', () => {
-                console.log('Multimedia folder clicked:', folder.querySelector('h3').textContent);
-            });
-        });
-    
-        const theoryFolders = document.querySelectorAll('.resource-folder.theory');
-        theoryFolders.forEach(folder => {
-            folder.addEventListener('click', () => {
-                console.log('Theory folder clicked:', folder.querySelector('h3').textContent);
-            });
-        });
-    
-        const driveLinkFolders = document.querySelectorAll('.resource-folder.drive-link');
-        driveLinkFolders.forEach(folder => {
-            folder.addEventListener('click', () => {
-                console.log('Drive Link folder clicked');
-            });
         });
     });
+
+    // "My Class" Bottom Navigation Logic (Direct Redirection)
+    if (bottomNavMyClass) {
+        bottomNavMyClass.addEventListener('click', (e) => {
+            e.preventDefault();
+            const subject = prompt("Enter your subject (e.g., Singing, Piano, Tabla):");
+            if (subject) {
+                const examNo = prompt("Enter your Exam No. (e.g., 1, 2, 3):");
+                if (examNo) {
+                    const key = `${subject.trim()}-${examNo.trim()}`;
+                    const courseUrl = courseMap[key];
+
+                    if (courseUrl) {
+                        window.location.href = courseUrl;
+                    } else {
+                        showNotification("No specific course found for your selection. Redirecting to courses page.");
+                        setTimeout(() => {
+                            window.location.href = 'courses.html';
+                        }, 2000);
+                    }
+                } else {
+                    showNotification("Exam No. cannot be empty.");
+                }
+            } else {
+                showNotification("Subject cannot be empty.");
+            }
+        });
+    }
+
+    // FAQ Accordion Functionality (remains the same - assuming this section exists elsewhere)
+    const faqItems = document.querySelectorAll('.faq-item');
+
+    faqItems.forEach(item => {
+        const question = item.querySelector('h3');
+        const answer = item.querySelector('p');
+        const icon = question.querySelector('i');
+
+        if (question && answer && icon) {
+            question.addEventListener('click', () => {
+                item.classList.toggle('active');
+                if (item.classList.contains('active')) {
+                    icon.classList.remove('fa-chevron-down');
+                    icon.classList.add('fa-chevron-up');
+                    $(answer).velocity("slideDown", { duration: 300, queue: false });
+                } else {
+                    $(answer).velocity("slideUp", { duration: 200, queue: false, complete: function(){
+                        answer.style.display = 'none';
+                    } });
+                    icon.classList.remove('fa-chevron-up');
+                    icon.classList.add('fa-chevron-down');
+                }
+            });
+        }
+    });
+
+    // Interactive Resource Folders (remains the same - assuming this section exists elsewhere)
+    const interactiveFolders = document.querySelectorAll('.resource-folder.interactive');
+    interactiveFolders.forEach(folder => {
+        folder.addEventListener('click', () => {
+            console.log('Interactive folder clicked:', folder.querySelector('h3').textContent);
+        });
+    });
+
+    const multimediaFolders = document.querySelectorAll('.resource-folder.multimedia');
+    multimediaFolders.forEach(folder => {
+        folder.addEventListener('click', () => {
+            console.log('Multimedia folder clicked:', folder.querySelector('h3').textContent);
+        });
+    });
+
+    const theoryFolders = document.querySelectorAll('.resource-folder.theory');
+    theoryFolders.forEach(folder => {
+        folder.addEventListener('click', () => {
+            console.log('Theory folder clicked:', folder.querySelector('h3').textContent);
+        });
+    });
+
+    const driveLinkFolders = document.querySelectorAll('.resource-folder.drive-link');
+    driveLinkFolders.forEach(folder => {
+        folder.addEventListener('click', () => {
+            console.log('Drive Link folder clicked');
+        });
+    });
+});
