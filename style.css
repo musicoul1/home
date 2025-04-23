@@ -1,4 +1,4 @@
-/* style.css (Complete - Enhanced Explore Courses Section) */
+/* style.css (Complete - Enhanced Explore Courses Section + Bottom Nav) */
 
 /* Base Styles */
 body {
@@ -13,6 +13,8 @@ body {
     min-height: 100vh;
     overflow-x: hidden;
     transition: background-image 0.5s ease-in-out;
+    padding-bottom: 60px; /* Add padding at the bottom for the fixed bottom nav */
+    box-sizing: border-box;
 }
 
 /* Navigation Bar */
@@ -95,7 +97,7 @@ nav .nav-links a:hover {
     padding-top: 60px;
     transition: right 0.3s ease;
     z-index: 100;
-    display: block;
+    display: none; /* Hidden by default, shown on hamburger click */
 }
 
 .side-nav a {
@@ -134,6 +136,7 @@ main {
     overflow-y: auto;
     transform-style: preserve-3d;
     padding-top: 72px;
+    box-sizing: border-box;
 }
 
 /* Hero Section */
@@ -174,7 +177,7 @@ main {
 .hero h1 {
     font-size: 3.2em;
     margin-bottom: 24px;
-    font-family: 'Playfair Display', serif;
+    font-family: 'Playayfair Display', serif;
     line-height: 1.2;
     font-weight: 700;
     padding: 0px 50px 0px 50px;
@@ -228,6 +231,7 @@ main {
     backdrop-filter: blur(10px);
     border-radius: 12px;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    box-sizing: border-box;
 }
 
 .explore-courses h2 {
@@ -342,6 +346,7 @@ footer {
     padding: 30px 20px;
     text-align: center;
     font-size: 0.9em;
+    box-sizing: border-box;
 }
 
 .footer-content {
@@ -616,6 +621,52 @@ footer {
     to { opacity: 0; transform: translateX(-50%) translateY(-10px); }
 }
 
+/* Bottom Navigation Bar (Mobile Specific) */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(10px);
+    color: white;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px 0;
+    z-index: 20;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.bottom-nav a {
+    flex-grow: 1;
+    text-align: center;
+    text-decoration: none;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    font-size: 0.9em;
+    transition: color 0.3s ease;
+}
+
+.bottom-nav a:hover {
+    color: gold;
+}
+
+.bottom-nav a i {
+    font-size: 1.3em;
+}
+
+/* Hide bottom nav on larger screens */
+@media (min-width: 769px) {
+    .bottom-nav {
+        display: none;
+    }
+}
+
 /* Media Queries */
 
 /* Desktop View (No specific media query needed for wider screens) */
@@ -745,6 +796,11 @@ footer {
         padding: 12px 18px;
         font-size: 0.95em;
     }
+
+    /* Show bottom nav on tablet */
+    .bottom-nav {
+        display: flex;
+    }
 }
 
 /* Mobile View */
@@ -871,6 +927,11 @@ footer {
         padding: 10px 15px;
         font-size: 0.85em;
     }
+
+    /* Show bottom nav on mobile */
+    .bottom-nav {
+        display: flex;
+    }
 }
 
 /* Smaller Mobile Screens */
@@ -930,5 +991,14 @@ footer {
     .google-auth-button {
         font-size: 0.8em;
         padding: 8px 12px;
+    }
+
+    /* Show bottom nav on smaller mobile */
+    .bottom-nav a {
+        font-size: 0.8em;
+    }
+
+    .bottom-nav a i {
+        font-size: 1.2em;
     }
 }
