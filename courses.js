@@ -252,3 +252,95 @@ document.addEventListener('DOMContentLoaded', function() {
         filterButton.addEventListener('click', filterCoursesByTags);
     }
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    const courseCards = document.querySelectorAll('.course-card');
+    const subjectFilter = document.getElementById('subjectFilter');
+    const pricingFilter = document.getElementById('pricingFilter');
+    const typeFilter = document.getElementById('typeFilter');
+    const examFilter = document.getElementById('examFilter');
+    const filterButton = document.getElementById('filterButton');
+    const courseSearchInput = document.getElementById('courseSearch');
+
+    function filterCourses() {
+        const selectedSubject = subjectFilter.value.toLowerCase();
+        const selectedPricing = pricingFilter.value.toLowerCase();
+        const selectedType = typeFilter.value.toLowerCase();
+        const selectedExam = examFilter.value.toLowerCase();
+        const searchTerm = courseSearchInput.value.toLowerCase();
+
+        courseCards.forEach(card => {
+            const cardSubject = card.dataset.subject.toLowerCase();
+            const cardPricing = card.dataset.pricing.toLowerCase();
+            const cardType = card.dataset.type.toLowerCase();
+            const cardExam = card.dataset.exam.toLowerCase();
+            const cardTitle = card.querySelector('h3').textContent.toLowerCase();
+            const cardDescription = card.querySelector('p').textContent.toLowerCase();
+
+            const subjectMatch = !selectedSubject || cardSubject.includes(selectedSubject);
+            const pricingMatch = !selectedPricing || cardPricing === selectedPricing;
+            const typeMatch = !selectedType || cardType === selectedType;
+            const examMatch = !selectedExam || cardExam === selectedExam;
+            const searchMatch = !searchTerm || cardTitle.includes(searchTerm) || cardDescription.includes(searchTerm);
+
+            if (subjectMatch && pricingMatch && typeMatch && examMatch && searchMatch) {
+                card.style.display = 'grid';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    }
+
+    if (filterButton) {
+        filterButton.addEventListener('click', filterCourses);
+    }
+
+    if (subjectFilter) {
+        subjectFilter.addEventListener('change', filterCourses);
+    }
+
+    if (pricingFilter) {
+        pricingFilter.addEventListener('change', filterCourses);
+    }
+
+    if (typeFilter) {
+        typeFilter.addEventListener('change', filterCourses);
+    }
+
+    if (examFilter) {
+        examFilter.addEventListener('change', filterCourses);
+    }
+
+    if (courseSearchInput) {
+        courseSearchInput.addEventListener('input', filterCourses);
+    }
+
+    // Function to handle initial filtering based on URL parameters
+    function applyInitialFilters() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const subjectParam = urlParams.get('subject');
+        const examParam = urlParams.get('exam');
+
+        if (subjectParam) {
+            const normalizedSubject = subjectParam.trim().toLowerCase();
+            subjectFilter.value = normalizedSubject.includes('singing') ? 'Singing' :
+                                normalizedSubject.includes('piano') || normalizedSubject.includes('harmonium') ? 'Piano/Harmonium' :
+                                normalizedSubject.includes('tabla') ? 'Tabla' : '';
+        }
+
+        if (examParam) {
+            examFilter.value = examParam.trim();
+        }
+
+        // Trigger the filter after setting the select values
+        filterCourses();
+
+        // Optionally, scroll to the courses section to make the filtered results visible
+        const courseSection = document.querySelector('.course-section');
+        if (courseSection) {
+            courseSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }
+
+    applyInitialFilters();
+});
