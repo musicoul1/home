@@ -259,6 +259,7 @@ nav {
     gap: 5px;
     margin-bottom: 5px;
     flex-wrap: wrap;
+    max-height: fit-content;
 }
 
 .course-card .tag {
@@ -269,10 +270,11 @@ nav {
     font-size: 0.8em;
     font-weight: 500;
     font-family: 'Raleway', sans-serif;
-    height: auto;
+    height: fit-content;
     line-height: 1.4;
     display: inline-block;
     margin-bottom: 3px;
+    white-space: nowrap; /* Prevent text from wrapping within the tag */
 }
 
 .course-card .tag.paid {
@@ -346,6 +348,7 @@ nav {
     color: white;
     border-color: white;
     width: 100%;
+    max-height: fit-content;
 }
 
 .course-card .button-container .read-more:hover {
@@ -358,6 +361,7 @@ nav {
     color: white;
     border-color: red;
     width: 100%;
+    max-height: fit-content;
 }
 
 .course-card .button-container .enter-button {
@@ -366,6 +370,7 @@ nav {
     border-color: red;
     width: 100%;
     border-radius: 5px;
+    max-height: fit-content;
 }
 
 .course-card .button-container .view-button:hover {
@@ -774,4 +779,48 @@ footer p {
     .course-details ul {
         margin-left: 30px;
     }
+}
+
+/* Specific styles to prevent tag shape changes on "all features" click */
+/* Assuming 'features-active' class is added to the body or a relevant container */
+body.features-active .course-card:not(:has(.all-features-button)) .tag,
+.course-section.features-active .course-card:not(:has(.all-features-button)) .tag,
+.course-grid.features-active .course-card:not(:has(.all-features-button)) .tag {
+    /* Ensure default tag appearance: dynamic size, rounded corners */
+    background-color: #555;
+    color: white;
+    padding: 5px 8px;
+    border-radius: 5px;
+    font-size: 0.8em;
+    font-weight: 500;
+    font-family: 'Raleway', sans-serif;
+    height: auto;
+    line-height: 1.4;
+    display: inline-block;
+    margin-bottom: 3px;
+    white-space: nowrap;
+}
+
+body.features-active .course-card:not(:has(.all-features-button)) .tag.paid,
+.course-section.features-active .course-card:not(:has(.all-features-button)) .tag.paid,
+.course-grid.features-active .course-card:not(:has(.all-features-button)) .tag.paid {
+    background: linear-gradient(to bottom, #fff09e, #ffbf00);
+    color: black;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    border: 1px solid #e6ac00;
+}
+
+body.features-active .course-card:not(:has(.all-features-button)) .tag.live,
+.course-section.features-active .course-card:not(:has(.all-features-button)) .tag.live,
+.course-grid.features-active .course-card:not(:has(.all-features-button)) .tag.live {
+    background: linear-gradient(to bottom, #fff09e, #ffbf00);
+    color: black;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    border: 1px solid #e6ac00;
+}
+
+/* If the "all features" button itself has an active state */
+.course-card .button-container .all-features-button.active {
+    /* Add styles for the active state of the button if needed */
+    opacity: 0.8; /* Example */
 }
