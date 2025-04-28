@@ -214,32 +214,32 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // "My Class" Bottom Navigation Logic (Direct Redirection)
-    if (bottomNavMyClass) {
-        bottomNavMyClass.addEventListener('click', (e) => {
-            e.preventDefault();
-            const subject = prompt("Enter your subject (e.g., Singing, Piano, Tabla):");
-            if (subject) {
-                const examNo = prompt("Enter your Exam No. (e.g., 1, 2, 3):");
-                if (examNo) {
-                    const key = `${subject.trim()}-${examNo.trim()}`;
-                    const courseUrl = courseMap[key];
+    //if (bottomNavMyClass) {
+      //  bottomNavMyClass.addEventListener('click', (e) => {
+        //    e.preventDefault();
+          //  const subject = prompt("Enter your subject (e.g., Singing, Piano, Tabla):");
+            //if (subject) {
+              //  const examNo = prompt("Enter your Exam No. (e.g., 1, 2, 3):");
+                //if (examNo) {
+                  //  const key = `${subject.trim()}-${examNo.trim()}`;
+                    //const courseUrl = courseMap[key];
 
-                    if (courseUrl) {
-                        window.location.href = courseUrl;
-                    } else {
-                        showNotification("No specific course found for your selection. Redirecting to courses page.");
-                        setTimeout(() => {
-                            window.location.href = 'courses.html';
-                        }, 2000);
-                    }
-                } else {
-                    showNotification("Exam No. cannot be empty.");
-                }
-            } else {
-                showNotification("Subject cannot be empty.");
-            }
-        });
-    }
+                    //if (courseUrl) {
+                      //  window.location.href = courseUrl;
+                    //} else {
+                      //  showNotification("No specific course found for your selection. Redirecting to courses page.");
+                        //setTimeout(() => {
+                          //  window.location.href = 'courses.html';
+                       // }, 2000);
+                   // }
+               // } else {
+                  //  showNotification("Exam No. cannot be empty.");
+                //}
+            //} else {
+              //  showNotification("Subject cannot be empty.");
+            //}
+        //});
+    //}
 
     // FAQ Accordion Functionality (remains the same - assuming this section exists elsewhere)
     const faqItems = document.querySelectorAll('.faq-item');
