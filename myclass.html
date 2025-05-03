@@ -9,21 +9,23 @@
     <style>
         body {
             font-family: 'Raleway', sans-serif;
-            /* Updated background with radial gradient */
-            background: radial-gradient(circle at center, #0c1a30, #080f1a, #030712);
+            /* Animated gradient background */
+            background-image: linear-gradient(to bottom, #000000, #b22222, #0000ff);
             background-size: 200% 200%;
-            animation: animateBackground 20s ease infinite; /* Increased animation speed */
+            animation: animateBackground 5s ease infinite; /* Reduced animation speed for subtler effect */
+            overflow: hidden; /* Prevent scrollbars */
+            margin: 0;
         }
 
         @keyframes animateBackground {
             0% {
-                background-position: 0% 0%;
+                background-position: 0% 50%;
             }
             50% {
-                background-position: 100% 100%;
+                background-position: 100% 50%;
             }
             100% {
-                background-position: 0% 0%;
+                background-position: 0% 50%;
             }
         }
 
@@ -31,54 +33,129 @@
             font-family: 'Playfair Display', serif;
         }
         .inter {
-          font-family: 'Inter', sans-serif;
+            font-family: 'Inter', sans-serif;
         }
 
         .glassmorphism {
-            background: rgba(255, 255, 255, 0.06);
+            /* Darker glassmorphism */
+            background: rgba(255, 255, 255, 0.03);
             border-radius: 16px;
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(12px);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05); /* Add a border */
         }
 
         .custom-select-font {
             font-family: 'Inter', sans-serif;
         }
 
+        .note {
+            position: absolute;
+            font-size: 24px;
+            opacity: 0.7;
+            pointer-events: none;
+            mix-blend-mode: color-dodge;
+            color: #fff;
+            animation: float 8s infinite linear;
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0); }
+        }
+
+
+        /* Style for the dropdowns */
+        .custom-select {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-color: rgba(109, 109, 109, 0.5);
+            border: 2px solid rgba(153, 153, 153, 0.303);
+            border-radius: 8px;
+            padding: 0.75rem 2.5rem 0.75rem 1rem;
+            color: #fff;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+            width: 100%;
+            font-family: 'Inter', sans-serif;
+            position: relative;
+        }
+
+        .custom-select:focus {
+            outline: none;
+            border-color: rgba(255, 255, 255, 0.4);
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.05);
+            background-color: rgba(128, 128, 128, 0.7);
+        }
+
+        /* Style for the dropdown options */
+        .custom-select option {
+            background-color: #4a5568;
+            color: #fff;
+        }
+
+        /* Style for the dropdown arrow */
+        .custom-select::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            right: 1rem;
+            transform: translateY(-50%);
+            border-style: solid;
+            border-width: 0.3em 0.3em 0 0;
+            border-color: #fff;
+            padding: 0.25em;
+            transform: rotate(135deg) translateY(-50%);
+            pointer-events: none;
+        }
+
+        .select-wrapper {
+            position: relative;
+            width: 100%;
+        }
+
     </style>
 </head>
 <body class="flex flex-col items-center justify-start min-h-screen py-20">
-    <div class="glassmorphism p-8 w-full max-w-md transition-transform hover:scale-105">
-        <h1 class="playfair text-3xl font-semibold text-yellow-400 mb-6 text-center  pb-2">Select Subject & Level</h1>
+    <div class="glassmorphism p-8 w-full max-w-md transition-transform hover:scale-105 relative z-10">
+        <h1 class="playfair text-3xl font-semibold text-white mb-6 text-center pb-2">Select Subject & Level</h1>
         <form id="subject-level-form" class="space-y-6">
             <div>
-                <label for="subject" class="block inter text-white text-sm font-bold mb-2">Select Subject:</label>
-                <select id="subject" name="subject" class="shadow appearance-none border rounded w-full py-3 px-4 text-white leading-tight focus:outline-none focus:shadow-outline bg-gray-800  inter custom-select-font">
-                    <option value="" disabled selected>Choose Subject</option>
-                    <option value="Singing">Singing</option>
-                    <option value="Tabla">Tabla</option>
-                    <option value="Piano">Piano</option>
-                </select>
+                <label for="subject" class="block inter text-gray-300 text-sm font-bold mb-2">Select Subject:</label>
+                <div class="select-wrapper">
+                    <select id="subject" name="subject" class="custom-select">
+                        <option value="" disabled selected>Choose Subject</option>
+                        <option value="Singing">Singing</option>
+                        <option value="Tabla">Tabla</option>
+                        <option value="Piano">Piano</option>
+                    </select>
+                </div>
             </div>
             <div>
-                <label for="level" class="block inter text-white text-sm font-bold mb-2">Select Level:</label>
-                <select id="level" name="level" class="shadow appearance-none border rounded w-full py-3 px-4 text-white leading-tight focus:outline-none focus:shadow-outline bg-gray-800  inter custom-select-font">
-                    <option value="" disabled selected>Choose Level</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                </select>
+                <label for="level" class="block inter text-gray-300 text-sm font-bold mb-2">Select Level:</label>
+                 <div class="select-wrapper">
+                    <select id="level" name="level" class="custom-select">
+                        <option value="" disabled selected>Choose Level</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                    </select>
+                </div>
             </div>
-            <button type="submit" class="bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 text-black font-bold py-3 px-6 rounded-full shadow-md focus:outline-none focus:shadow-outline transition duration-300 ease-in-out w-full inter">
+            <button type="submit" class="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-bold py-3 px-6 rounded-full shadow-md focus:outline-none focus:shadow-outline transition duration-300 ease-in-out w-full inter">
                 Enter Class
             </button>
         </form>
-        <div class="mt-8 text-center  pt-4">
-            <a href="index.html" class="text-gray-300 hover:text-yellow-300 transition duration-300 ease-in-out p-2 rounded-md hover:bg-gray-800 inline-flex items-center inter">
+        <div class="mt-8 text-center pt-4">
+            <a href="index.html" class="text-gray-300 hover:text-red-300 transition duration-300 ease-in-out p-2 rounded-md hover:bg-gray-800 inline-flex items-center inter">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l-4-4m0 0l4-4m-4 4h18" />
                 </svg>
@@ -86,37 +163,95 @@
             </a>
         </div>
     </div>
+<script>
+const subjectLevelForm = document.getElementById('subject-level-form');
 
-    <script>
-        const subjectLevelForm = document.getElementById('subject-level-form');
+subjectLevelForm.addEventListener('submit', (event) => {
+    event.preventDefault();
 
-        subjectLevelForm.addEventListener('submit', (event) => {
-            event.preventDefault();
+    const subject = document.getElementById('subject').value;
+    const level = document.getElementById('level').value;
 
-            const subject = document.getElementById('subject').value;
-            const level = document.getElementById('level').value;
+    if (!subject || !level) {
+        alert('Please select both Subject and Level.');
+        return;
+    }
 
-            if (!subject || !level) {
-                alert('Please select both Subject and Level.');
-                return;
-            }
+    let redirectURL = '';
+    if (subject === 'Singing' && level === '1') {
+        redirectURL = 'prarambhik.html';
+    } else if (subject === 'Singing' && level === '4') {
+        redirectURL = 'madhyama-pratham.html';
+    } else if (subject === 'Singing' && level === '6') {
+        redirectURL = 'visharad-pratham.html';
+    } else if (subject === 'Piano' && level === '1') {
+        redirectURL = 'piano-prarambhik.html';
+    } else {
+        alert('No matching page found. Please select a valid Subject and Level combination.');
+        return;
+    }
 
-            let redirectURL = '';
-            if (subject === 'Singing' && level === '1') {
-                redirectURL = 'prarambhik.html';
-            } else if (subject === 'Singing' && level === '4') {
-                redirectURL = 'madhyama-pratham.html';
-            } else if (subject === 'Singing' && level === '6') {
-                redirectURL = 'visharad-pratham.html';
-            } else if (subject === 'Piano' && level === '1') {
-                redirectURL = 'piano-prarambhik.html';
-            } else {
-                alert('No matching page found. Please select a valid Subject and Level combination.');
-                return;
-            }
+    window.location.href = redirectURL;
+});
 
-            window.location.href = redirectURL;
-        });
-    </script>
+// --- Particle Animation ---
+const numNotes = 15;
+const notes = [];
+const musicalNotes = ['♪', '♫', '♩', '♬', '♭', '♯'];
+
+function createNote() {
+    const note = document.createElement('div');
+    note.className = 'note';
+    note.textContent = musicalNotes[Math.floor(Math.random() * musicalNotes.length)];
+    note.style.left = `${Math.random() * window.innerWidth}px`;
+    note.style.top = `${Math.random() * window.innerHeight}px`;
+    const size = Math.random() * 30 + 20;
+    note.style.fontSize = `${size}px`;
+    note.style.animationDuration = `${Math.random() * 6 + 8}s`;
+    notes.push(note);
+    document.body.appendChild(note);
+
+    return {
+        element: note,
+        x: parseFloat(note.style.left),
+        y: parseFloat(note.style.top),
+        vx: (Math.random() - 0.5) * 5,
+        vy: (Math.random() - 0.5) * 5,
+        size: size,
+    };
+}
+
+
+
+function animateNotes() {
+    for (let i = 0; i < numNotes; i++) {
+        const note = notes[i];
+        note.x += note.vx;
+        note.y += note.vy;
+
+        // Wall collision detection and response
+        if (note.x + note.size / 2 > window.innerWidth || note.x - note.size / 2 < 0) {
+            note.vx = -note.vx;
+        }
+        if (note.y + note.size / 2 > window.innerHeight || note.y - note.size / 2 < 0) {
+            note.vy = -note.vy;
+        }
+
+
+
+        note.element.style.left = `${note.x}px`;
+        note.element.style.top = `${note.y}px`;
+    }
+
+    requestAnimationFrame(animateNotes);
+}
+
+// Create notes
+for (let i = 0; i < numNotes; i++) {
+    notes.push(createNote());
+}
+
+animateNotes();
+</script>
 </body>
 </html>
