@@ -1,0 +1,20 @@
+        <a href="#" id="bottom-nav-my-class"><i class="fas fa-graduation-cap"></i> My Class</a>
+
+
+<script>
+        // Re-add the event listener for the bottom nav "My Class" button
+        document.addEventListener('DOMContentLoaded', function() {
+            const bottomNavMyClassButton = document.getElementById('bottom-nav-my-class');
+            if (bottomNavMyClassButton) {
+                bottomNavMyClassButton.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const myClassPopup = document.querySelector('.my-class-popup');
+                    const overlay = document.querySelector('.overlay');
+                    if (myClassPopup && overlay) {
+                        myClassPopup.classList.add('active');
+                        overlay.classList.add('active');
+                    }
+                });
+            }
+        });
+    </script>

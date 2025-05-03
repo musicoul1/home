@@ -1,4 +1,116 @@
 document.addEventListener('DOMContentLoaded', function() {
+    const myClassButton = document.getElementById('my-class-button');
+    const body = document.body;
+    const courseMap = {
+        'Singing-1': 'prarambhik.html',
+        'Singing-4': 'madhyama-pratham.html',
+        'Singing-6': 'visharad-pratham.html',
+        'Piano-1': 'piano-prarambhik.html',
+        // Add more mappings as needed
+    };
+
+    // Function to show notification
+    function showNotification(message) {
+        const notificationDiv = document.createElement('div');
+        notificationDiv.classList.add('notification');
+        notificationDiv.textContent = message;
+        document.body.appendChild(notificationDiv);
+        setTimeout(() => {
+            notificationDiv.remove();
+        }, 3000);
+    }
+
+    // Function to open the "My Class" pop-up
+    function openMyClassPopup() {
+        const overlay = document.createElement('div');
+        overlay.classList.add('overlay');
+        const myClassPopup = document.createElement('div');
+        myClassPopup.classList.add('my-class-popup');
+
+        const popupContent = `
+            <div class="my-class-container">
+                <span class="close-my-class-popup">&times;</span>
+                <h2>Enter Your Class Details</h2>
+                <form id="my-class-form">
+                    <div class="input-group">
+                        <label for="myClassSubject">Subject:</label>
+                        <input type="text" id="myClassSubject" placeholder="e.g., Singing, Piano">
+                    </div>
+                    <div class="input-group" id="input-group-2">
+                        <label for="myClassExamNo">Exam No.:</label>
+                        <input type="number" id="myClassExamNo" placeholder="e.g., 1, 4, 6">
+                    </div>
+                    <button type="submit" class="action-button">Go to Class</button>
+                </form>
+            </div>
+        `;
+        myClassPopup.innerHTML = popupContent;
+
+        // Add event listeners to the dynamically created elements
+        const closeButton = myClassPopup.querySelector('.close-my-class-popup');
+        const myClassFormElement = myClassPopup.querySelector('#my-class-form');
+
+        closeButton.addEventListener('click', closeMyClassPopup);
+        myClassFormElement.addEventListener('submit', handleMyClassSubmit);
+
+        body.appendChild(overlay);
+        body.appendChild(myClassPopup);
+        setTimeout(() => {
+            myClassPopup.classList.add('active');
+            overlay.classList.add('active');
+        }, 10); // slight delay for transition
+    }
+
+    // Function to close the "My Class" pop-up
+    function closeMyClassPopup() {
+        const activePopup = document.querySelector('.my-class-popup.active');
+        const activeOverlay = document.querySelector('.overlay.active');
+
+        if (activePopup) {
+            activePopup.classList.remove('active');
+        }
+        if (activeOverlay) {
+            activeOverlay.classList.remove('active');
+        }
+
+        setTimeout(() => {
+            if (activePopup && activePopup.parentNode) {
+                body.removeChild(activePopup);
+            }
+            if (activeOverlay && activeOverlay.parentNode) {
+                body.removeChild(activeOverlay);
+            }
+        }, 300); // duration of the fade-out
+    }
+
+    // Function to handle the "My Class" form submission
+    function handleMyClassSubmit(event) {
+        event.preventDefault();
+        const subjectInput = document.getElementById('myClassSubject');
+        const examNoInput = document.getElementById('myClassExamNo');
+        const subject = subjectInput.value.trim();
+        const examNo = examNoInput.value.trim();
+        const key = `${subject}-${examNo}`;
+        const courseUrl = courseMap[key];
+
+        if (courseUrl) {
+            window.location.href = courseUrl;
+        } else {
+            showNotification("No specific course found for your selection.");
+        }
+        closeMyClassPopup();
+    }
+
+    // Event listener for the "My Class" button click
+    if (myClassButton) {
+        myClassButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            openMyClassPopup();
+        });
+    }
+});
+
+document.addEventListener('DOMContentLoaded', function() {
     let lastScrollTop = 0;
     const navbar = document.querySelector('nav');
     const hamburger = document.querySelector('.hamburger');
@@ -214,32 +326,32 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // "My Class" Bottom Navigation Logic (Direct Redirection)
-    //if (bottomNavMyClass) {
-      //  bottomNavMyClass.addEventListener('click', (e) => {
-        //    e.preventDefault();
-          //  const subject = prompt("Enter your subject (e.g., Singing, Piano, Tabla):");
-            //if (subject) {
-              //  const examNo = prompt("Enter your Exam No. (e.g., 1, 2, 3):");
-                //if (examNo) {
-                  //  const key = `${subject.trim()}-${examNo.trim()}`;
-                    //const courseUrl = courseMap[key];
+    // if (bottomNavMyClass) {
+    //     bottomNavMyClass.addEventListener('click', (e) => {
+    //         e.preventDefault();
+    //         const subject = prompt("Enter your subject (e.g., Singing, Piano, Tabla):");
+    //         if (subject) {
+    //             const examNo = prompt("Enter your Exam No. (e.g., 1, 2, 3):");
+    //             if (examNo) {
+    //                 const key = `${subject.trim()}-${examNo.trim()}`;
+    //                 const courseUrl = courseMap[key];
 
-                    //if (courseUrl) {
-                      //  window.location.href = courseUrl;
-                    //} else {
-                      //  showNotification("No specific course found for your selection. Redirecting to courses page.");
-                        //setTimeout(() => {
-                          //  window.location.href = 'courses.html';
-                       // }, 2000);
-                   // }
-               // } else {
-                  //  showNotification("Exam No. cannot be empty.");
-                //}
-            //} else {
-              //  showNotification("Subject cannot be empty.");
-            //}
-        //});
-    //}
+    //                 if (courseUrl) {
+    //                     window.location.href = courseUrl;
+    //                 } else {
+    //                     showNotification("No specific course found for your selection. Redirecting to courses page.");
+    //                     setTimeout(() => {
+    //                         window.location.href = 'courses.html';
+    //                     }, 2000);
+    //                 }
+    //             } else {
+    //                 showNotification("Exam No. cannot be empty.");
+    //             }
+    //         } else {
+    //             showNotification("Subject cannot be empty.");
+    //         }
+    //     });
+    // }
 
     // FAQ Accordion Functionality (remains the same - assuming this section exists elsewhere)
     const faqItems = document.querySelectorAll('.faq-item');
