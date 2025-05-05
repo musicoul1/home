@@ -1,9 +1,7 @@
-/* style.css (Complete - Enhanced Explore Courses Section + Bottom Nav) */
+/* style.css (Modified - Includes styling for the "What's New" badge and hero button fix for small mobiles) */
 
 /* Base Styles */
 body {
-    background: url('Resources/Homepage/music-background.jpg') no-repeat center center fixed;
-    background-size: cover;
     color: white;
     font-family: 'Raleway', sans-serif;
     margin: 0;
@@ -12,9 +10,70 @@ body {
     flex-direction: column;
     min-height: 100vh;
     overflow-x: hidden;
-    transition: background-image 0.5s ease-in-out;
-    padding-bottom: 60px; /* Add padding at the bottom for the fixed bottom nav */
+    transition: background 0.5s ease-in-out;
+    padding-bottom: 60px;
     box-sizing: border-box;
+    position: relative;
+}
+
+/* Animated Gradient Background (Slower, Black to Purple Only) */
+body {
+    background: linear-gradient(to bottom, #000000 0%, #1a0033 20%, #330066 50%, #4d0080 80%, #660099 100%);
+    background-size: 100% 400%; /* Increased size for animation */
+    animation: verticalGradient 30s ease infinite; /* Even slower animation (30s) */
+}
+
+@keyframes verticalGradient {
+    0% { background-position: 0% 0%; }
+    50% { background-position: 0% 100%; }
+    100% { background-position: 0% 0%; }
+}
+
+/* "Smoke" or Wave-like effect */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('Resources/Homepage/smoke_pattern.png'); /* Replace with your smoke/wave pattern image */
+    background-repeat: repeat;
+    opacity: 0.08; /* Slightly more subtle */
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* Musical Notes with Glow */
+.musical-note {
+    color: #ffffff;
+    font-size: 16px; /* Base size */
+    text-shadow: 0 0 15px rgba(173, 216, 230, 0.8); /* Added glow */
+    position: absolute;
+    pointer-events: none;
+    opacity: 0.7; /* Slightly more visible */
+    transition: transform 2s ease-in-out, opacity 2s ease-in-out, text-shadow 0.5s ease-in-out; /* Smooth transition for all */
+}
+
+.musical-note:hover {
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.9); /* Stronger glow on hover (optional) */
+}
+
+/* Keyframes for note movement (Smoother, more random) */
+@keyframes floatNoteSmoothRandom1 {
+    0% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 0.7; }
+    25% { transform: translate(15px, -10px) rotate(10deg) scale(1.05); opacity: 0.85; }
+    50% { transform: translate(-5px, -20px) rotate(-5deg) scale(0.98); opacity: 0.8; }
+    75% { transform: translate(-12px, 5px) rotate(3deg) scale(1.02); opacity: 0.9; }
+    100% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 0.7; }
+}
+
+@keyframes floatNoteSmoothRandom2 {
+    0% { transform: translate(0, 0) rotate(0deg) scale(1.02); opacity: 0.85; }
+    25% { transform: translate(-10px, 8px) rotate(-8deg) scale(0.99); opacity: 0.8; }
+    50% { transform: translate(8px, -15px) rotate(5deg) scale(1.03); opacity: 0.9; }
+    75% { transform: translate(3px, 12px) rotate(-2deg) scale(1); opacity: 0.8; }
+    100% { transform: translate(0, 0) rotate(0deg) scale(1.02); opacity: 0.85; }
 }
 
 /* Navigation Bar */
@@ -25,7 +84,7 @@ nav {
     padding: 20px;
     height: 72px;
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: rgba(0, 0, 0, 0.7); /* Slightly more opaque nav */
     backdrop-filter: blur(10px);
     position: fixed;
     top: 0;
@@ -73,6 +132,12 @@ nav .nav-links a {
 
 nav .nav-links a:hover {
     color: red;
+}
+
+@media (max-width: 1024px) {
+    nav .nav-links .nav-button {
+        display: none;
+    }
 }
 
 .hamburger {
@@ -139,18 +204,17 @@ main {
     box-sizing: border-box;
 }
 
-/* Hero Section */
+/* Hero Section (Adjusted Desktop View) */
 .hero {
     text-align: center;
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 80vh;
-    transform: translateZ(-1px) scale(2);
+    min-height: 60vh; /* Adjusted height */
     position: relative;
     z-index: 1;
-    margin-top: -50vh;
-    padding: 10px;
+    margin-top: 0; /* Reset the negative margin */
+    padding: 80px 20px; /* Increased top/bottom padding for better spacing */
     box-sizing: border-box;
 }
 
@@ -166,59 +230,62 @@ main {
 }
 
 .hero-content {
-    max-width: 90%;
+    max-width: 80%; /* Slightly narrower on desktop */
     background-color: rgba(0, 0, 0, 0.6);
     backdrop-filter: blur(10px);
-    padding: 40px;
+    padding: 50px; /* More padding on desktop */
     border-radius: 10px;
     box-sizing: border-box;
 }
 
 .hero h1 {
-    font-size: 3.2em;
+    font-size: 3.6em; /* Larger text on desktop */
     margin-bottom: 24px;
-    font-family: 'Playayfair Display', serif;
+    font-family: 'Playfair Display', serif;
     line-height: 1.2;
     font-weight: 700;
-    padding: 0px 50px 0px 50px;
+    padding: 0px 80px 0px 80px; /* More horizontal padding */
 }
 
 .hero p {
-    font-size: 1.2em;
+    font-size: 1.3em; /* Larger paragraph text */
     margin-bottom: 32px;
     line-height: 1.6;
     font-weight: 400;
 }
 
+.button_container {
+    display: flex;
+    justify-content: center; /* Center the buttons */
+    gap: 15px; /* Space between buttons */
+    margin-bottom: 48px;
+}
+
 .cta-button1 {
-    background-color: red;
-    box-shadow: 0 0 14px red;
+    background-color: black;
+    box-shadow: 0 0 14px rgb(194, 0, 194);
     color: white;
-    padding: 14px 30px;
-    border: 2px solid red;
+    padding: 16px 35px; /* Larger buttons */
+    border: 2px solid rgb(194, 0, 194);
     border-radius: 6px;
-    font-size: 1.1em;
+    font-size: 1.2em; /* Larger font */
     text-decoration: none;
     transition: box-shadow 0.3s ease, color 0.3s ease, border 0.3s ease, background-color 0.3s ease;
     font-weight: 600;
-    margin-bottom: 48px;
-    margin-right: 10px;
     display: inline-block;
 }
 
 .cta-button2 {
     background-color: black;
-    box-shadow: 0 0 10px white;
+    box-shadow: 0 0 14px red;
     color: white;
-    padding: 14px 30px;
-    border: 2px solid white;
+    padding: 16px 35px; /* Larger buttons */
+    border: 2px solid red;
     border-radius: 6px;
-    font-size: 1.1em;
+    font-size: 1.2em; /* Larger font */
     text-decoration: none;
     transition: box-shadow 0.3s ease, color 0.3s ease, border 0.3s ease, background-color 0.3s ease;
     font-weight: 600;
-    margin-bottom: 48px;
-    margin-left: 10px;
     display: inline-block;
 }
 
@@ -232,7 +299,8 @@ main {
 .cta-button2:hover{
     background-color: white;
     color: black;
-
+    border: 2px solid white;
+    box-shadow: 0 0 14px white;
 }
 
 /* Divider */
@@ -241,126 +309,6 @@ main {
     height: 1px;
     background-color: rgba(255, 255, 255, 0.2);
     margin: 60px auto;
-}
-
-/* Explore Courses Section */
-.explore-courses {
-    text-align: center;
-    margin-top: 60vh; /* Increased margin to prevent overlap */
-    margin-bottom: 80px;
-    position: relative;
-    z-index: 2;
-    padding: 60px 20px;
-    background-color: rgba(0, 0, 0, 0.3);
-    backdrop-filter: blur(10px);
-    border-radius: 12px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-    box-sizing: border-box;
-}
-
-.explore-courses h2 {
-    font-size: 2.8em;
-    margin-bottom: 30px;
-    font-family: 'Playfair Display', serif;
-    font-weight: 700;
-    color: gold;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-}
-
-.course-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
-    padding: 30px;
-}
-
-.course-item {
-    background-color: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(10px);
-    border-radius: 10px;
-    text-align: left;
-    padding: 25px;
-    box-sizing: border-box;
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-}
-
-.course-item:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
-}
-
-.course-image-wrapper {
-    position: relative;
-    overflow: hidden;
-    border-radius: 8px;
-    margin-bottom: 15px;
-}
-
-.course-image {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    transition: transform 0.4s ease-in-out;
-}
-
-.course-item:hover .course-image {
-    transform: scale(1.05);
-}
-
-.course-item h3 {
-    font-size: 1.8em;
-    margin-bottom: 12px;
-    font-family: 'Playfair Display', serif;
-    font-weight: 600;
-    color: #eee;
-}
-
-.course-item p {
-    font-size: 1.1em;
-    margin-bottom: 20px;
-    line-height: 1.6;
-    color: #ccc;
-}
-
-.course-link {
-    color: gold;
-    text-decoration: none;
-    font-weight: 600;
-    transition: color 0.3s ease;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.course-link:hover {
-    color: red;
-}
-
-.course-link i {
-    font-size: 1em;
-}
-
-.view-more-button {
-    background-color: gold;
-    color: #222;
-    padding: 16px 32px;
-    border: 2px solid gold;
-    border-radius: 8px;
-    font-size: 1.1em;
-    text-decoration: none;
-    transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease, box-shadow 0.3s ease;
-    font-weight: 600;
-    margin-top: 40px;
-    display: inline-block;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-}
-
-.view-more-button:hover {
-    background-color: black;
-    color: white;
-    box-shadow: 0 0 14px white;
-    border: 2px solid white;
 }
 
 /* Footer */
@@ -499,7 +447,7 @@ footer {
 
 .auth-forms h2 {
     text-align: left;
-    margin-bottom: 20px; /* Adjusted margin */
+    margin-bottom: 20px; /* Adjustedstyle.css (Continued) */
     font-family: 'Playfair Display', serif;
     font-size: 2em; /* Adjusted font size */
     color: gold;
@@ -509,7 +457,7 @@ footer {
 
 .input-group {
     display: flex;
-    flex-direction: column;
+    flex-direction: column;/* style.css (Continued) */
     width: 100%;
     box-sizing: border-box;
 }
@@ -674,6 +622,7 @@ footer {
     gap: 5px;
     font-size: 0.9em;
     transition: color 0.3s ease;
+    position: relative; /* For badge positioning */
 }
 
 .bottom-nav a:hover {
@@ -682,6 +631,23 @@ footer {
 
 .bottom-nav a i {
     font-size: 1.3em;
+}
+
+.bottom-nav a span {
+    display: block;
+}
+
+/* Notification badge for "What's New" */
+.notification-badge {
+    position: absolute;
+    top: -8px;
+    right: -10px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 5px 8px;
+    font-size: 0.7em;
+    font-weight: bold;
 }
 
 /* My Class Pop-up Styles */
@@ -744,7 +710,6 @@ footer {
 
 /* Hide bottom nav on larger screens */
 @media (min-width: 769px) {
-
     .my-class-popup {
         width: 95%;
         max-width: 350px;
@@ -814,57 +779,26 @@ footer {
         margin-bottom: 20px;
     }
 
+    .button_container {
+        margin-bottom: 30px; /* Adjust spacing for tablet */
+    }
+
     .cta-button1 {
         padding: 12px 25px;
         font-size: 1em;
+        margin-right: 10px;
+        margin-bottom: 10px; /* Add some bottom margin for better spacing on smaller tablets */
     }
 
     .cta-button2 {
         padding: 12px 25px;
         font-size: 1em;
+        margin-left: 10px;
+        margin-bottom: 10px; /* Add some bottom margin */
     }
 
     .divider {
         margin: 50px auto;
-    }
-
-    .explore-courses {
-        margin-top: 100px;
-        margin-bottom: 60px;
-        padding: 40px 15px;
-    }
-
-    .explore-courses h2 {
-        font-size: 2.5em;
-        margin-bottom: 20px;
-    }
-
-    .course-grid {
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 20px;
-        padding: 20px;
-    }
-
-    .course-item {
-        padding: 20px;
-    }
-
-    .course-image {
-        height: 160px;
-    }
-
-    .course-item h3 {
-        font-size: 1.6em;
-    }
-
-    .course-item p {
-        font-size: 1em;
-    }
-
-    .view-more-button {
-        margin-top: 30px;
-        padding: 14px 28px;
-        font-size: 1em;
     }
 
     /* Responsive adjustments for auth pop-up on tablet */
@@ -905,6 +839,14 @@ footer {
     /* Show bottom nav on tablet */
     .bottom-nav {
         display: flex;
+    }
+
+    /* Adjust badge position for tablet */
+    .bottom-nav a .notification-badge {
+        top: -6px;
+        right: -7px;
+        padding: 4px 7px;
+        font-size: 0.65em;
     }
 }
 
@@ -949,52 +891,33 @@ footer {
         margin-bottom: 18px;
     }
 
-    .cta-button {
+    .button_container {
+        flex-direction: column; /* Stack buttons on smaller mobiles */
+        align-items: center; /* Center them */
+        margin-bottom: 30px;
+        gap: 10px; /* Reduced gap */
+    }
+
+    .cta-button1 {
         padding: 10px 20px;
         font-size: 0.9em;
+        margin-right: 0;
+        margin-left: 0;
+        width: 80%; /* Make buttons wider on mobile */
+        box-sizing: border-box;
+    }
+
+    .cta-button2 {
+        padding: 10px 20px;
+        font-size: 0.9em;
+        margin-left: 0;
+        margin-right: 0;
+        width: 80%; /* Make buttons wider on mobile */
+        box-sizing: border-box;
     }
 
     .divider {
         margin: 40px auto;
-    }
-
-    .explore-courses {
-        margin-top: 120px;
-        margin-bottom: 50px;
-        padding: 30px 10px;
-    }
-
-    .explore-courses h2 {
-        font-size: 2.2em;
-        margin-bottom: 15px;
-    }
-
-    .course-grid {
-        grid-template-columns: 1fr;
-        gap: 25px;
-        padding: 15px;
-    }
-
-    .course-item {
-        padding: 20px;
-    }
-
-    .course-image {
-        height: 180px;
-    }
-
-    .course-item h3 {
-        font-size: 1.5em;
-    }
-
-    .course-item p {
-        font-size: 0.95em;
-    }
-
-    .view-more-button {
-        margin-top: 30px;
-        padding: 12px 24px;
-        font-size: 0.95em;
     }
 
     /* Responsive adjustments for auth pop-up on mobile */
@@ -1037,78 +960,215 @@ footer {
     .bottom-nav {
         display: flex;
     }
+
+    /* Adjust badge position for mobile */
+    .bottom-nav a .notification-badge {
+        top: -5px;
+        right: -5px;
+        padding: 3px 6px;
+        font-size: 0.6em;
+    }
 }
 
-/* Smaller Mobile Screens */
-@media (max-width: 400px) {
+/* Smaller Mobile Screens (e.g., Redmi 8A) */
+@media (max-width: 380px) {
     .hero h1 {
         font-size: 2em;
     }
 
     .hero p {
         font-size: 0.85em;
+    }/* style.css (Continued - Hero button fix for small mobiles) */
+    .button_container {
+        flex-direction: column;
+        align-items: stretch; /* Make buttons take full width */
+        gap: 10px;
+        margin-bottom: 25px;
     }
 
-    .cta-button {
-        padding: 8px 16px;
-        font-size: 0.8em;
-    }
-
-    .explore-courses h2 {
-        font-size: 2em;
-    }
-
-    .course-item h3 {
-        font-size: 1.3em;
-    }
-
-    .course-item p {
+    .cta-button1,
+    .cta-button2 {
+        width: 100%; /* Full width for very small screens */
+        padding: 10px 15px;
         font-size: 0.9em;
     }
+}
 
-    .view-more-button {
-        font-size: 0.85em;
-        padding: 10px 20px;
-    }
+/* "What's New" Badge Styles */
+.whats-new-badge {
+    position: absolute;
+    top: 10px;
+    right: -10px;
+    background-color: #ff6f61; /* A vibrant color */
+    color: white;
+    border-radius: 8px;
+    padding: 5px 8px;
+    font-size: 0.7em;
+    font-weight: bold;
+    z-index: 1;
+}
 
-    .auth-tabs button {
-        font-size: 0.75em;
-        padding: 6px 10px;
-    }
+/* Apply to the specific "What's New" link */
+nav .nav-links a[href="#whats-new"] {
+    position: relative; /* To position the badge */
+}
 
-    .auth-forms h2 {
-        font-size: 1.6em;
-    }
+.side-nav a[href="#whats-new"] {
+    position: relative;
+}
 
-    .input-group label {
-        font-size: 0.7em;
-    }
+.bottom-nav a[href="#whats-new"] {
+    position: relative;
+}
 
-    .input-group input[type="email"],
-    .input-group input[type="password"],
-    .input-group input[type="text"],
-    .input-group select {
-        font-size: 0.75em;
-        padding: 6px;
-    }
+/* Overlay for pop-ups */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    display: none; /* Hidden by default */
+}
 
-    .auth-button,
-    .google-auth-button {
-        font-size: 0.8em;
-        padding: 8px 12px;
-    }
+.overlay.active {
+    display: block;
+}
 
-    /* Show bottom nav on smaller mobile */
-    .bottom-nav a {
-        font-size: 0.8em;
-    }
+/* Styles for FAQ section */
+.faq-section {
+    padding: 40px 20px;
+    max-width: 960px;
+    margin: 40px auto;
+}
 
-    .bottom-nav a i {
-        font-size: 1.2em;
-    }
+.faq-section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5em;
+    color: gold;
+    text-align: center;
+    margin-bottom: 30px;
+}
 
-    .my-class-popup h2 {
-        font-size: 1.6em;
-    }
+.faq-item {
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(10px);
+    border-radius: 8px;
+    margin-bottom: 15px;
+    padding: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
 
+.faq-item h3 {
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0;
+    margin-bottom: 10px;
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: 600;
+}
+
+.faq-item h3 i {
+    font-size: 1.2em;
+    transition: transform 0.3s ease-in-out;
+}
+
+.faq-item.active h3 i {
+    transform: rotate(180deg);
+}
+
+.faq-item p {
+    color: #ccc;
+    line-height: 1.6;
+    margin: 0;
+    display: none; /* Initially hidden */
+}
+
+.faq-item.active p {
+    display: block !important; /* Override inline style set by velocity.js */
+}
+
+/* Styles for Resource Folder section */
+.resource-section {
+    padding: 40px 20px;
+    max-width: 960px;
+    margin: 40px auto;
+}
+
+.resource-section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5em;
+    color: gold;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.resource-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 20px;
+}
+
+.resource-folder {
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(10px);
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+.resource-folder:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.resource-folder i {
+    font-size: 2em;
+    color: gold;
+    margin-bottom: 10px;
+}
+
+.resource-folder h4 {
+    color: white;
+    margin-top: 0;
+    font-size: 1em;
+    font-weight: 600;
+}
+
+/* Interactive folder style */
+.resource-folder.interactive:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* Styles for "My Class" pop-up */
+.my-class-popup.active {
+    display: flex;
+    opacity: 1;
+}
+
+.overlay.active {
+    opacity: 1;
+}
+
+.my-class-popup {
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+    transform: translate(-50%, -50%) scale(0.9);
+}
+
+.my-class-popup.active {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+/* Ensure Velocity.js doesn't interfere with display:none initially */
+.faq-item p {
+    display: none;
 }

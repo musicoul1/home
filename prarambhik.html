@@ -1,332 +1,372 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Musicoul - Prarambhik [Exam-1]</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="course-details.css">
-    <link rel="shortcut icon" href="Resources/Favicon/1.png" type="image/x-icon">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Raleway:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
+    <title>Course Page</title>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* password-styles.css - Embedded for simplicity */
-        #password-popup-overlay {
+        body {
+            font-family: 'Raleway', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #000000 0%, #0a0014 10%, #140029 20%, #1e003d 30%, #280052 40%,  #330066 50%, #280052 60%, #1e003d 70%, #140029 80%, #0a0014 90%, #000000 100%);
+            background-size: 100% 400%;
+            animation: verticalGradient 30s ease infinite;
+            position: relative;
+            color: #fff; /* Default text color */
+        }
+        @keyframes verticalGradient {
+            0% { background-position: 0% 0%; }
+            50% { background-position: 0% 100%; }
+            100% { background-position: 0% 0%; }
+        }
+        body::before {
+            content: '';
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
+            background-image: url('Resources/Homepage/smoke_pattern.png');
+            background-repeat: repeat;
+            opacity: 0.08;
+            pointer-events: none;
+            z-index: -1;
         }
-
-        #password-popup {
-            background-color: #2b2b2b;
-            color: #eee;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        .container {
+            max-width: 960px; /* Adjusted max width */
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+        .section-container {
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 0.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(0, 0, 0, 0.3);
+            padding: 2rem;
+            margin-bottom: 2rem; /* Added margin between sections */
+        }
+        .course-info h2{
+            color: gold;
             text-align: center;
-            width: 80%;
-            max-width: 400px;
+            margin-bottom: 1rem;
+        }
+        .course-info p{
+            color: #d1d5db;
+            line-height: 1.6;
+        }
+        .section-heading {
+            color: gold;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 0.75rem;
+        }
+        .course-schedule h3{
+            color: #ffffff;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 1rem;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        .course-schedule ul li{
+            color: #e5e7eb;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+        .course-schedule ul li:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+            margin-bottom: 0;
         }
 
-        #password-popup h2 {
-            font-size: 2em;
-            margin-bottom: 20px;
-            color: #ffc107;
-            font-family: 'Playfair Display', serif;
+        .fixed-bottom-button {
+            position: fixed;
+            bottom: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            width: 95%; /* Adjusted width */
+            max-width: 450px; /* Slightly larger max width */
+            border-radius: 0.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.3); /* Subtle top shadow */
         }
-
-        #password-popup label {
+        @media (max-width: 768px){
+            .fixed-bottom-button{
+                width: auto; /* Fit content on mobile/tablet */
+                max-width: 90%; /* Ensure it doesn't go full width on wider mobiles/tablets */
+                left: 50%;
+                transform: translateX(-50%);
+                bottom: 1.5rem; /* Added bottom margin */
+                border-radius: 0.5rem; /* Keep border-radius */
+                border: 1px solid rgba(255, 255, 255, 0.1); /* Keep border */
+                box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.3);
+            }
+        }
+        .back-button {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            z-index: 20;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.375rem;
+            padding: 0.5rem 1rem;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+        .back-button:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        #course-name-heading {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: gold;
+            font-size: 2.5rem;
+            font-weight: bold;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 1rem;
+        }
+        .section-heading {
+            color: gold;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 0.75rem;
+        }
+        .file-link {
+            color: #93c5fd;
+            text-decoration: underline;
+            margin-top: 0.5rem;
             display: block;
-            margin-bottom: 10px;
-            font-size: 1.1em;
-            color: #ccc;
-            text-align: left;
+            padding-left: 1.5rem; /* Adjusted indentation */
+        }
+        .file-link:hover {
+            color: #bae6fd;
+        }
+        #files-section .file-list-container { /* New container for files */
+            padding: 1.5rem;
+        }
+        #files-section ul li{
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 1rem;
+            margin-bottom: 1rem;
+        }
+        #files-section ul li:last-child{
+            border-bottom: none;
+            padding-bottom: 0;
+            margin-bottom: 0;
         }
 
-        #password-popup input[type="password"] {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 20px;
-            border: 1px solid #555;
-            border-radius: 5px;
-            background-color: #444;
-            color: #eee;
-            font-size: 1em;
-            box-sizing: border-box;
+        /* Musical Note Styles */
+        .musical-note {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 2rem; /* Slightly smaller on smaller screens */
+            animation: float 3s infinite, pulse 2s infinite;
+            opacity: 0;
+            pointer-events: none;
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+        }
+        @keyframes float {
+            0% { transform: translateY(0) translateX(0); opacity: 0; }
+            25% { transform: translateY(-10px) translateX(5px); opacity: 0.5; }
+            50% { transform: translateY(0px) translateX(10px); opacity: 0.8; }
+            75% { transform: translateY(10px) translateX(5px); opacity: 0.5; }
+            100% { transform: translateY(0px) translateX(0); opacity: 0; }
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        .note1 {
+            top: 10%;
+            left: 10%;
+            animation-delay: 0.2s;
+        }
+        .note2 {
+            top: 30%;
+            left: 40%;
+            animation-delay: 0.5s;
+        }
+        .note3 {
+            top: 60%;
+            left: 20%;
+            animation-delay: 0s;
+        }
+        .note4 {
+            top: 80%;
+            left: 70%;
+            animation-delay: 1s;
+        }
+        @media (min-width: 768px) {
+            .musical-note {
+                font-size: 3rem;
+            }
+            @keyframes float {
+                0% { transform: translateY(0) translateX(0); opacity: 0; }
+                25% { transform: translateY(-20px) translateX(10px); opacity: 0.5; }
+                50% { transform: translateY(0px) translateX(20px); opacity: 0.8; }
+                75% { transform: translateY(20px) translateX(10px); opacity: 0.5; }
+                100% { transform: translateY(0px) translateX(0); opacity: 0; }
+            }
+
+            /* Desktop specific styles for section width */
+            .section-container {
+                max-width: 50%; /* Adjust as needed (40-50%) */
+                margin-left: auto;
+                margin-right: auto;
+            }
         }
 
-        #password-popup button {
-            background-color: #ffc107;
-            color: #212121;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 8px;
-            font-size: 1.1em;
-            cursor: pointer;
-            transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
+        .join-class-button {
+            background-image: linear-gradient(to right, #6366f1, #d946ef); /* Gradient: Indigo to Violet */
+            animation: animatedGradient 3s ease infinite; /* Subtle gradient animation */
+            background-size: 200% 200%; /* Larger background size for animation */
+            color: white; /* White text for contrast */
+            padding: 1rem 2rem; /* Comfortable padding */
+            border-radius: 0.5rem; /* Rounded corners */
+            font-size: 1.25rem; /* Readable font size */
+            font-weight: 600; /* Semi-bold font */
+            text-decoration: none; /* Removes underline if it's an <a> tag */
+            display: block; /* Allows setting width/height and margin */
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* Smooth transitions */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            margin: 1rem auto; /* Centers the button */
+            width: auto; /* Adjust width to content */
+            max-width: 300px; /* Limit the maximum width */
+            text-align: center; /* Add this to center the text */
+
         }
 
-        #password-popup button:hover {
-            background-color: #ffd54f;
-            transform: translateY(-2px);
-            box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
+        .join-class-button:hover {
+            transform: scale(1.05); /* Slight scale-up on hover */
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2); /* Increased shadow on hover */
         }
 
-        #password-popup p#password-error {
-            color: #f44336;
-            margin-top: 10px;
-            font-size: 1em;
-            display: none; /* Initially hidden */
+        @keyframes animatedGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @media (min-width: 768px) {
+            .join-class-button {
+                font-size: 1.5rem; /* Larger font on desktop */
+                padding: 1.25rem 2.5rem; /* Increased padding on desktop */
+                max-width: 400px; /* Wider button on desktop */
+            }
+        }
+
+        footer {
+            background-color: rgba(0, 0, 0, 0.8); /* Slightly transparent footer */
+            padding-top: 2rem;
+            padding-bottom: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            font-size: 1rem; /* Smaller font size on mobile */
+        }
+        @media (min-width: 768px) {
+            footer {
+                font-size: 1.125rem;
+            }
         }
     </style>
-
 </head>
-<body>
+<body class="bg-gray-900 text-white">
+    <div class="musical-note note1">♪</div>
+    <div class="musical-note note2">♫</div>
+    <div class="musical-note note3">♪</div>
+    <div class="musical-note note4">♫</div>
 
-    <div id="password-popup-overlay">
-        <div id="password-popup">
-            <h2>Course Access</h2>
-            <label for="course-password">Password:</label>
-            <input type="password" id="course-password">
-            <button id="submit-password">Submit</button>
-            <p id="password-error">Incorrect password.</p>
-        </div>
-    </div>
+    <main class="container py-10">
+        <a href="index.html"><button class="back-button bg-gray-700 hover:bg-gray-600 text-white font-bold transition duration-300 ease-in-out">
+            &larr; Back
+        </button></a>
+        <h1 id="course-name-heading" class="text-3xl font-semibold mb-6">Prarambhik</h1>
 
-    <nav class="main-nav">
-        <div class="nav-brand">
-            <img src="Resources/Homepage/Logo.png" class="logo" alt="Musicoul Logo">
-            <span class="musicoul-name">Musicoul</span>
-        </div>
-        <div class="nav-links">
-            <a href="index.html" aria-label="Go to Home page">Home</a>
-            <a href="courses.html" aria-label="View our Courses" class="active">Courses</a>
-            <a href="coming-soon.html" aria-label="See upcoming Events">Events</a>
-            <a href="coming-soon.html" aria-label="Learn more About Us">About Us</a>
-            <a href="coming-soon.html" aria-label="Contact Us">Contact</a>
-            <!-- <a href="coming-soon.html" aria-label="Login to your account">Login</a> -->
-        </div>
-        <button class="hamburger" aria-label="Toggle navigation menu">
-            <i class="fas fa-bars"></i>
-        </button>
-    </nav>
-
-    <div class="side-nav">
-        <button class="close-btn">&times;</button>
-        <a href="index.html" aria-label="Go to Home page">Home</a>
-        <a href="courses.html" aria-label="View our Courses" class="active">Courses</a>
-        <a href="coming-soon.html" aria-label="See upcoming Events">Events</a>
-        <a href="coming-soon.html" aria-label="Learn more About Us">About Us</a>
-        <a href="coming-soon.html" aria-label="Contact Us">Contact</a>
-        <!-- <a href="coming-soon.html" aria-label="Login to your account">Login</a> -->
-    </div>
-
-    <main class="course-details-page">
-        <section id="hero" class="hero-section">
-            <div class="hero-image">
-                <img src="Resources/Courses/e1.jpeg" alt="Prarambhik Course Visual">
-            </div>
-            <div class="hero-content">
-                <h1 class="hero-title">Prarambhik <br>[Exam-1]</h1>
-                <p class="hero-subtitle">Your Foundational Journey into Hindustani Classical Vocal Music</p>
-                <div class="hero-meta">
-                    <span class="tag beginner"><i class="fas fa-level-down-alt"></i> Beginner</span>
-                    <span class="tag vocal"><i class="fas fa-microphone-alt"></i> Vocal</span>
-                    <span class="tag flexible"><i class="fas fa-hourglass-half"></i> Flexible</span>
-                </div>
-                <div class="hero-actions">
-                    <a href="#resources" class="button secondary"><i class="fas fa-folder-open"></i> Resources</a>
-                    <a href="#schedule" class="button outline"><i class="fas fa-calendar-week"></i> Schedule</a>
-                </div>
-            </div>
-        </section>
-
-        <section id="schedule" class="weekly-schedule section-padding">
-            <h2>Weekly Class Schedule</h2>
-            <div class="schedule-card">
-                <div class="schedule-icon"><i class="fas fa-calendar-alt"></i></div>
-                <h3>Live Online Classes</h3>
-                <p>Join our interactive live sessions on the following days and times:</p>
-                <ul class="schedule-list">
-                    <li><i class="far fa-calendar-alt"></i> <strong>Monday:</strong> 7:30 AM - 8:00 AM</li>
-                    <li><i class="far fa-calendar-alt"></i> <strong>Tuesday:</strong> 7:30 AM - 8:00 AM</li>
-                    <li><i class="far fa-calendar-alt"></i> <strong>Wednesday:</strong> 7:30 AM - 8:00 AM</li>
-                    <li><i class="far fa-calendar-alt"></i> <strong>Thursday:</strong> 7:30 AM - 8:00 AM</li>
-                    <li><i class="far fa-calendar-alt"></i> <strong>Friday:</strong> 7:30 AM - 8:00 AM</li>
+        <section id="schedule-section" class="mb-8">
+            <h2 class="section-heading">Class Timing</h2>
+            <div class="section-container course-schedule">
+                <ul class="list-disc list-inside space-y-3" id="schedule-list">
                 </ul>
-                <p class="schedule-note">All timings are in IST (Indian Standard Time).</p>
-                <a href="https://drive.google.com/file/d/1nB8tNpyQ-Yf84TdKaiYGenvUeLPwyY-f/view?usp=sharing" class="button outline schedule-button"><i class="fas fa-eye"></i> View Detailed Schedule</a>
             </div>
         </section>
 
-        <section id="resources" class="course-resources section-padding">
-            <h2>Course Resources</h2>
-            <div class="resource-folders-grid grid-2">
-                <div class="resource-folder">
-                    <div class="folder-icon"><i class="fas fa-book-open"></i></div>
-                    <h3>Alankaar</h3>
-                    <ul class="resource-list">
-                        <li><i class="fas fa-file-pdf"></i> <a href="https://drive.google.com/file/d/1lUeLzTLygGX_V0cnrTq4oN_lm8xpQo5Q/view?usp=sharing">26 Alankaars</a></li>
-                        <!-- <li><i class="fas fa-image"></i> <a href="#">Understanding Swaras</a></li>
-                        <li><i class="fas fa-file-audio"></i> <a href="#">Rhythm and Taal Basics</a></li> -->
-                    </ul>
-                    <div class="folder-overlay"></div>
-                </div>
-                <!-- <div class="resource-folder">
-                    <div class="folder-icon"><i class="fas fa-film"></i></div>
-                    <h3>Vocal Exercises</h3>
-                    <ul class="resource-list">
-                        <li><i class="fas fa-file-video"></i> <a href="#">Sargam Practice</a></li>
-                        <li><i class="fas fa-file-pdf"></i> <a href="#">Alankar Exercises</a></li>
-                        <li><i class="fas fa-file-audio"></i> <a href="#">Voice Modulation</a></li>
-                    </ul>
-                    <div class="folder-overlay"></div>
-                </div>
-                <div class="resource-folder">
-                    <div class="folder-icon"><i class="fas fa-atom"></i></div>
-                    <h3>Raag Theory</h3>
-                    <ul class="resource-list">
-                        <li><i class="fas fa-file-pdf"></i> <a href="#">Introduction to Raagas</a></li>
-                        <li><i class="fas fa-image"></i> <a href="#">Raag Characteristics</a></li>
-                    </ul>
-                    <div class="folder-overlay"></div>
-                </div>-->
-                <div class="resource-folder drive-link">
-                    <div class="folder-icon"><i class="fab fa-google-drive"></i></div>
-                    <h3>Google Drive</h3>
-                    <p><a href="https://drive.google.com/drive/folders/1h72klRCmVVLiy3Zgb9RCt-CMfpS2LTtN?usp=sharing" target="_blank" rel="noopener noreferrer">Access All Files</a></p>
-                    <div class="folder-overlay"></div>
-                </div> 
+        <section id="files-section" class="mb-8">
+            <h2 class="section-heading">Notes</h2>
+            <div class="section-container bg-black">
+                <ul class="space-y-4 file-list-container">
+                    <li>
+                        <h4 class="text-lg font-semibold text-white">Lecture 1: Alankaar</h4>
+                        <a href="https://drive.google.com/file/d/1lUeLzTLygGX_V0cnrTq4oN_lm8xpQo5Q/view?usp=sharing" class="file-link">26 Alankaars</a>
+                        </li>
+                </ul>
             </div>
         </section>
 
-        <section id="features" class="course-features section-padding">
-            <h2>In This Course</h2>
-            <ul class="features-list">
-                <li><i class="fas fa-video"></i> Live Lectures</li>
-                <!-- <li><i class="fas fa-play-circle"></i> Recorded Lectures</li> -->
-                <li><i class="fas fa-file-alt"></i> Notes and Resources</li>
-                <li><i class="fas fa-clipboard-check"></i> Tests</li>
-                <li><i class="fas fa-trophy"></i> Competitions</li>
-                <li><i class="fas fa-sync-alt"></i> Revision Sessions</li>
-                <li><i class="fas fa-question-circle"></i> Live Doubt Solving</li>
-            </ul>
-        </section>
-
-        <section id="instructor" class="instructor-intro section-padding">
-            <h2>Meet Your Instructor</h2>
-            <div class="instructor-card">
-                <img src="Resources/Instructor/1.png" alt="Chandrashekhar Kolhe">
-                <div class="instructor-info">
-                    <h3>Chandrashekhar Kolhe</h3>
-                    <p class="instructor-title">Beginner's Vocal Guide</p>
-                    <p class="instructor-bio">Alankaar in Indian Classical Music <br>4 Years+ Teaching Experience</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- <section id="for-you" class="is-this-for-you section-padding">
-            <h2>Is This Course For You?</h2>
-            <ul>
-                <li><i class="fas fa-check-circle"></i> No prior vocal music experience is necessary.</li>
-                <li><i class="fas fa-check-circle"></i> You want to learn the fundamental building blocks of Hindustani classical music.</li>
-                <li><i class="fas fa-check-circle"></i> You prefer a flexible online learning environment.</li>
-                <li><i class="fas fa-check-circle"></i> You are excited to begin your journey into the world of music!</li>
-            </ul>
-        </section> -->
-
-        <section id="faq" class="faq-section section-padding">
-            <h2>Frequently Asked Questions</h2>
-            <div class="faq-list">
-                <div class="faq-item">
-                    <h3>What equipment do I need? <i class="fas fa-chevron-down"></i></h3>
-                    <p>All you need is a device with internet access and your enthusiasm to learn. A quiet space for practice is recommended.</p>
-                </div>
-                <div class="faq-item">
-                    <h3>How long will I have access to this course? <i class="fas fa-chevron-down"></i></h3>
-                    <p>You will have 1 year access to this Course</p>
-                </div>
-                <div class="faq-item">
-                    <h3>How do I access the course materials? <i class="fas fa-chevron-down"></i></h3>
-                    <p>Course materials, including notes, audio, and video resources, will be available in the "Course Resources" section</p>
-                </div>
-                <div class="faq-item">
-                    <h3>What is the duration of this course? <i class="fas fa-chevron-down"></i></h3>
-                    <p>This course ranges from 6 months to 1 year</p>
-                </div>
-                <div class="faq-item">
-                    <h3>Will I receive a certificate upon completion? <i class="fas fa-chevron-down"></i></h3>
-                    <p>Yes, you will receive a Certificate from Akhil Bhartiya Gandharva Mahavidyala on passing the exam.</p>
-                </div>
-            </div>
-        </section>
+        <div class="fixed-bottom-button">
+            <a href="https://meet.google.com/cej-qdbj-stc" target="_blank" class="join-class-button">
+                Join Class
+            </a>
+        </div>
     </main>
 
-    <a href="https://meet.google.com/cej-qdbj-stc" class="floating-join-button pulse" target="_blank" rel="noopener noreferrer">
-        <i class="fas fa-video"></i> Join Class
-    </a>
+    <footer class="py-8 border-t border-white/10">
+        <div class="container px-4 text-center text-gray-300">
+            &copy; 2025 Course Platform. All rights reserved.
+        </div>
+    </footer>
 
     <script>
-        const passwordPopupOverlay = document.getElementById('password-popup-overlay');
-        const passwordPopup = document.getElementById('password-popup');
-        const passwordInput = document.getElementById('course-password');
-        const submitPasswordButton = document.getElementById('submit-password');
-        const passwordError = document.getElementById('password-error');
-        const courseContent = document.getElementById('course-content');
-        const correctPasswords = ['santosh', 'Santosh', 'Shaurya', 'shaurya', 'chandu', 'Chandu']; // Array of accepted passwords
+        const scheduleList = document.getElementById('schedule-list');
 
-        submitPasswordButton.addEventListener('click', function() {
-            const enteredPassword = passwordInput.value;
-            if (correctPasswords.includes(enteredPassword)) {
-                passwordPopupOverlay.style.display = 'none';
-                courseContent.style.display = 'block';
+        function updateSchedule() {
+            const now = new Date();
+            const dayOfWeek = now.getDay(); // 0 (Sunday) to 6 (Saturday)
+            const hours = now.getHours();
+            const minutes = now.getMinutes();
+
+            let scheduleText = '';
+
+            if (dayOfWeek >= 1 && dayOfWeek <= 5) { // Monday to Friday
+                if (hours === 7 && minutes >= 30 && minutes < 60) {
+                    scheduleText = `Class is currently ongoing (7:30 AM - 8:00 AM)`;
+                } else if (hours === 8 && minutes === 0) {
+                    scheduleText = `Class is currently ongoing (7:30 AM - 8:00 AM)`;
+                } else if (hours < 7 || (hours === 7 && minutes< 30)) {
+                    scheduleText = `Today's class starts at 7:30 AM`;
+                } else {
+                    scheduleText = `Today's class is over.`;
+                }
+            } else if (dayOfWeek === 6 || dayOfWeek === 0) { // Saturday (6) or Sunday (0)
+                scheduleText = `Today is a Holiday.`;
             } else {
-                passwordError.style.display = 'block';
-                passwordInput.value = ''; // Clear the input field after incorrect attempt
+                scheduleText = `Checking schedule...`; // Fallback state
             }
-        });
+            scheduleList.innerHTML = `<li class="text-lg font-semibold">${scheduleText}</li>`;
+        }
 
-        // Optional: Close popup when clicking outside
-        passwordPopupOverlay.addEventListener('click', function(event) {
-            if (event.target === passwordPopupOverlay) {
-                // You might want to handle this differently, e.g., not closing
-                // or providing a message that it can only be closed by submitting.
-                // For now, let's prevent closing by clicking outside.
-                // passwordPopupOverlay.style.display = 'none';
-            }
-        });
+        // Update the schedule immediately when the page loads
+        updateSchedule();
 
-        // Mobile Navigation
-        const hamburger = document.querySelector('.hamburger');
-        const sideNav = document.querySelector('.side-nav');
-        const closeBtn = document.querySelector('.close-btn');
+        // Update the schedule every 30 seconds (30000 milliseconds)
+        setInterval(updateSchedule, 30000);
 
-        hamburger.addEventListener('click', () => {
-            sideNav.classList.add('open');
-        });closeBtn.addEventListener('click', () => {
-            sideNav.classList.remove('open');
-        });
-
-        // FAQ Accordion
-        const faqItems = document.querySelectorAll('.faq-item');
-
-        faqItems.forEach(item => {
-            const h3 = item.querySelector('h3');
-            h3.addEventListener('click', () => {
-                item.classList.toggle('active');
+        const backButton = document.querySelector('.back-button');
+        if (backButton) {
+            backButton.addEventListener('click', () => {
+                window.history.back();
             });
-        });
+        }
     </script>
 </body>
 </html>
