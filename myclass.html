@@ -10,9 +10,9 @@
         body {
             font-family: 'Raleway', sans-serif;
             /* Animated gradient background */
-            background-image: linear-gradient(to bottom, #000000, #b22222, #0000ff);
+            background-image: linear-gradient(to bottom, #000000, #000000, #800080); /* Changed bottom color to purple (#800080) */
             background-size: 200% 200%;
-            animation: animateBackground 5s ease infinite; /* Reduced animation speed for subtler effect */
+            animation: animateBackground 15s ease infinite; /* Increased animation speed for smoke effect */
             overflow: hidden; /* Prevent scrollbars */
             margin: 0;
         }
@@ -58,6 +58,7 @@
             color: #fff;
             animation: float 8s infinite linear;
             text-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+            z-index: 1000; /* Increased z-index to ensure notes are above other elements */
         }
 
         @keyframes float {
@@ -137,7 +138,7 @@
             </div>
             <div>
                 <label for="level" class="block inter text-gray-300 text-sm font-bold mb-2">Select Level:</label>
-                 <div class="select-wrapper">
+                <div class="select-wrapper">
                     <select id="level" name="level" class="custom-select">
                         <option value="" disabled selected>Choose Level</option>
                         <option value="1">1</option>

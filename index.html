@@ -23,7 +23,7 @@
         <div class="nav-links">
             <a href="index.html" aria-label="Go to Home page" data-page="home"   class="active">Home</a>
             <a href="courses.html" aria-label="View our Courses" data-page="courses">Courses</a>
-            <a href="myclass.html" aria-label="See upcoming Events" data-page="events">My Class</a>
+            <!-- <a href="myclass.html" aria-label="See upcoming Events" data-page="events">My Class</a> -->
             <a href="coming-soon.html" aria-label="Learn more About Us" data-page="about">Events</a>
             <a href="coming-soon.html" aria-label="Contact Us" data-page="contact">Contact</a>
             </div>
@@ -35,62 +35,23 @@
         <span class="close-btn">&times;</span>
         <a href="index.html" aria-label="Go to Home page" data-page="home" class="active">Home</a>
         <a href="courses.html" aria-label="View our Courses" data-page="courses">Courses</a>
-        <a href="myclass.html" aria-label="See upcoming Events" data-page="events">My Class</a>
+        <!-- <a href="myclass.html" aria-label="See upcoming Events" data-page="events">My Class</a> -->
         <a href="coming-soon.html" aria-label="Learn more About Us" data-page="about">Events</a>
         <a href="coming-soon.html" aria-label="Contact Us" data-page="contact">Contact</a>
-        </div>
+    </div>
     <main>
         <section class="hero">
             <div class="hero-content">
                 <h1>Unleash Your Inner Musician!</h1>
                 <p>Where passion meets melody. Begin your musical journey today.</p>
                 <div class="button_container">
-                    <a href="courses.html" class="cta-button1">Enroll Now</a>
-                    <a href="myclass.html" class="cta-button2">My Class</a>
+                    <a href="myclass.html" class="cta-button1">M-Class</a>
+                    <a href="myclass.html" class="cta-button2">M-Youtube</a>
                 </div>
             </div>
         </section>
 
         <div class="divider"></div>
-
-        <section class="explore-courses">
-            <h2>Explore Our Courses</h2>
-            <div class="course-grid">
-                <div class="course-item">
-                    <div class="course-image-wrapper">
-                        <img src="Resources/Homepage/vocals.jpg" alt="A person singing into a microphone." class="course-image">
-                    </div>
-                    <h3>Vocal Mastery</h3>
-                    <p>Refine your voice to its fullest potential.</p>
-                    <a href="courses.html" class="course-link">Learn More <i class="fas fa-arrow-right"></i></a>
-                </div>
-                <div class="course-item">
-                    <div class="course-image-wrapper">
-                        <img src="Resources/Homepage/harmonium.jpg" alt="Hands playing a harmonium." class="course-image">
-                    </div>
-                    <h3>Harmonium Essentials</h3>
-                    <p>Create soulful melodies with the harmonium.</p>
-                    <a href="courses.html" class="course-link">Learn More <i class="fas fa-arrow-right"></i></a>
-                </div>
-                <div class="course-item">
-                    <div class="course-image-wrapper">
-                        <img src="Resources/Homepage/tabla.jpeg" alt="A pair of tabla drums." class="course-image">
-                    </div>
-                    <h3>Tabla Rhythms</h3>
-                    <p>Dive into the world of percussion and rhythm.</p>
-                    <a href="courses.html" class="course-link">Learn More <i class="fas fa-arrow-right"></i></a>
-                </div>
-                <div class="course-item">
-                    <div class="course-image-wrapper">
-                        <img src="Resources/Courses/e8.jpg" alt="Piano." class="course-image">
-                    </div>
-                    <h3>Piano Fundamentals</h3>
-                    <p>Master the basics of playing the Piano.</p>
-                    <a href="courses.html" class="course-link">Learn More <i class="fas fa-arrow-right"></i></a>
-                </div>
-            </div>
-            <a href="courses.html" class="view-more-button">View All Courses</a>
-        </section>
 
         <div id="auth-popup" class="auth-popup">
             <div class="auth-container">
@@ -170,17 +131,17 @@
     </footer>
 
     <div class="bottom-nav">
+        <a href="coming-soon.html" aria-label="View Events">
+            <i class="fas fa-calendar-alt"></i>
+            <span>Events</span>
+        </a>
         <a href="courses.html" aria-label="View Courses">
             <i class="fas fa-book-open"></i>
             <span>Courses</span>
         </a>
-        <a href="myclass.html" aria-label="Go to My Class">
-            <i class="fas fa-graduation-cap"></i>
-            <span>My Class</span>
-        </a>
-        <a href="coming-soon.html" aria-label="View Events">
-            <i class="fas fa-calendar-alt"></i>
-            <span>Events</span>
+        <a href="coming-soon.html" id="bottom-nav-whats-new" aria-label="What's New">
+            <i class="fas fa-bullhorn"></i>
+            <span>What's New <span class="notification-badge" id="whats-new-badge"></span></span>
         </a>
     </div>
 
