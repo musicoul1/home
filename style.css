@@ -970,14 +970,16 @@ footer {
     }
 }
 
-/* Smaller Mobile Screens (e.g., Redmi 8A) */
-@media (max-width: 380px) {
+@media (max-width: 768px) {
     .hero h1 {
-        font-size: 2em;
+        font-size: 1.8em; /* Further reduce font size */
+        text-align: center; /* Ensure it's centered */
+        padding: 0 10px; /* Add some horizontal padding if needed */
     }
 
     .hero p {
         font-size: 0.85em;
+        text-align: center; /* Keep paragraph centered */
     }/* style.css (Continued - Hero button fix for small mobiles) */
     .button_container {
         flex-direction: column;
@@ -1171,4 +1173,30 @@ nav .nav-links a[href="#whats-new"] {
 /* Ensure Velocity.js doesn't interfere with display:none initially */
 .faq-item p {
     display: none;
+}
+
+@media (max-width: 380px) {
+    .hero h1 {
+        font-size: 1.8em; /* Further reduce font size */
+        text-align: center; /* Ensure it's centered */
+        padding: 0 10px; /* Add some horizontal padding if needed */
+    }
+
+    .hero p {
+        font-size: 0.85em;
+        text-align: center; /* Keep paragraph centered */
+    }/* style.css (Continued - Hero button fix for small mobiles) */
+    .button_container {
+        flex-direction: column;
+        align-items: stretch; /* Make buttons take full width */
+        gap: 10px;
+        margin-bottom: 25px;
+    }
+
+    .cta-button1,
+    .cta-button2 {
+        width: 100%; /* Full width for very small screens */
+        padding: 10px 15px;
+        font-size: 0.9em;
+    }
 }
