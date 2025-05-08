@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Course Page</title>
+    <title>Singing - Level 1</title>
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -167,13 +167,13 @@
         }
         .file-link {
             color: #93c5fd;
-            text-decoration: underline;
-            margin-top: 0.5rem;
-            display: block;
-            padding-left: 1.5rem;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease-in-out, text-shadow 0.3s ease-in-out;
         }
         .file-link:hover {
             color: #bae6fd;
+            text-shadow: 0 0 8px rgba(186, 230, 253, 0.5);
         }
         #files-section .file-list-container {
             padding: 1.5rem;
@@ -319,6 +319,140 @@
             margin-left: auto;
             margin-right: auto;
         }
+
+        .schedule-button-container {
+            display: flex;
+            justify-content: center; /* Center horizontally */
+        }
+
+        .schedule-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.5rem 1rem; /* Smaller padding */
+            border-radius: 0.3rem; /* Smaller border-radius */
+            background-color: #4f46e5;
+            color: #fff;
+            font-size: 0.8rem; /* Smaller font size */
+            font-weight: 600;
+            text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            margin-top: 1rem;
+            cursor: pointer;
+            border: none;
+        }
+
+        .schedule-button:hover {
+            background-color: #4338ca;
+            transform: translateY(-1px);
+            box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .schedule-button-icon {
+            margin-right: 0.3rem; /* Smaller margin for icon */
+            width: 1rem; /* Smaller icon size */
+            height: 1rem;
+        }
+
+        .weekly-schedule-modal {
+            display: none;
+            position: fixed;
+            z-index: 50;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .weekly-schedule-content {
+            background-color: #1f2937;
+            color: #fff;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            width: 95%;
+            max-width: 800px;
+            position: relative;
+        }
+
+        .weekly-schedule-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .weekly-schedule-header h2 {
+            margin: 0;
+            font-size: 1.5rem;
+            color: gold;
+        }
+
+        .close-button {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            color: #fff;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.2s ease;
+            border: none;
+            background: none;
+        }
+
+        .close-button:hover {
+            opacity: 1;
+        }
+
+        .weekly-schedule-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1rem;
+        }
+
+        .weekly-schedule-table th,
+        .weekly-schedule-table td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .weekly-schedule-table th {
+            font-weight: 600;
+            color: gold;
+        }
+
+        .weekly-schedule-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        @media (max-width: 640px) {
+            .weekly-schedule-table th,
+            .weekly-schedule-table td {
+                padding: 0.5rem;
+                font-size: 0.9rem;
+            }
+            .weekly-schedule-header h2{
+                font-size: 1.2rem;
+            }
+            .close-button{
+                font-size: 1.2rem;
+                top: 0.5rem;
+                right: 0.5rem;
+            }
+            .weekly-schedule-content{
+                padding: 1rem;
+            }
+        }
     </style>
 </head>
 <body class="bg-gray-900 text-white">
@@ -338,6 +472,15 @@
             <div class="section-container course-schedule">
                 <ul class="list-disc list-inside space-y-3" id="schedule-list">
                 </ul>
+                <div class="schedule-button-container">
+                    <button id="view-schedule-button" class="schedule-button">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="schedule-button-icon">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m-2.188.832l3.435 2.061m-2.188-1.595v7.065" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 20.25c5.304 0 9.625-4.321 9.625-9.625s-4.321-9.625-9.625-9.625-9.625 4.32-9.625 9.625 4.32 9.625 9.625 9.625z" />
+                        </svg>
+                        Weekly Schedule
+                    </button>
+                </div>
             </div>
             <hr class="section-divider">
         </section>
@@ -348,7 +491,9 @@
                 <ul class="space-y-4 file-list-container">
                     <li>
                         <h4 class="text-lg font-semibold text-white">Lecture 1: Alankaar</h4>
-                        <a href="https://drive.google.com/file/d/1lUeLzTLygGX_V0cnrTq4oN_lm8xpQo5Q/view?usp=sharing" class="file-link">26 Alankaars</a>
+                        <div style="margin-left: 20px;">
+                            <span style="color: #ffffff; text-decoration: none;">1.1 </span><a href="https://drive.google.com/file/d/1lUeLzTLygGX_V0cnrTq4oN_lm8xpQo5Q/view?usp=sharing" class="file-link"> 26 Alankaars</a>
+                        </div>
                     </li>
                 </ul>
             </div>
@@ -360,6 +505,52 @@
                 Join Class
             </a>
         </div>
+        <div id="weekly-schedule-modal" class="weekly-schedule-modal">
+            <div class="weekly-schedule-content">
+                <div class="weekly-schedule-header">
+                    <h2>Weekly Schedule</h2>
+                    <button id="close-modal-button" class="close-button">&times;</button>
+                </div>
+                <table class="weekly-schedule-table">
+                    <thead>
+                        <tr>
+                            <th>Day</th>
+                            <th>Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Monday</td>
+                            <td>7:30 AM - 8:00 AM</td>
+                        </tr>
+                        <tr>
+                            <td>Tuesday</td>
+                            <td>7:30 AM - 8:00 AM</td>
+                        </tr>
+                        <tr>
+                            <td>Wednesday</td>
+                            <td>7:30 AM - 8:00 AM</td>
+                        </tr>
+                        <tr>
+                            <td>Thursday</td>
+                            <td>7:30 AM - 8:00 AM</td>
+                        </tr>
+                        <tr>
+                            <td>Friday</td>
+                            <td>7:30 AM - 8:00 AM</td>
+                        </tr>
+                        <tr>
+                            <td>Saturday</td>
+                            <td>Holiday</td>
+                        </tr>
+                        <tr>
+                            <td>Sunday</td>
+                            <td>Holiday</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </main>
 
     <footer class="py-8 border-t border-white/10">
@@ -370,35 +561,61 @@
 
     <script>
         const scheduleList = document.getElementById('schedule-list');
+        const viewScheduleButton = document.getElementById('view-schedule-button');
+        const weeklyScheduleModal = document.getElementById('weekly-schedule-modal');
+        const closeModalButton = document.getElementById('close-modal-button');
 
         function updateSchedule() {
             const now = new Date();
             const dayOfWeek = now.getDay();
             const hours = now.getHours();
             const minutes = now.getMinutes();
+            const seconds = now.getSeconds();
 
             let scheduleText = '';
+            let secondaryText = '';
 
-            if (dayOfWeek >= 1 && dayOfWeek <= 5) {
-                if (hours === 7 && minutes >= 30 && minutes < 60) {
-                    scheduleText = `Class is currently ongoing (7:30 AM - 8:00 AM)`;
-                } else if (hours === 8 && minutes === 0) {
-                    scheduleText = `Class is currently ongoing (7:30 AM - 8:00 AM)`;
-                } else if (hours < 7 || (hours === 7 && minutes< 30)) {
+            if (dayOfWeek >= 1 && dayOfWeek <= 5) { // Monday to Friday
+                if (hours < 7) {
+                    const diff = (7 - hours - 1) * 3600 + (60 - minutes) * 60 - seconds;
+                    const hourDiff = Math.floor(diff / 3600);
+                    const minDiff = Math.floor((diff % 3600) / 60);
+                    const secDiff = Math.floor(diff % 60);
                     scheduleText = `Today's class starts at 7:30 AM`;
-                } else {
-                    scheduleText = `Today's class is over.`;
+                    secondaryText = `Class starts in ${hourDiff} hours ${minDiff} minutes ${secDiff} seconds.`;
+                } else if (hours === 7 && minutes >= 30 && minutes < 60) {
+                    scheduleText = `Today's class timing (7:30 AM - 8:00 AM)`;
+                    secondaryText = `Class is currently ongoing.`;
                 }
-            } else if (dayOfWeek === 6 || dayOfWeek === 0) {
+                else if (hours === 8 && minutes < 0){
+                    scheduleText = `Today's class timing (7:30 AM - 8:00 AM)`;
+                    secondaryText = `Class is currently ongoing.`;
+                }
+                else {
+                    scheduleText = `Today's class timing (7:30 AM - 8:00 AM)`;
+                    secondaryText = `Today's class is over.`;
+                }
+            } else if (dayOfWeek === 6 || dayOfWeek === 0) { // Saturday and Sunday
                 scheduleText = `Today is a Holiday.`;
+                secondaryText = ``;
             } else {
                 scheduleText = `Checking schedule...`;
+                secondaryText = ``;
             }
-            scheduleList.innerHTML = `<li class="text-lg font-semibold">${scheduleText}</li>`;
+
+            scheduleList.innerHTML = `<li class="text-lg font-semibold">${scheduleText}</li>${secondaryText ? `<li class="text-md">${secondaryText}</li>` : ''}`;
         }
 
         updateSchedule();
-        setInterval(updateSchedule, 30000);
+        setInterval(updateSchedule, 1000);
+
+        viewScheduleButton.addEventListener('click', () => {
+            weeklyScheduleModal.style.display = 'flex';
+        });
+
+        closeModalButton.addEventListener('click', () => {
+            weeklyScheduleModal.style.display = 'none';
+        });
 
         const backButton = document.querySelector('.back-button');
         if (backButton) {
