@@ -31,6 +31,24 @@ document.addEventListener('DOMContentLoaded', function() {
     const googleLoginBtn = document.querySelector('#login-form .google-auth-button');
     const googleSignupBtn = document.querySelector('#signup-form .google-auth-button');
     const bottomNavLoginBtn = document.getElementById('bottom-nav-login-btn');
+    const heroSection = document.querySelector('.hero');
+    const heroContent = document.querySelector('.hero-content');
+
+    // Create a container for the musical notes
+    const notesContainer = document.createElement('div');
+    notesContainer.classList.add('notes-container');
+    notesContainer.style.position = 'absolute';
+    notesContainer.style.top = '0';
+    notesContainer.style.left = '0';
+    notesContainer.style.width = '100%';
+    notesContainer.style.height = '100%';
+    notesContainer.style.pointerEvents = 'none';
+    notesContainer.style.zIndex = '-1'; // Ensure it's behind the hero content
+    if (heroSection) {
+        heroSection.insertBefore(notesContainer, heroContent);
+    } else {
+        body.appendChild(notesContainer); // Fallback if hero section isn't found
+    }
 
     // Function to show notification
     function showNotification(message) {
@@ -398,8 +416,8 @@ document.addEventListener('DOMContentLoaded', function() {
     for (let i = 0; i < numberOfNotes; i++) {
         const note = document.createElement('div');
         note.classList.add('musical-note');
-        note.textContent = musicalSymbols[Math.floor(Math.random() * musicalSymbols.length)];
-        note.style.left = `${Math.random() * 100}vw`;
+        note.textContent= musicalSymbols[Math.floor(Math.random() * musicalSymbols.length)];
+        note.style.left = `${Math.random() * 100}vw`; // Ensure it starts within the viewport
         note.style.top = `${Math.random() * 100}vh`;
         // More varied font sizes, ensuring smaller ones are still decent
         const size = Math.random() * 20 + 14; // Size between 14px and 34px
@@ -413,7 +431,7 @@ document.addEventListener('DOMContentLoaded', function() {
         note.style.animationIterationCount = 'infinite';
         note.style.animationTimingFunction = 'ease-in-out'; // Smoother timing
 
-        body.appendChild(note);
+        notesContainer.appendChild(note);
     }
 
     // ---// Existing FAQ and Resource Folder interactivity ---
