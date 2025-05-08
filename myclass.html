@@ -43,6 +43,13 @@
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.05); /* Add a border */
+            position: relative; /* Ensure relative positioning for z-index */
+            z-index: 1;
+        }
+
+        .glassmorphism * {
+            position: relative;
+            z-index: 2;
         }
 
         .custom-select-font {
@@ -58,7 +65,7 @@
             color: #fff;
             animation: float 8s infinite linear;
             text-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
-            z-index: 1000; /* Increased z-index to ensure notes are above other elements */
+            z-index: 0; /* Changed to 0 to go behind other elements */
         }
 
         @keyframes float {
@@ -84,6 +91,7 @@
             width: 100%;
             font-family: 'Inter', sans-serif;
             position: relative;
+            z-index: 2; /* Increased z-index */
         }
 
         .custom-select:focus {
@@ -97,6 +105,7 @@
         .custom-select option {
             background-color: #4a5568;
             color: #fff;
+            z-index: 2;
         }
 
         /* Style for the dropdown arrow */
@@ -112,13 +121,66 @@
             padding: 0.25em;
             transform: rotate(135deg) translateY(-50%);
             pointer-events: none;
+            z-index: 2; /* Increased z-index */
         }
 
         .select-wrapper {
             position: relative;
             width: 100%;
+            z-index: 2;
         }
 
+        button {
+            position: relative;
+            z-index: 2;
+        }
+        h1{
+            position: relative;
+            z-index: 2;
+        }
+        a{
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Media query for mobile view */
+        @media (max-width: 768px) {
+            .glassmorphism {
+                padding: 1.5rem;
+                max-width: 95%;
+            }
+            .glassmorphism h1 {
+                font-size: 2rem;
+                margin-bottom: 2rem;
+            }
+            .glassmorphism form {
+                spacing: 1rem;
+            }
+            .glassmorphism label {
+                font-size: 0.9rem;
+            }
+            .custom-select {
+                padding: 0.75rem 2.5rem 0.75rem 1rem;
+                font-size: 0.9rem;
+            }
+            .note {
+                font-size: 1.5rem;
+            }
+            button {
+                padding: 0.75rem 1.5rem;
+                font-size: 0.9rem;
+            }
+            .mt-8 {
+                margin-top: 2rem;
+            }
+            .h-5 {
+                height: 1.25rem;
+                width: 1.25rem;
+            }
+            .text-sm {
+                font-size: 0.875rem;
+            }
+        }
     </style>
 </head>
 <body class="flex flex-col items-center justify-start min-h-screen py-20">
@@ -206,9 +268,10 @@ function createNote() {
     note.textContent = musicalNotes[Math.floor(Math.random() * musicalNotes.length)];
     note.style.left = `${Math.random() * window.innerWidth}px`;
     note.style.top = `${Math.random() * window.innerHeight}px`;
-    const size = Math.random() * 30 + 20;
+    const size = Math.random() * 50 + 30; // Increased size
     note.style.fontSize = `${size}px`;
     note.style.animationDuration = `${Math.random() * 6 + 8}s`;
+    note.style.color = '#fff'; // Set color to white
     notes.push(note);
     document.body.appendChild(note);
 

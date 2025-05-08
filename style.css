@@ -1,4 +1,4 @@
-/* style.css (Modified - Includes styling for the "What's New" badge and hero button fix for small mobiles) */
+/* style.css (Modified - Removed vertical scrollbar from hero) */
 
 /* Base Styles */
 body {
@@ -216,6 +216,7 @@ main {
     margin-top: 0; /* Reset the negative margin */
     padding: 80px 20px; /* Increased top/bottom padding for better spacing */
     box-sizing: border-box;
+    overflow: hidden; /* Prevent vertical scrollbar */
 }
 
 .hero::before {
@@ -290,17 +291,17 @@ main {
 }
 
 .cta-button1:hover {
-    background-color: white;
-    color: black;
-    border: 2px solid white;
-    box-shadow: 0 0 14px white;
+    background-color: rgb(194, 0, 194);
+    color: white;
+    border: 2px solid rgb(194, 0, 194);
+    box-shadow: 0 0 14px rgb(194, 0, 194);
 }
 
 .cta-button2:hover{
-    background-color: white;
-    color: black;
-    border: 2px solid white;
-    box-shadow: 0 0 14px white;
+    background-color: red;
+    color: white;
+    border: 2px solid red;
+    box-shadow: 0 0 14px red;
 }
 
 /* Divider */
@@ -681,7 +682,7 @@ footer {
     text-align: center;
     margin-bottom: 20px;
     font-family: 'Playfair Display', serif;
-    font-size: 2em;
+    font-size:2em;
     color: gold;
 }
 
@@ -763,6 +764,7 @@ footer {
         transform: translateZ(0) scale(1);
         min-height: auto;
         padding: 40px 20px;
+        overflow: hidden; /* Prevent vertical scrollbar */
     }
 
     .hero-content {
@@ -875,6 +877,7 @@ footer {
     .hero {
         margin-top: 72px;
         padding: 30px 15px;
+        overflow: hidden; /* Prevent vertical scrollbar */
     }
 
     .hero-content {
@@ -966,237 +969,234 @@ footer {
         top: -5px;
         right: -5px;
         padding: 3px 6px;
-        font-size: 0.6em;
-    }
-}
+        font-size: 0.6em;}
 
-@media (max-width: 768px) {
-    .hero h1 {
-        font-size: 1.8em; /* Further reduce font size */
-        text-align: center; /* Ensure it's centered */
-        padding: 0 10px; /* Add some horizontal padding if needed */
+        /* My Class Pop-up adjustments for mobile */
+        .my-class-popup {
+            width: 95%;
+            padding: 20px;
+        }
+    
+        .my-class-popup h2 {
+            font-size: 1.6em;
+            margin-bottom: 15px;
+        }
+    
+        .close-my-class-popup {
+            top: 10px;
+            right: 15px;
+            font-size: 1.6em;
+        }
+    
+        #my-class-form {
+            gap: 15px;
+        }
+    
+        .input-group label {
+            font-size: 0.8em;
+        }
+    
+        .input-group input[type="text"],
+        .input-group input[type="number"] {
+            padding: 10px;
+            font-size: 0.9em;
+        }
+    
+        #my-class-form button.action-button {
+            padding: 12px 20px;
+            font-size: 0.95em;
+        }
     }
-
-    .hero p {
+    
+    /* Overlay for pop-ups */
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+        display: none;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    
+    .overlay.active {
+        display: block;
+        opacity: 1;
+    }
+    
+    .popup-open {
+        overflow: hidden; /* Prevent scrolling of the body when the pop-up is open */
+    }
+    
+    /* Styles for the musical notes container */
+    .notes-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: -1;
+        overflow: hidden; /* Ensure notes don't cause scroll */
+    }
+    
+    /* FAQ Section */
+    .faq-section {
+        padding: 60px 20px;
+        max-width: 960px;
+        margin: 0 auto;
+        box-sizing: border-box;
+    }
+    
+    .faq-section h2 {
+        font-family: 'Playfair Display', serif;
+        font-size: 2.5em;
+        text-align: center;
+        margin-bottom: 40px;
+        color: gold;
+    }
+    
+    .faq-item {
+        background-color: rgba(0, 0, 0, 0.5);
+        border-radius: 8px;
+        margin-bottom: 15px;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .faq-item.active h3 i {
+        transform: rotate(180deg);
+    }
+    
+    .faq-item h3 {
+        padding: 15px 20px;
+        margin: 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 1.1em;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    
+    .faq-item h3:hover {
+        background-color: rgba(0, 0, 0, 0.7);
+    }
+    
+    .faq-item h3 i {
+        font-size: 1.2em;
+        transition: transform 0.3s ease-in-out;
+    }
+    
+    .faq-item p {
+        padding: 0 20px;
+        margin-bottom: 15px;
+        font-size: 0.95em;
+        line-height: 1.6;
+        display: none; /* Initially hidden */
+    }
+    
+    /* Resource Folder Section */
+    .resource-folder-section {
+        padding: 60px 20px;
+        max-width: 960px;
+        margin: 0 auto;
+        box-sizing: border-box;
+        text-align: center;
+    }
+    
+    .resource-folder-section h2 {
+        font-family: 'Playfair Display', serif;
+        font-size: 2.5em;
+        margin-bottom: 40px;
+        color: lightcoral;
+    }
+    
+    .resource-folders-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 20px;
+        margin-top: 20px;
+    }
+    
+    .resource-folder {
+        background-color: rgba(0, 0, 0, 0.5);
+        border-radius: 8px;
+        padding: 20px;
+        text-align: center;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+    }
+    
+    .resource-folder:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+    
+    .resource-folder img {
+        max-width: 80px;
+        margin-bottom: 10px;
+    }
+    
+    .resource-folder h3 {
+        font-size: 1em;
+        margin-top: 0;
+        margin-bottom: 5px;
+        font-weight: 600;
+    }
+    
+    .resource-folder p {
         font-size: 0.85em;
-        text-align: center; /* Keep paragraph centered */
-    }/* style.css (Continued - Hero button fix for small mobiles) */
-    .button_container {
-        flex-direction: column;
-        align-items: stretch; /* Make buttons take full width */
-        gap: 10px;
-        margin-bottom: 25px;
+        color: #ccc;
+        margin-bottom: 0;
     }
-
-    .cta-button1,
-    .cta-button2 {
-        width: 100%; /* Full width for very small screens */
-        padding: 10px 15px;
-        font-size: 0.9em;
+    
+    .resource-folder.interactive {
+        cursor: pointer;
     }
-}
-
-/* "What's New" Badge Styles */
-.whats-new-badge {
-    position: absolute;
-    top: 10px;
-    right: -10px;
-    background-color: #ff6f61; /* A vibrant color */
-    color: white;
-    border-radius: 8px;
-    padding: 5px 8px;
-    font-size: 0.7em;
-    font-weight: bold;
-    z-index: 1;
-}
-
-/* Apply to the specific "What's New" link */
-nav .nav-links a[href="#whats-new"] {
-    position: relative; /* To position the badge */
-}
-
-.side-nav a[href="#whats-new"] {
-    position: relative;
-}
-
-.bottom-nav a[href="#whats-new"] {
-    position: relative;
-}
-
-/* Overlay for pop-ups */
-.overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 999;
-    display: none; /* Hidden by default */
-}
-
-.overlay.active {
-    display: block;
-}
-
-/* Styles for FAQ section */
-.faq-section {
-    padding: 40px 20px;
-    max-width: 960px;
-    margin: 40px auto;
-}
-
-.faq-section h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: 2.5em;
-    color: gold;
-    text-align: center;
-    margin-bottom: 30px;
-}
-
-.faq-item {
-    background-color: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(10px);
-    border-radius: 8px;
-    margin-bottom: 15px;
-    padding: 15px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.faq-item h3 {
-    color: white;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 0;
-    margin-bottom: 10px;
-    cursor: pointer;
-    font-size: 1.1em;
-    font-weight: 600;
-}
-
-.faq-item h3 i {
-    font-size: 1.2em;
-    transition: transform 0.3s ease-in-out;
-}
-
-.faq-item.active h3 i {
-    transform: rotate(180deg);
-}
-
-.faq-item p {
-    color: #ccc;
-    line-height: 1.6;
-    margin: 0;
-    display: none; /* Initially hidden */
-}
-
-.faq-item.active p {
-    display: block !important; /* Override inline style set by velocity.js */
-}
-
-/* Styles for Resource Folder section */
-.resource-section {
-    padding: 40px 20px;
-    max-width: 960px;
-    margin: 40px auto;
-}
-
-.resource-section h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: 2.5em;
-    color: gold;
-    text-align: center;
-    margin-bottom: 30px;
-}
-
-.resource-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 20px;
-}
-
-.resource-folder {
-    background-color: rgba(0, 0, 0, 0.7);
-    backdrop-filter: blur(10px);
-    border-radius: 8px;
-    padding: 20px;
-    text-align: center;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-    cursor: pointer;
-}
-
-.resource-folder:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-}
-
-.resource-folder i {
-    font-size: 2em;
-    color: gold;
-    margin-bottom: 10px;
-}
-
-.resource-folder h4 {
-    color: white;
-    margin-top: 0;
-    font-size: 1em;
-    font-weight: 600;
-}
-
-/* Interactive folder style */
-.resource-folder.interactive:hover {
-    background-color: rgba(0, 0, 0, 0.8);
-}
-
-/* Styles for "My Class" pop-up */
-.my-class-popup.active {
-    display: flex;
-    opacity: 1;
-}
-
-.overlay.active {
-    opacity: 1;
-}
-
-.my-class-popup {
-    opacity: 0;
-    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
-    transform: translate(-50%, -50%) scale(0.9);
-}
-
-.my-class-popup.active {
-    transform: translate(-50%, -50%) scale(1);
-}
-
-/* Ensure Velocity.js doesn't interfere with display:none initially */
-.faq-item p {
-    display: none;
-}
-
-@media (max-width: 380px) {
-    .hero h1 {
-        font-size: 1.8em; /* Further reduce font size */
-        text-align: center; /* Ensure it's centered */
-        padding: 0 10px; /* Add some horizontal padding if needed */
+    
+    /* --- Media Queries for FAQ and Resources --- */
+    @media (max-width: 768px) {
+        .faq-section h2,
+        .resource-folder-section h2 {
+            font-size: 2em;
+            margin-bottom: 30px;
+        }
+    
+        .faq-item h3 {
+            font-size: 1em;
+            padding: 12px 15px;
+        }
+    
+        .faq-item p {
+            font-size: 0.9em;
+            padding: 0 15px 10px;
+        }
+    
+        .resource-folders-grid {
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+        }
+    
+        .resource-folder {
+            padding: 15px;
+        }
+    
+        .resource-folder img {
+            max-width: 60px;
+            margin-bottom: 8px;
+        }
+    
+        .resource-folder h3 {
+            font-size: 0.9em;
+        }
+    
+        .resource-folder p {
+            font-size: 0.8em;
+        }
     }
-
-    .hero p {
-        font-size: 0.85em;
-        text-align: center; /* Keep paragraph centered */
-    }/* style.css (Continued - Hero button fix for small mobiles) */
-    .button_container {
-        flex-direction: column;
-        align-items: stretch; /* Make buttons take full width */
-        gap: 10px;
-        margin-bottom: 25px;
-    }
-
-    .cta-button1,
-    .cta-button2 {
-        width: 100%; /* Full width for very small screens */
-        padding: 10px 15px;
-        font-size: 0.9em;
-    }
-}

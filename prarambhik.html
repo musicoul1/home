@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Course Page</title>
-    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
-            font-family: 'Raleway', sans-serif;
+            font-family: 'Raleway', sans-serif; /* Default font */
             margin: 0;
             padding: 0;
             background: linear-gradient(to bottom, #000000 0%, #0a0014 10%, #140029 20%, #1e003d 30%, #280052 40%,  #330066 50%, #280052 60%, #1e003d 70%, #140029 80%, #0a0014 90%, #000000 100%);
@@ -63,7 +63,7 @@
             color: gold;
             text-align: center;
             margin-bottom: 1.5rem;
-            font-size: 2rem;
+            font-size: 1.75rem; /* Reduced from 2rem to 1.75rem */
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             padding-bottom: 0.75rem;
         }
@@ -72,13 +72,17 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             padding-bottom: 1rem;
             margin-bottom: 1rem;
-            font-size: 1.5rem;
+            font-size: 1.25rem;
+            font-family: 'Inter', sans-serif; /* Changed font */
         }
         .course-schedule ul li{
             color: #e5e7eb;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             padding-bottom: 0.75rem;
             margin-bottom: 0.75rem;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            font-family: 'Inter', sans-serif; /* Changed font */
         }
         .course-schedule ul li:last-child {
             border-bottom: none;
@@ -133,11 +137,16 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             padding-bottom: 1rem;
         }
+        @media (max-width: 768px) {
+            #course-name-heading {
+                margin-top: 3rem; /* Add top margin on mobile to prevent overlap */
+            }
+        }
         .section-heading {
             color: gold;
             text-align: center;
             margin-bottom: 1.5rem;
-            font-size: 2rem;
+            font-size: 1.75rem; /* Reduced from 2rem to 1.75rem */
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             padding-bottom: 0.75rem;
         }
@@ -163,6 +172,17 @@
             border-bottom: none;
             padding-bottom: 0;
             margin-bottom: 0;
+        }
+        #files-section ul li h4{
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 0.25rem;
+            font-family: 'Inter', sans-serif; /* Changed font */
+        }
+        #files-section ul li a{
+            font-size: 0.9rem;
+            font-family: 'Inter', sans-serif; /* Changed font */
         }
 
         /* Musical Note Styles */
@@ -238,7 +258,7 @@
             font-weight: 600; /* Semi-bold font */
             text-decoration: none; /* Removes underline if it's an <a> tag */
             display: block; /* Allows setting width/height and margin */
-            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* Smooth transitions */
+            transition: transform 0.2s ease-in-out, box-shadow 0 4px 6px rgba(0, 0, 0, 0.1); /* Smooth transitions */
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
             margin: 1rem auto; /* Centers the button */
             width: auto; /* Adjust width to content */
@@ -303,12 +323,12 @@
 
         <section id="files-section" class="mb-8">
             <h2 class="section-heading">Notes</h2>
-            <div class="section-container bg-black">
+            <div class="section-container">
                 <ul class="space-y-4 file-list-container">
                     <li>
                         <h4 class="text-lg font-semibold text-white">Lecture 1: Alankaar</h4>
                         <a href="https://drive.google.com/file/d/1lUeLzTLygGX_V0cnrTq4oN_lm8xpQo5Q/view?usp=sharing" class="file-link">26 Alankaars</a>
-                        </li>
+                    </li>
                 </ul>
             </div>
         </section>
