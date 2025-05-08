@@ -51,57 +51,57 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Function to show notification
-    function showNotification(message) {
-        const notificationDiv = document.createElement('div');
-        notificationDiv.classList.add('notification');
-        notificationDiv.textContent = message;
-        document.body.appendChild(notificationDiv);
-        setTimeout(() => {
-            notificationDiv.remove();
-        }, 3000);
-    }
+    // function showNotification(message) {
+    //     const notificationDiv = document.createElement('div');
+    //     notificationDiv.classList.add('notification');
+    //     notificationDiv.textContent = message;
+    //     document.body.appendChild(notificationDiv);
+    //     setTimeout(() => {
+    //         notificationDiv.remove();
+    //     }, 3000);
+    // }
 
-    function updateLoggedInUI(user) {
-        console.log("Logged in as:", user ? (user.displayName || user.email) : null);
-        if (loginBtn) loginBtn.style.display = 'none';
-        if (sideNavLoginBtn) sideNavLoginBtn.style.display = 'none';
-        if (logoutBtn) {
-            logoutBtn.style.display = 'inline-block';
-        } else {
-            // If logout button doesn't exist in main nav, ensure side nav is updated
-            const tempLogoutBtn = document.getElementById('logout-btn');
-            if (tempLogoutBtn) tempLogoutBtn.style.display = 'inline-block';
-        }
-        if (sideNavLogoutBtn) sideNavLogoutBtn.style.display = 'inline-block';
+    // function updateLoggedInUI(user) {
+    //     console.log("Logged in as:", user ? (user.displayName || user.email) : null);
+    //     if (loginBtn) loginBtn.style.display = 'none';
+    //     if (sideNavLoginBtn) sideNavLoginBtn.style.display = 'none';
+    //     if (logoutBtn) {
+    //         logoutBtn.style.display = 'inline-block';
+    //     } else {
+    //         // If logout button doesn't exist in main nav, ensure side nav is updated
+    //         const tempLogoutBtn = document.getElementById('logout-btn');
+    //         if (tempLogoutBtn) tempLogoutBtn.style.display = 'inline-block';
+    //     }
+    //     if (sideNavLogoutBtn) sideNavLogoutBtn.style.display = 'inline-block';
 
-        if (user) {
-            showNotification(`Logged in as ${user.email}`);
-            // You might want to redirect to a user dashboard here eventually
-        }
-    }
+    //     if (user) {
+    //         showNotification(`Logged in as ${user.email}`);
+    //         // You might want to redirect to a user dashboard here eventually
+    //     }
+    // }
 
-    function updateLoggedOutUI() {
-        console.log("Logged out");
-        if (loginBtn) loginBtn.style.display = 'inline-block';
-        if (sideNavLoginBtn) sideNavLoginBtn.style.display = 'inline-block';
-        if (logoutBtn) {
-            logoutBtn.style.display = 'none';
-        } else {
-            const tempLogoutBtn = document.getElementById('logout-btn');
-            if (tempLogoutBtn) tempLogoutBtn.style.display = 'none';
-        }
-        if (sideNavLogoutBtn) sideNavLogoutBtn.style.display = 'none';
-        showNotification("Logged out successfully.");
-    }
+    // function updateLoggedOutUI() {
+    //     console.log("Logged out");
+    //     if (loginBtn) loginBtn.style.display = 'inline-block';
+    //     if (sideNavLoginBtn) sideNavLoginBtn.style.display = 'inline-block';
+    //     if (logoutBtn) {
+    //         logoutBtn.style.display = 'none';
+    //     } else {
+    //         const tempLogoutBtn = document.getElementById('logout-btn');
+    //         if (tempLogoutBtn) tempLogoutBtn.style.display = 'none';
+    //     }
+    //     if (sideNavLogoutBtn) sideNavLogoutBtn.style.display = 'none';
+    //     showNotification("Logged out successfully.");
+    // }
 
-    auth.onAuthStateChanged((user) => {
-        if (user) {
-            updateLoggedInUI(user);
-            // Optionally, fetch user-specific data here
-        } else {
-            updateLoggedOutUI();
-        }
-    });
+    // auth.onAuthStateChanged((user) => {
+    //     if (user) {
+    //         updateLoggedInUI(user);
+    //         // Optionally, fetch user-specific data here
+    //     } else {
+    //         updateLoggedOutUI();
+    //     }
+    // });
 
     // Event listener for Login form submission
     if (loginForm) {
