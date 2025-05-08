@@ -8,14 +8,14 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
-            font-family: 'Raleway', sans-serif; /* Default font */
+            font-family: 'Raleway', sans-serif;
             margin: 0;
             padding: 0;
             background: linear-gradient(to bottom, #000000 0%, #0a0014 10%, #140029 20%, #1e003d 30%, #280052 40%,  #330066 50%, #280052 60%, #1e003d 70%, #140029 80%, #0a0014 90%, #000000 100%);
             background-size: 100% 400%;
             animation: verticalGradient 30s ease infinite;
             position: relative;
-            color: #fff; /* Default text color */
+            color: #fff;
         }
         @keyframes verticalGradient {
             0% { background-position: 0% 0%; }
@@ -36,7 +36,7 @@
             z-index: -1;
         }
         .container {
-            max-width: 960px; /* Adjusted max width */
+            max-width: 960px;
             margin-left: auto;
             margin-right: auto;
             padding-left: 1rem;
@@ -45,10 +45,12 @@
         .section-container {
             background-color: rgba(0, 0, 0, 0.7);
             border-radius: 0.5rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(0, 0, 0, 0.3);
             padding: 2rem;
-            margin-bottom: 2rem; /* Added margin between sections */
+            margin-bottom: 2rem;
+            margin-left: auto;
+            margin-right: auto;
         }
         .course-info h2{
             color: gold;
@@ -63,26 +65,23 @@
             color: gold;
             text-align: center;
             margin-bottom: 1.5rem;
-            font-size: 1.75rem; /* Reduced from 2rem to 1.75rem */
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            padding-bottom: 0.75rem;
+            font-size: 1.75rem;
         }
         .course-schedule h3{
             color: #ffffff;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             padding-bottom: 1rem;
             margin-bottom: 1rem;
             font-size: 1.25rem;
-            font-family: 'Inter', sans-serif; /* Changed font */
+            font-family: 'Inter', sans-serif;
         }
         .course-schedule ul li{
             color: #e5e7eb;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             padding-bottom: 0.75rem;
             margin-bottom: 0.75rem;
             font-size: 0.9rem;
             line-height: 1.4;
-            font-family: 'Inter', sans-serif; /* Changed font */
+            font-family: 'Inter', sans-serif;
         }
         .course-schedule ul li:last-child {
             border-bottom: none;
@@ -96,22 +95,25 @@
             left: 50%;
             transform: translateX(-50%);
             z-index: 10;
-            width: 95%; /* Adjusted width */
-            max-width: 450px; /* Slightly larger max width */
+            width: 95%;
+            max-width: 450px;
             border-radius: 0.5rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.3); /* Subtle top shadow */
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.3);
         }
         @media (max-width: 768px){
             .fixed-bottom-button{
-                width: auto; /* Fit content on mobile/tablet */
-                max-width: 90%; /* Ensure it doesn't go full width on wider mobiles/tablets */
+                width: auto;
+                max-width: 90%;
                 left: 50%;
                 transform: translateX(-50%);
-                bottom: 1.5rem; /* Added bottom margin */
-                border-radius: 0.5rem; /* Keep border-radius */
-                border: 1px solid rgba(255, 255, 255, 0.1); /* Keep border */
+                bottom: 1.5rem;
+                border-radius: 0.5rem;
                 box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.3);
+            }
+            .section-container{
+                width: 95%;
+                margin-left: auto;
+                margin-right: auto;
             }
         }
         .back-button {
@@ -134,37 +136,50 @@
             color: gold;
             font-size: 2.5rem;
             font-weight: bold;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            /* Apply gradient only to the bottom border */
+            border-bottom: 2px solid;
+            border-image: linear-gradient(to right, #845ef7, #e56399); /* Gradient colors */
+            border-image-slice: 1;
             padding-bottom: 1rem;
+            box-shadow: 0px 4px 10px rgba(132, 94, 247, 0.5); /* Glow only below the line */
+            width: 100%; /* Make it full width */
+            display: block;
+            margin-top: 0; /* Ensure no top margin */
+            padding-top: 1rem; /* Add padding at the top */
+            border-radius: 0.5rem;
+            height: auto;
+            padding-top: 1.5rem;
+            padding-bottom: 1.5rem;
         }
+
+
+
         @media (max-width: 768px) {
             #course-name-heading {
-                margin-top: 3rem; /* Add top margin on mobile to prevent overlap */
+                margin-top: 3rem;
             }
         }
         .section-heading {
             color: gold;
             text-align: center;
             margin-bottom: 1.5rem;
-            font-size: 1.75rem; /* Reduced from 2rem to 1.75rem */
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            padding-bottom: 0.75rem;
+            font-size: 1.75rem;
         }
         .file-link {
             color: #93c5fd;
             text-decoration: underline;
             margin-top: 0.5rem;
             display: block;
-            padding-left: 1.5rem; /* Adjusted indentation */
+            padding-left: 1.5rem;
         }
         .file-link:hover {
             color: #bae6fd;
         }
-        #files-section .file-list-container { /* New container for files */
+        #files-section .file-list-container {
             padding: 1.5rem;
         }
         #files-section ul li{
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             padding-bottom: 1rem;
             margin-bottom: 1rem;
         }
@@ -178,18 +193,17 @@
             font-weight: 600;
             color: #ffffff;
             margin-bottom: 0.25rem;
-            font-family: 'Inter', sans-serif; /* Changed font */
+            font-family: 'Inter', sans-serif;
         }
         #files-section ul li a{
             font-size: 0.9rem;
-            font-family: 'Inter', sans-serif; /* Changed font */
+            font-family: 'Inter', sans-serif;
         }
 
-        /* Musical Note Styles */
         .musical-note {
             position: absolute;
             color: rgba(255, 255, 255, 0.4);
-            font-size: 2rem; /* Slightly smaller on smaller screens */
+            font-size: 2rem;
             animation: float 3s infinite, pulse 2s infinite;
             opacity: 0;
             pointer-events: none;
@@ -239,37 +253,36 @@
                 100% { transform: translateY(0px) translateX(0); opacity: 0; }
             }
 
-            /* Desktop specific styles for section width */
             .section-container {
-                max-width: 50%; /* Adjust as needed (40-50%) */
+                max-width: 50%;
                 margin-left: auto;
                 margin-right: auto;
             }
         }
 
         .join-class-button {
-            background-image: linear-gradient(to right, #6366f1, #d946ef); /* Gradient: Indigo to Violet */
-            animation: animatedGradient 3s ease infinite; /* Subtle gradient animation */
-            background-size: 200% 200%; /* Larger background size for animation */
-            color: white; /* White text for contrast */
-            padding: 1rem 2rem; /* Comfortable padding */
-            border-radius: 0.5rem; /* Rounded corners */
-            font-size: 1.25rem; /* Readable font size */
-            font-weight: 600; /* Semi-bold font */
-            text-decoration: none; /* Removes underline if it's an <a> tag */
-            display: block; /* Allows setting width/height and margin */
-            transition: transform 0.2s ease-in-out, box-shadow 0 4px 6px rgba(0, 0, 0, 0.1); /* Smooth transitions */
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-            margin: 1rem auto; /* Centers the button */
-            width: auto; /* Adjust width to content */
-            max-width: 300px; /* Limit the maximum width */
-            text-align: center; /* Add this to center the text */
+            background-image: linear-gradient(to right, #6366f1, #d946ef);
+            animation: animatedGradient 3s ease infinite;
+            background-size: 200% 200%;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 0.5rem;
+            font-size: 1.25rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: block;
+            transition: transform 0.2s ease-in-out, box-shadow 0 4px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin: 1rem auto;
+            width: auto;
+            max-width: 300px;
+            text-align: center;
 
         }
 
         .join-class-button:hover {
-            transform: scale(1.05); /* Slight scale-up on hover */
-            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2); /* Increased shadow on hover */
+            transform: scale(1.05);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
         }
 
         @keyframes animatedGradient {
@@ -280,24 +293,31 @@
 
         @media (min-width: 768px) {
             .join-class-button {
-                font-size: 1.5rem; /* Larger font on desktop */
-                padding: 1.25rem 2.5rem; /* Increased padding on desktop */
-                max-width: 400px; /* Wider button on desktop */
+                font-size: 1.5rem;
+                padding: 1.25rem 2.5rem;
+                max-width: 400px;
             }
         }
 
         footer {
-            background-color: rgba(0, 0, 0, 0.8); /* Slightly transparent footer */
+            background-color: rgba(0, 0, 0, 0.8);
             padding-top: 2rem;
             padding-bottom: 2rem;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             text-align: center;
-            font-size: 1rem; /* Smaller font size on mobile */
+            font-size: 1rem;
         }
         @media (min-width: 768px) {
             footer {
                 font-size: 1.125rem;
             }
+        }
+        hr.section-divider {
+            border-top: 1px solid rgba(255, 255, 255, 0.3);
+            margin-top: 2rem;
+            width: 70%;
+            margin-left: auto;
+            margin-right: auto;
         }
     </style>
 </head>
@@ -319,6 +339,7 @@
                 <ul class="list-disc list-inside space-y-3" id="schedule-list">
                 </ul>
             </div>
+            <hr class="section-divider">
         </section>
 
         <section id="files-section" class="mb-8">
@@ -331,6 +352,7 @@
                     </li>
                 </ul>
             </div>
+            <hr class="section-divider">
         </section>
 
         <div class="fixed-bottom-button">
@@ -351,13 +373,13 @@
 
         function updateSchedule() {
             const now = new Date();
-            const dayOfWeek = now.getDay(); // 0 (Sunday) to 6 (Saturday)
+            const dayOfWeek = now.getDay();
             const hours = now.getHours();
             const minutes = now.getMinutes();
 
             let scheduleText = '';
 
-            if (dayOfWeek >= 1 && dayOfWeek <= 5) { // Monday to Friday
+            if (dayOfWeek >= 1 && dayOfWeek <= 5) {
                 if (hours === 7 && minutes >= 30 && minutes < 60) {
                     scheduleText = `Class is currently ongoing (7:30 AM - 8:00 AM)`;
                 } else if (hours === 8 && minutes === 0) {
@@ -367,18 +389,15 @@
                 } else {
                     scheduleText = `Today's class is over.`;
                 }
-            } else if (dayOfWeek === 6 || dayOfWeek === 0) { // Saturday (6) or Sunday (0)
+            } else if (dayOfWeek === 6 || dayOfWeek === 0) {
                 scheduleText = `Today is a Holiday.`;
             } else {
-                scheduleText = `Checking schedule...`; // Fallback state
+                scheduleText = `Checking schedule...`;
             }
             scheduleList.innerHTML = `<li class="text-lg font-semibold">${scheduleText}</li>`;
         }
 
-        // Update the schedule immediately when the page loads
         updateSchedule();
-
-        // Update the schedule every 30 seconds (30000 milliseconds)
         setInterval(updateSchedule, 30000);
 
         const backButton = document.querySelector('.back-button');
