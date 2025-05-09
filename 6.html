@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Player - Musicoul</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Raleway', sans-serif;
+            margin: 0;
+            background: linear-gradient(135deg, #000000, #2a0000, #550055, #000000);
+            background-size: 300% 300%;
+            animation: backgroundGradient 15s ease infinite;
+            color: #ffffff;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        @keyframes backgroundGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+            backdrop-filter: blur(15px);
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-bottom: 30px;
+            padding: 10px 20px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            text-decoration: none;
+            font-size: 1rem;
+            border-radius: 5px;
+            border: 1px solid rgba(148, 148, 148, 0.619);
+            transition: background-color 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .back-btn:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .back-btn::before {
+            content: '← ';
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            color: #ffffff;
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        #video-player-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto 30px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+            aspect-ratio: 16 / 9;
+            background-color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #video-player {
+            width: 100%;
+            height: 100%;
+        }
+
+        .notes-section {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            color: #eee;
+            line-height: 1.7;
+        }
+
+        .notes-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #fff;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+
+        .musical-note {
+            position: fixed;
+            color: yellow;
+            font-size: 1.2rem;
+            opacity: 0.6;
+            animation: float 3s infinite alternate, glowNote 1.5s infinite alternate;
+            z-index: 0;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-15px); }
+        }
+
+        @keyframes glowNote {
+            0% { text-shadow: 0 0 3px rgba(255, 255, 0, 0.4); }
+            100% { text-shadow: 0 0 8px rgba(255, 255, 0, 0.7); }
+        }
+
+        .note1 { top: 15%; left: 5%; animation-delay: 0.2s; font-size: 1.5rem; }
+        .note2 { top: 30%; right: 8%; animation-delay: 0.8s; font-size: 1.7rem; }
+        .note3 { bottom: 30%; left: 10%; animation-delay: 0.3s; font-size: 1.4rem; }
+        .note4 { bottom: 15%; right: 5%; animation-delay: 1.2s; font-size: 1.9rem; }
+        .note5 { top: 10%; right: 20%; animation-delay: 1.8s; font-size: 1.6rem; }
+        .note6 { bottom: 20%; right: 15%; animation-delay: 0.5s; font-size: 1.8rem; }
+
+        #fullscreen-button {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 2;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+
+        #fullscreen-button:hover {
+            opacity: 1;
+        }
+
+        #notes-button {
+            display: block;
+            margin-top: 20px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-family: 'Raleway', sans-serif;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 12px 24px;
+            border-radius: 10px;
+            cursor: pointer;
+            z-index: 2;
+            opacity: 0.9;
+            transition: opacity 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+            margin-left: auto;
+            margin-right: auto;
+            width: fit-content;
+            font-size: 1.1rem;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(12px);
+        }
+
+        #notes-button:hover {
+            opacity: 1;
+            transform: translateY(-3px) scale(1.06);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        #notes-button:active {
+            transform: translateY(0) scale(0.9);
+            box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        #notes-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+
+        @media screen and (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            #video-player-container {
+                max-width: 100%;
+            }
+            .notes-section {
+                padding: 15px;
+            }
+            .notes-section h2 {
+                font-size: 1.75rem;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .container {
+                padding: 15px;
+            }
+            #video-player-container {
+                max-width: 100%;
+            }
+           .notes-section {
+                padding: 15px;
+            }
+            .notes-section h2 {
+                font-size: 1.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="musical-note note1">♫</div>
+    <div class="musical-note note2">♪</div>
+    <div class="musical-note note3">𝄞</div>
+    <div class="musical-note note4">♩</div>
+    <div class="musical-note note5">♬</div>
+    <div class="musical-note note6">♭</div>
+
+    <div class="container">
+        <a href="icmc.html" class="back-btn">Back</a>
+        <h1>What is Taal? All About Teen-taal</h1>
+
+        <div id="video-player-container">
+            <iframe
+              id="video-player"
+              width="100%"
+              height="100%"
+              src="https://www.youtube.com/embed/9oc-4jshZdM?si=OFz9GqsE-k5W8mob"
+              title="YouTube video player"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen
+            >
+            </iframe>
+            <button id="fullscreen-button">Fullscreen</button>
+        </div>
+        <a href="https://your-google-drive-link" target="_blank">
+            <button id="notes-button">Notes</button>
+        </a>
+
+        <div class="notes-section">
+            <h2>Course Summary</h2>
+            <p>
+                Welcome to the Indian Classical Music Course! Here are some important notes to help you understand the videos:
+            </p>
+            <ul>
+                <li><strong>Episode 1: Introduction to Indian Classical Music</strong><br>
+                    Learn about the rich history and traditions of Indian Classical Music, its unique elements, and its significance in Indian culture.
+                </li>
+                <li><strong>Episode 2: What is Swar? How to sing Swar?</strong><br>
+                    Understand the concept of Swar (musical notes), their types, and how to produce them accurately.  Practice exercises for singing Swar.
+                </li>
+                <li><strong>Episode 3: What is Alankaar? How to sing Alankaar?</strong><br>
+                    Discover Alankaars (ornamentations), their importance in adding beauty to the music, and techniques for singing them effectively.
+                </li>
+                <li><strong>Episode 4: What is Raag? Characteristics of Raag</strong><br>
+                    Explore the concept of Raag, the melodic framework in Indian Classical Music, and its essential characteristics.
+                </li>
+                <li><strong>Episode 5: What is Raag Vargikaran?</strong><br>
+                    Learn about the classification of Raags into different Thaats (scales) and understand the relationships between them.
+                </li>
+                <li><strong>Episode 6: What is Taal? All About Teen-taal</strong><br>
+                    Understand the concept of Taal (rhythm), learn about Teen-taal (a common rhythmic cycle), and practice counting and clapping Taals.
+                </li>
+            </ul>
+            <p>
+                For more detailed notes and exercises, please refer to the <a href="#" target="_blank">full course materials</a>.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        const videoContainer = document.getElementById('video-player-container');
+        const video = document.getElementById('video-player');
+        const fullscreenButton = document.getElementById('fullscreen-button');
+        const notesButton = document.getElementById('notes-button'); // Get the notes button
+
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                if (videoContainer.requestFullscreen) {
+                    videoContainer.requestFullscreen();
+                } else if (videoContainer.mozRequestFullScreen) {
+                    videoContainer.mozRequestFullScreen();
+                } else if (videoContainer.webkitRequestFullscreen) {
+                    videoContainer.webkitRequestFullscreen();
+                } else if (videoContainer.msRequestFullscreen) {
+                    videoContainer.msRequestFullscreen();
+                }
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.mozCancelFullScreen) {
+                    document.mozCancelFullScreen();
+                } else if (document.webkitExitFullscreen) {
+                    document.webkitExitFullscreen();
+                } else if (document.msExitFullscreen) {
+                    document.msExitFullscreen();
+                }
+            }
+        }
+
+        fullscreenButton.addEventListener('click', toggleFullscreen);
+
+        document.addEventListener('fullscreenchange', () => {
+            fullscreenButton.textContent = document.fullscreenElement ? 'Exit Fullscreen' : 'Fullscreen';
+        });
+        document.addEventListener('mozfullscreenchange', () => {
+            fullscreenButton.textContent = document.mozFullScreen ? 'Exit Fullscreen' : 'Fullscreen';
+        });
+        document.addEventListener('webkitfullscreenchange', () => {
+            fullscreenButton.textContent = document.webkitIsFullScreen ? 'Exit Fullscreen' : 'Fullscreen';
+        });
+        document.addEventListener('msfullscreenchange', () => {
+            fullscreenButton.textContent = document.msFullscreenElement ? 'Exit Fullscreen' : 'Fullscreen';
+        });
+
+        // Notes button functionality (open in new tab)
+        notesButton.addEventListener('click', () => {
+            const googleDriveLink = "https://your-google-drive-link"; // Replace with your actual link
+            window.open(googleDriveLink, '_blank');
+        });
+
+    </script>
+</body>
+</html>
