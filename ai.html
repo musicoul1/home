@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playlist Details - Musicoul Playlists</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Base styles (inheriting from the previous page) */
+        body {
+            font-family: 'Raleway', sans-serif;
+            margin: 0;
+            background: linear-gradient(135deg, #000000, #2a0000, #550055, #000000);
+            background-size: 300% 300%;
+            animation: backgroundGradient 15s ease infinite;
+            color: #ffffff;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        @keyframes backgroundGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-bottom: 30px;
+            padding: 8px 16px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            text-decoration: none;
+            font-size: 0.9rem;
+            border-radius: 5px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: background-color 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .back-btn:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .back-btn::before {
+            content: '← ';
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            color: #ffffff;
+            font-size: 2.5rem; /* Slightly smaller than playlist overview */
+            font-weight: 700;
+            text-align: center;
+            margin-top: -10px;
+            margin-bottom: 40px; /* Reduced spacing below title */
+        }
+
+        .underline {
+            height: 3px;
+            width: 100px; /* Shorter underline for video list */
+            background: linear-gradient(270deg, #ff001e, #0000ff, #aa00aa, #ff001e); /* Dark red, blue, purple */
+            background-size: 600% 600%;
+            animation: gradientGlow 7s ease infinite;
+            border-radius: 2px;
+            margin: 5px auto 30px auto; /* Reduced margin below underline */
+            box-shadow: 0 0 10px rgba(255, 0, 30, 0.5);
+            margin-bottom: 60px;
+        }
+
+        @keyframes gradientGlow {
+            0% { background-position: 0% 50%; box-shadow: 0 0 10px rgba(255, 0, 30, 0.5); }
+            25% { background-position: 100% 50%; box-shadow: 0 0 15px rgba(0, 0, 255, 0.7); }
+            50% { background-position: 0% 50%; box-shadow: 0 0 12px rgba(170, 0, 170, 0.6); }
+            75% { background-position: 100% 50%; box-shadow: 0 0 15px rgba(0, 0, 255, 0.7); }
+            100% { background-position: 0% 50%; box-shadow: 0 0 10px rgba(255, 0, 30, 0.5); }
+        }
+
+        .video-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .video-card {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.2s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.2);
+        }
+
+        .video-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .video-cover {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+
+        .video-content {
+            padding: 15px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .video-title {
+            font-family: 'Playfair Display', serif;
+            margin-top: 0;
+            font-size: 1.2rem;
+            color: #ffffff;
+            margin-bottom: 8px;
+        }
+
+        .video-meta {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+            font-size: 0.85rem;
+            color: #aaa;
+        }
+
+        .video-meta span {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+
+        .video-meta svg {
+            fill: #aaa;
+            width: 14px;
+            height: 14px;
+        }
+
+        .video-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: auto;
+        }
+
+        .notes-btn {
+            flex-grow: 1;
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            transition: background-color 0.2s ease-in-out;
+            font-size: 0.85rem;
+            font-family: 'Raleway', sans-serif;
+            background-color: rgba(0, 0, 0, 0.6);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .notes-btn:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .watch-now-btn {
+            flex-grow: 1;
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            font-size: 0.85rem;
+            font-family: 'Raleway', sans-serif;
+            background: linear-gradient(90deg, #800000, #000080, #800080); /* Dark Red, Blue, Purple */
+            color: #fff;
+            border: none;
+            background-size: 200% auto;
+            animation: liveGradient 3s linear infinite;
+        }
+
+        @keyframes liveGradient {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+
+        .musical-note {
+            position: fixed;
+            color: yellow;
+            font-size: 1.2rem; /* Slightly smaller notes */
+            opacity: 0.6; /* Slightly more transparent */
+            animation: float 3s infinite alternate, glowNote 1.5s infinite alternate;
+            z-index: 0;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-15px); } /* Smaller float distance */
+        }
+
+        @keyframes glowNote {
+            0% { text-shadow: 0 0 3px rgba(255, 255, 0, 0.4); } /* Subtler glow */
+            100% { text-shadow: 0 0 8px rgba(255, 255, 0, 0.7); }
+        }
+
+        .note1 { top: 15%; left: 5%; animation-delay: 0.2s; font-size: 1.5rem; }
+        .note2 { top: 30%; right: 8%; animation-delay: 0.8s; font-size: 1.7rem; }
+        .note3 { bottom: 30%; left: 10%; animation-delay: 0.3s; font-size: 1.4rem; }
+        .note4 { bottom: 15%; right: 5%; animation-delay: 1.2s; font-size: 1.9rem; }
+        .note5 { top: 10%; right: 20%; animation-delay: 1.8s; font-size: 1.6rem; }
+        .note6 { bottom: 20%; right: 15%; animation-delay: 0.5s; font-size: 1.8rem; }
+
+        /* Responsive adjustments */
+        @media screen and (max-width: 768px) {
+            .video-cards {
+                grid-template-columns: 1fr;
+            }
+            .video-cover {
+                height: 160px;
+            }
+            .video-actions {
+                flex-direction: row; /* Make buttons inline on smaller screens */
+            }
+        }
+
+        @media screen and (max-width: 600px) {
+            .video-actions {
+                flex-direction: row; /* Ensure inline on even smaller screens */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="musical-note note1">♫</div>
+    <div class="musical-note note2">♪</div>
+    <div class="musical-note note3">𝄞</div>
+    <div class="musical-note note4">♩</div>
+    <div class="musical-note note5">♬</div>
+    <div class="musical-note note6">♭</div>
+
+    <div class="container">
+        <a href="m-youtube.html" class="back-btn">Back</a>
+        <h1>+Plus-One Series</h1> <div class="underline"></div>
+
+        <div class="video-cards">
+            <div class="video-card">
+                <img src="Resources/M-Youtube/ai/1.jpg" alt="What is the Correct Breathing Technique for Singing? | Episode - #1 |" class="video-cover">
+                <div class="video-content">
+                    <h3 class="video-title">Create a Song with AI in 3 seconds!!! *Shocking Results* | Episode - #1 |</h3>
+                    <div class="video-meta">
+                        <span><svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 20C16.41 20 20 16.41 20 12C20 7.59 16.41 4 12 4C7.59 4 4 7.59 4 12C4 16.41 7.59 20 12 20M12 2C17.53 2 22 6.47 22 12C22 17.53 17.53 22 12 22C6.47 22 2 17.53 2 12C2 6.47 6.47 2 12 2M12 6V12L16 14L12 18V12L8 10V6H12Z"/></svg> 13:40</span>
+                    </div>
+                    <div class="video-actions">
+                        <button class="notes-btn">Notes</button>
+                        <a href="111.html" class="watch-now-btn">Watch Now</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="video-card">
+                <img src="Resources/M-Youtube/ai/2.jpg" alt="2 Simple Techniques to Improve your Voice | Episode - #2 |" class="video-cover">
+                <div class="video-content">
+                    <h3 class="video-title">Song generated with AI! | Episode - #2 |</h3>
+                    <div class="video-meta">
+                        <span><svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 20C16.41 20 20 16.41 20 12C20 7.59 16.41 4 12 4C7.59 4 4 7.59 4 12C4 16.41 7.59 20 12 20M12 2C17.53 2 22 6.47 22 12C22 17.53 17.53 22 12 22C6.47 22 2 17.53 2 12C2 6.47 6.47 2 12 2M12 6V12L16 14L12 18V12L8 10V6H12Z"/></svg> 12:22</span>
+                    </div>
+                    <div class="video-actions">
+                        <button class="notes-btn">Notes</button>
+                        <a href="222.html" class="watch-now-btn">Watch Now</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>

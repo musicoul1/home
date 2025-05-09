@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explore Lessons - Musicoul Playlists</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Base styles */
+        body {
+            font-family: 'Raleway', sans-serif;
+            margin: 0;
+            background: linear-gradient(135deg, #000000, #2a0000, #550055, #000000); /* Gradient background with looping */
+            background-size: 300% 300%;
+            animation: backgroundGradient 15s ease infinite;
+            color: #ffffff;
+            line-height: 1.6;
+            overflow-x: hidden; /* Prevent horizontal scroll for notes */
+        }
+
+        @keyframes backgroundGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 20px;
+            position: relative; /* For positioning notes */
+            z-index: 1; /* Ensure content is above notes */
+        }
+
+        /* Back button */
+        .back-btn {
+            display: inline-block;
+            margin-bottom: 30px;
+            padding: 8px 16px;
+            background-color: rgba(255, 255, 255, 0.1); /* Translucent white */
+            color: #fff; /* White text */
+            text-decoration: none;
+            font-size: 0.9rem;
+            border-radius: 5px;
+            border: 1px solid rgba(255, 255, 255, 0.2); /* Subtle white border */
+            transition: background-color 0.3s ease;
+            backdrop-filter: blur(10px); /* Glass effect */
+        }
+
+        .back-btn:hover {
+            background-color: rgba(255, 255, 255, 0.2); /* Slightly darker translucent white on hover */
+        }
+
+        .back-btn::before {
+            content: '← ';
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            color: #ffffff;
+            font-size: 2.8rem;
+            font-weight: 700;
+            text-align: center; /* Centered title */
+            margin-top: -10px;
+            margin-bottom: 20px; /* Increased spacing below title */
+        }
+
+        .underline {
+            height: 3px; /* Slightly thicker for glow effect */
+            width: 150px; /* Wider for centered title */
+            background: linear-gradient(270deg, #ff001e, #ffff00, #aa00aa, #ff001e); /* Gradient colors with purple */
+            background-size: 600% 600%; /* Adjusted size for more color visibility */
+            animation: gradientGlow 7s ease infinite; /* Slightly slower animation */
+            border-radius: 2px;
+            margin: 5px auto 50px auto; /* Increased margin below underline */
+            box-shadow: 0 0 10px rgba(255, 0, 30, 0.5); /* Initial glow */
+            margin-bottom: 80px;
+        }
+
+        @keyframes gradientGlow {
+            0% { background-position: 0% 50%; box-shadow: 0 0 10px rgba(255, 0, 30, 0.5); }
+            25% { background-position: 100% 50%; box-shadow: 0 0 15px rgba(255, 255, 0, 0.7); }
+            50% { background-position: 0% 50%; box-shadow: 0 0 12px rgba(170, 0, 170, 0.6); }
+            75% { background-position: 100% 50%; box-shadow: 0 0 15px rgba(255, 255, 0, 0.7); }
+            100% { background-position: 0% 50%; box-shadow: 0 0 10px rgba(255, 0, 30, 0.5); }
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            /* Glassmorphism styles */
+            background-color: rgba(255, 255, 255, 0.1); /* Translucent white */
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.2s ease-in-out;
+            display: flex;
+            flex-direction: column; /* To align content properly */
+            border: 1px solid rgba(255, 255, 255, 0.2); /* Subtle white border */
+            backdrop-filter: blur(10px); /* Glass effect */
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37); /* Soft shadow for depth */
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-cover {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 20px;
+            flex-grow: 1; /* Allow content to take up remaining space */
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card h3 {
+            font-family: 'Playfair Display', serif;
+            margin-top: 0;
+            font-size: 1.6rem;
+            color: #ffffff;
+            margin-bottom: 5px;
+        }
+
+        .playlist-meta {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            color: yellow; /* Yellow color */
+        }
+
+        .playlist-meta span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .playlist-meta svg {
+            fill: yellow; /* Yellow color */
+            width: 18px; /* Slightly larger icons */
+            height: 18px;
+            margin-right: 3px; /* Add a little spacing */
+        }
+
+        .playlist-description {
+            color: #ccc;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        .card ul {
+            padding-left: 20px;
+            margin: 10px 0 15px 0;
+            color: #ccc;
+            font-size: 0.95rem;
+            display: none; /* Initially hidden bullets */
+        }
+
+        .card ul.show-bullets {
+            display: block; /* Show bullets when class is added */
+        }
+
+        .card ul li {
+            margin-bottom: 8px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 10px; /* Reduced gap */
+            margin-top: auto; /* Push buttons to the bottom */
+        }
+
+        .cta-btn,
+        .more-btn {
+            flex: 1; /* Make widths equal */
+            padding: 10px 15px; /* Reduced padding */
+            border-radius: 5px;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            transition: background-color 0.2s ease-in-out;
+            font-size: 0.9rem;
+            font-family: 'Raleway', sans-serif; /* Raleway font */
+        }
+
+        .cta-btn {
+            background-color: rgba(255, 0, 30, 0.86); /* Translucent red */
+            color: #fff;
+            border: none;
+            backdrop-filter: blur(10px); /* Glass effect */
+            border: 2px solid rgba(255, 0, 30, 0.86);
+        }
+
+        .cta-btn:hover {
+            background-color: rgba(188, 0, 22, 0.9);
+            border: 2px solid rgba(188, 0, 22, 0.9);
+        }
+
+        .more-btn {
+            background-color: rgba(28, 28, 28, 0.6); /* Translucent black */
+            color: white; /* White text */
+            border: 2px solid rgb(255, 255, 255); /* Subtle white border */
+            backdrop-filter: blur(10px); /* Glass effect */
+        }
+
+        .more-btn:hover,
+        .more-btn:active {
+            background-color: rgba(0, 0, 0, 0.8); /* Slightly darker on hover/click */
+        }
+
+        .more-content {
+            display: none;
+            margin-top: 15px;
+            font-size: 0.9rem;
+            color: #ccc;
+            line-height: 1.7;
+        }
+
+        /* Glowing musical notes */
+        .musical-note {
+            position: fixed;
+            color: yellow; /* Yellow glow */
+            font-size: 1.5rem;
+            opacity: 0.7;
+            animation: float 3s infinite alternate, glowNote 1.5s infinite alternate;
+            z-index: 0; /* Behind the content */
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-20px); }
+        }
+
+        @keyframes glowNote {
+            0% { text-shadow: 0 0 5px rgba(255, 255, 0, 0.5); }
+            100% { text-shadow: 0 0 15px rgba(255, 255, 0, 0.8); }
+        }
+
+        .note1 { top: 10%; left: 10%; animation-delay: 0s; font-size: 1.8rem; }
+        .note2 { top: 25%; right: 12%; animation-delay: 1s; font-size: 2.0rem; }
+        .note3 { bottom: 25%; left: 15%; animation-delay: 0.5s; font-size: 1.6rem; }
+        .note4 { bottom: 10%; right: 10%; animation-delay: 1.5s; font-size: 2.2rem; }
+        .note5 { top: 5%; right: 25%; animation-delay: 2s; font-size: 1.7rem; }
+        .note6 { bottom: 30%; right: 20%; animation-delay: 2.5s; font-size: 1.9rem; }
+
+        /* Responsive adjustments */
+        @media screen and (max-width: 768px) {
+            .container {
+                margin-top: 30px;
+            }
+            h1 {
+                font-size: 2.3rem;
+            }
+            .cards {
+                grid-template-columns: 1fr;
+            }
+            .card-cover {
+                height: 160px;
+            }
+            .buttons {
+                flex-direction: row; /* Keep buttons inline */
+            }
+            .cta-btn, .more-btn {
+                font-size: 0.85rem;
+                padding: 8px 12px;
+            }
+        }
+
+        /* Even smaller screens */
+        @media screen and (max-width: 480px) {
+            .buttons {
+                flex-direction: row; /* Ensure inline */
+                gap: 5px;
+            }
+            .cta-btn, .more-btn {
+                font-size: 0.8rem;
+                padding: 6px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="musical-note note1">♫</div>
+    <div class="musical-note note2">♪</div>
+    <div class="musical-note note3">𝄞</div>
+    <div class="musical-note note4">♩</div>
+    <div class="musical-note note5">♬</div>
+    <div class="musical-note note6">♭</div>
+
+    <div class="container">
+        <a href="index.html" class="back-btn">Back</a>
+        <h1>Explore Lessons</h1>
+        <div class="underline"></div>
+
+        <div class="cards">
+
+            <div class="card">
+                <img src="Resources/M-Youtube/Playlist/Indian Classical Music Course Cover.png" alt="Playlist 1" class="card-cover">
+                <div class="card-content">
+                    <h3>Indian Classical Music Course</h3>
+                    <div class="playlist-meta">
+                        <span>
+                            <svg viewBox="0 0 24 24"><path fill="currentColor" d="M17 9V7C17 5.89 16.1 5 15 5H9C7.89 5 7 5.89 7 7V9C5.89 9 5 9.89 5 11V17C5 18.11 5.89 19 7 19H15C16.11 19 17 18.11 17 17V15H19V17C19 19.21 16.79 21 14 21H10C7.21 21 5 19.21 5 17V11C5 8.79 7.21 7 10 7H14C16.21 7 18 8.79 18 11V15H17M10 10L13 12L10 14V10Z"/></svg>
+                            6 Videos
+                        </span>
+                        <span>
+                            <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 20C16.41 20 20 16.41 20 12C20 7.59 16.41 4 12 4C7.59 4 4 7.59 4 12C4 16.41 7.59 20 12 20M12 2C17.53 2 22 6.47 22 12C22 17.53 17.53 22 12 22C6.47 22 2 17.53 2 12C2 6.47 6.47 2 12 2M12 6V12L16 14L12 18V12L8 10V6H12Z"/></svg>
+                            1 hr 15 mins
+                        </span>
+                    </div>
+                    <p class="playlist-description short-desc">Begin your musical journey!</p>
+                    <ul data-target="more1">
+                        <li>Introduction to Classical Music</li>
+                        <li>What is Swar?</li>
+                        <li>What is Alankaar?</li>
+                        <li>What is Raag?</li>
+                        <li>What is Raag Vargikaran?</li>
+                        <li>What is Taal?</li>
+                    </ul>
+                    <div class="buttons">
+                        <button class="more-btn" onclick="toggleMore(this, 'more2')">Know More</button>
+                        <a href="icmc.html" class="cta-btn" target="_blank">Enter</a>
+                    </div>
+                    <div class="more-content" id="more1">
+                        This playlist walks you through the foundations of Hindustani classical music, starting from basic notes to your first compositions.
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <img src="Resources/M-Youtube/Playlist/+Plus One Series Cover.png" alt="Playlist 2" class="card-cover">
+                <div class="card-content">
+                    <h3>+Plus One Series</h3>
+                    <div class="playlist-meta">
+                        <span>
+                            <svg viewBox="0 0 24 24"><path fill="currentColor" d="M17 9V7C17 5.89 16.1 5 15 5H9C7.89 5 7 5.89 7 7V9C5.89 9 5 9.89 5 11V17C5 18.11 5.89 19 7 19H15C16.11 19 17 18.11 17 17V15H19V17C19 19.21 16.79 21 14 21H10C7.21 21 5 19.21 5 17V11C5 8.79 7.21 7 10 7H14C16.21 7 18 8.79 18 11V15H17M10 10L13 12L10 14V10Z"/></svg>
+                            3 Videos
+                        </span>
+                        <span>
+                            <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 20C16.41 20 20 16.41 20 12C20 7.59 16.41 4 12 4C7.59 4 4 7.59 4 12C4 16.41 7.59 20 12 20M12 2C17.53 2 22 6.47 22 12C22 17.53 17.53 22 12 22C6.47 22 2 17.53 2 12C2 6.47 6.47 2 12 2M12 6V12L16 14L12 18V12L8 10V6H12Z"/></svg>
+                            30 mins
+                        </span>
+                    </div>
+                    <p class="playlist-description short-desc">Refine your vocal power.</p>
+                    <ul data-target="more2">
+                        <li>Breath Techniques</li>
+                        <li>Vocal Exercises</li>
+                        <li>The Art of Impactful Performance</li>
+                    </ul>
+                    <div class="buttons">
+                        <button class="more-btn" onclick="toggleMore(this, 'more2')">Know More</button>
+                        <a href="plus-one.html" class="cta-btn" target="_blank">Enter</a>
+                    </div>
+                    <div class="more-content" id="more2">
+                        Strengthen your vocal skills with targeted exercises designed to improve tone, pitch, and delivery for classical and light music.
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <img src="Resources/M-Youtube/Playlist/AI Series Cover.jpg" alt="Playlist 3" class="card-cover">
+                <div class="card-content">
+                    <h3>AI Series</h3>
+                    <div class="playlist-meta">
+                        <span>
+                            <svg viewBox="0 0 24 24"><path fill="currentColor" d="M17 9V7C17 5.89 16.1 5 15 5H9C7.89 5 7 5.89 7 7V9C5.89 9 5 9.89 5 11V17C5 18.11 5.89 19 7 19H15C16.11 19 17 18.11 17 17V15H19V17C19 19.21 16.79 21 14 21H10C7.21 21 5 19.21 5 17V11C5 8.79 7.21 7 10 7H14C16.21 7 18 8.79 18 11V15H17M10 10L13 12L10 14V10Z"/></svg>
+                            2 Videos
+                        </span>
+                        <span>
+                            <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 20C16.41 20 20 16.41 20 12C20 7.59 16.41 4 12 4C7.59 4 4 7.59 4 12C4 16.41 7.59 20 12 20M12 2C17.53 2 22 6.47 22 12C22 17.53 17.53 22 12 22C6.47 22 2 17.53 2 12C2 6.47 6.47 2 12 2M12 6V12L16 14L12 18V12L8 10V6H12Z"/></svg>
+                            16 mins
+                        </span>
+                    </div>
+                    <p class="playlist-description short-desc">Explore AI in music.</p>
+                    <ul data-target="more3">
+                        <li>Create Music with AI</li>
+                        <li>Song Created with AI</li>
+                    </ul>
+                    <div class="buttons">
+                        <button class="more-btn" onclick="toggleMore(this, 'more3')">Know More</button>
+                        <a href="ai.html" class="cta-btn" target="_blank">Enter</a>
+                    </div>
+                    <div class="more-content" id="more3">
+                        Discover how Artificial Intelligence is revolutionizing music Industry and How can we use it?
+                    </div>
+                </div>
+            </div>
+
+            <!-- <div class="card">
+                <img src="Resources/M-Youtube/Playlist/Tabla Cover Cover.jpeg" alt="Playlist 4" class="card-cover">
+                <div class="card-content">
+                    <h3>Tabla Covers</h3>
+                    <div class="playlist-meta">
+                        <span>
+                            <svg viewBox="0 0 24 24"><path fill="currentColor" d="M17 9V7C17 5.89 16.1 5 15 5H9C7.89 5 7 5.89 7 7V9C5.89 9 5 9.89 5 11V17C5 18.11 5.89 19 7 19H15C16.11 19 17 18.11 17 17V15H19V17C19 19.21 16.79 21 14 21H10C7.21 21 5 19.21 5 17V11C5 8.79 7.21 7 10 7H14C16.21 7 18 8.79 18 11V15H17M10 10L13 12L10 14V10Z"/></svg>
+                            8 Videos
+                        </span>
+                        <span>
+                            <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 20C16.41 20 20 16.41 20 12C20 7.59 16.41 4 12 4C7.59 4 4 7.59 4 12C4 16.41 7.59 20 12 20M12 2C17.53 2 22 6.47 22 12C22 17.53 17.53 22 12 22C6.47 22 2 17.53 2 12C2 6.47 6.47 2 12 2M12 6V12L16 14L12 18V12L8 10V6H12Z"/></svg>
+                            20 mins
+                        </span>
+                    </div>
+                    <p class="playlist-description short-desc">Explore AI in music.</p>
+                    <ul data-target="more3">
+                        <li>The Search Song Cover</li>
+                        <li>Levitating Song Cover</li>
+                        <li>Without Me Song Cover</li>
+                        <li>You Broke Me First Song Cover</li>
+                        <li>All Time Low Song Cover</li>
+                        <li>Mi Gente Song Cover</li>
+                        <li>Fake a Smile Song Cover</li>
+                        <li>Tum Tum Song Cover</li>
+                    </ul>
+                    <div class="buttons">
+                        <button class="more-btn" onclick="toggleMore(this, 'more4')">Know More</button>
+                        <a href="https://youtube.com/playlist?list=PLAYLIST_ID_4" class="cta-btn" target="_blank">Enter</a>
+                    </div>
+                    <div class="more-content" id="more4">
+                        Tabla Covers on Songs
+                    </div>
+                </div>
+            </div> 
+            </div> -->
+
+    </div>
+
+    <script>
+        function toggleMore(button, moreContentId) {
+            const contentDiv = document.getElementById(moreContentId);
+            const bulletsUl = button.parentElement.previousElementSibling; // Get the UL element
+            const shortDescription = bulletsUl.previousElementSibling; // Get the short description
+
+            contentDiv.style.display = contentDiv.style.display === "block" ? "none" : "block";
+            bulletsUl.classList.toggle('show-bullets');
+
+            // Remove short description when "Know More" is opened
+            if (contentDiv.style.display === "block") {
+                shortDescription.style.display = "none";
+            } else {
+                shortDescription.style.display = "block";
+            }
+        }
+    </script>
+</body>
+</html>
