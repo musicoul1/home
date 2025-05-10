@@ -1,4 +1,4 @@
-/* style.css (Modified - Removed vertical scrollbar from hero) */
+/* style.css (Modified - Added golden wave styles) */
 
 /* Base Styles */
 body {
@@ -29,6 +29,59 @@ body {
     100% { background-position: 0% 0%; }
 }
 
+/* Golden Wave Styles */
+.golden-wave-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -2; /* Behind the smoke and notes */
+}
+
+.golden-wave {
+    position: absolute;
+    width: 200%;
+    height: 150px;
+    background: linear-gradient(to right, transparent 0%, #ff0000 50%, transparent 100%); /* Golden color */
+    border-radius: 50%;
+    animation: moveGoldenWave 10s linear infinite;
+    opacity: 0.6;
+}
+
+/* Create multiple waves for a richer effect */
+.golden-wave::before {
+    content: '';
+    position: absolute;
+    top: 30px;
+    left: -50%;
+    width: 100%;
+    height: 120px;
+    background: linear-gradient(to right, transparent 0%, #e6cf00 50%, transparent 100%); /* Slightly darker gold */
+    border-radius: 50%;
+    opacity: 0.7;
+    animation: moveGoldenWave 13s linear infinite reverse;
+}
+
+.golden-wave::after {
+    content: '';
+    position: absolute;
+    top: 60px;
+    left: 0%;
+    width: 150%;
+    height: 100px;
+    background: linear-gradient(to right, transparent 0%, #f00058 50%, transparent 100%); /* Another shade of gold */
+    border-radius: 50%;
+    opacity: 0.5;
+    animation: moveGoldenWave 16s linear infinite;
+}
+
+@keyframes moveGoldenWave {
+    0% { transform: translateX(-50%) translateY(0); }
+    100% { transform: translateX(0%) translateY(0); }
+}
+
 /* "Smoke" or Wave-like effect */
 body::before {
     content: '';
@@ -41,7 +94,7 @@ body::before {
     background-repeat: repeat;
     opacity: 0.08; /* Slightly more subtle */
     pointer-events: none;
-    z-index: -1;
+    z-index: -1; /* Above the golden wave */
 }
 
 /* Musical Notes with Glow */
@@ -53,6 +106,7 @@ body::before {
     pointer-events: none;
     opacity: 0.7; /* Slightly more visible */
     transition: transform 2s ease-in-out, opacity 2s ease-in-out, text-shadow 0.5s ease-in-out; /* Smooth transition for all */
+    z-index: -1; /* Above the golden wave */
 }
 
 .musical-note:hover {
@@ -127,7 +181,7 @@ nav .nav-links a {
     text-decoration: none;
     margin: 0 20px;
     transition: color 0.3s ease;
-    font-weight: 500;
+    font-weight:500;
 }
 
 nav .nav-links a:hover {
@@ -608,128 +662,292 @@ footer {
     align-items: center;
     padding: 10px 0;
     z-index: 20;
-    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 -2px5px rgba(255, 255, 255, 0.1);
 }
 
 .bottom-nav a {
-    flex-grow: 1;
-    text-align: center;
-    text-decoration: none;
-    color: white;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    gap: 5px;
-    font-size: 0.9em;
-    transition: color 0.3s ease;
-    position: relative; /* For badge positioning */
+    color: white;
+    text-decoration: none;
+    font-size: 0.8em;
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
 }
 
 .bottom-nav a:hover {
-    color: gold;
+    opacity: 1;
 }
 
 .bottom-nav a i {
-    font-size: 1.3em;
+    font-size: 1.5em;
+    margin-bottom: 5px;
 }
 
-.bottom-nav a span {
-    display: block;
-}
-
-/* Notification badge for "What's New" */
-.notification-badge {
-    position: absolute;
-    top: -8px;
-    right: -10px;
-    background-color: red;
-    color: white;
-    border-radius: 50%;
-    padding: 5px 8px;
-    font-size: 0.7em;
-    font-weight: bold;
-}
-
-/* My Class Pop-up Styles */
+/* "My Class" Pop-up Styles */
 .my-class-popup {
     display: none;
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 90%;
-    max-width: 400px;
-    background-color: rgba(30, 30, 30, 0.9);
+    background-color: rgba(30, 30, 30, 0.95);
     backdrop-filter: blur(20px);
-    border-radius: 16px;
-    box-shadow: 0 0px 18px rgba(255, 255, 255, 0.582);
     color: #f0f0f0;
-    z-index: 1002; /* Higher than auth-popup */
-    overflow: hidden;
     padding: 30px;
-    box-sizing: border-box;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+    z-index: 1050;
+    opacity: 0;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.my-class-popup.active {
+    display: block;
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 1040;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.overlay.active {
+    display: block;
+    opacity: 1;
 }
 
 .my-class-container {
     display: flex;
     flex-direction: column;
-    align-items: stretch;
-    justify-content: center;
+    gap: 20px;
+    width: 300px;
+    max-width: 90vw;
 }
 
-.my-class-popup h2 {
+.my-class-container h2 {
     text-align: center;
+    color: gold;
     margin-bottom: 20px;
     font-family: 'Playfair Display', serif;
-    font-size:2em;
-    color: gold;
+}
+
+.my-class-container .input-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.my-class-container .input-group label {
+    color: #ccc;
+    margin-bottom: 5px;
+}
+
+.my-class-container .input-group input[type="text"],
+.my-class-container .input-group input[type="number"] {
+    padding: 10px;
+    border: 1px solid #777;
+    border-radius: 6px;
+    background-color: #444;
+    color: #eee;
+}
+
+.my-class-container .action-button {
+    background-color: gold;
+    color: #222;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.my-class-container .action-button:hover {
+    background-color: #daa520;
 }
 
 .close-my-class-popup {
     position: absolute;
-    top: 15px;
-    right: 20px;
-    font-size: 2em;
-    font-weight: bold;
+    top: 10px;
+    right: 15px;
+    font-size: 1.5em;
     color: #bbb;
     cursor: pointer;
     transition: color 0.3s ease;
-    z-index: 1003;
 }
 
 .close-my-class-popup:hover {
     color: #eee;
 }
 
-#my-class-form {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    align-items: stretch;
+/* FAQ Section Styles */
+.faq-section {
+    padding: 60px 20px;
+    max-width: 960px;
+    margin: 40px auto;
 }
 
-/* Hide bottom nav on larger screens */
-@media (min-width: 769px) {
-    .my-class-popup {
-        width: 95%;
-        max-width: 350px;
-        padding: 20px;
-    }
+.faq-section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5em;
+    color: gold;
+    text-align: center;
+    margin-bottom: 40px;
+}
 
-    .my-class-popup h2 {
-        font-size: 1.8em;
+.faq-item {
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 8px;
+    margin-bottom: 15px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.faq-item h3 {
+    color: white;
+    padding: 15px 20px;
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.faq-item h3 i {
+    transition: transform 0.3s ease-in-out;
+}
+
+.faq-item.active h3 i {
+    transform: rotate(180deg);
+}
+
+.faq-item p {
+    color: #ccc;
+    padding: 0 20px;
+    margin-bottom: 15px;
+    display: none; /* Initially hidden */
+}
+
+.faq-item.active p {
+    display: block !important; /* Override inline style set by velocity */
+}
+
+/* Resource Folder Section */
+.resource-section {
+    padding: 60px 20px;
+    max-width: 960px;
+    margin: 40px auto;
+    text-align: center;
+}
+
+.resource-section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5em;
+    color: gold;
+    margin-bottom: 40px;
+}
+
+.resource-folders {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.resource-folder {
+    background-color: rgba(0, 0, 0, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.resource-folder:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.2);
+}
+
+.resource-folder i {
+    font-size: 2em;
+    color: gold;
+    margin-bottom: 10px;
+}
+
+.resource-folder span {
+    color: white;
+    display: block;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    nav .nav-links {
+        display: none;
+    }
+    .hamburger {
+        display: block;
+    }
+    .hero {
+        padding-top: 100px; /* Adjust for fixed nav */
+    }
+    .hero h1 {
+        font-size: 2.2em;
+        margin-bottom: 12px;
+        text-align: center; /* Center the text */
+        padding: 0 15px; /* Add some horizontal padding if needed */
+      }
+    .hero p {
+        font-size: 1.1em;
+    }
+    .button_container {
+        flex-direction: column;
+        align-items: center;
+    }
+    .cta-button1, .cta-button2 {
+        width: 80%;
         margin-bottom: 15px;
+        padding: 14px 25px;
+        font-size: 1em;
     }
-
-    .close-my-class-popup {
-        top: 10px;
-        right: 15px;
-        font-size: 1.8em;
+    .bottom-nav {
+        display: flex;
     }
+    main {
+        padding-bottom: 60px; /* Adjust for bottom nav */
+        padding-top: 72px; /* Adjust for fixed top nav */
+    }
+    .auth-popup {
+        top: 60px;
+        margin-top: 20px;
+    }
+    .faq-section {
+        padding-top: 40px;
+        padding-bottom: 40px;
+    }
+    .resource-section {
+        padding-top: 40px;
+        padding-bottom: 40px;
+    }
+}
 
+@media (min-width: 769px) {
     .bottom-nav {
         display: none;
+    }
+    .side-nav {
+        display: none; /* Initially hidden on larger screens */
     }
 
     .hero h1 {
@@ -740,496 +958,3 @@ footer {
       }
 
 }
-
-/* Media Queries */
-
-/* Desktop View (No specific media query needed for wider screens) */
-
-/* Tablet View */
-@media (max-width: 1024px) {
-    nav .nav-links {
-        display: none;
-    }
-
-    .hamburger {
-        display: block;
-    }
-
-    .side-nav {
-        display: block;
-    }
-
-    nav {
-        justify-content: space-between;
-    }
-
-    main {
-        padding-top: 72px;
-    }
-
-    .hero {
-        margin-top: 72px;
-        transform: translateZ(0) scale(1);
-        min-height: auto;
-        padding: 40px 20px;
-        overflow: hidden; /* Prevent vertical scrollbar */
-    }
-
-    .hero-content {
-        padding: 30px;
-    }
-
-    .hero h1 {
-        font-size: 2.6em;
-        margin-bottom: 15px;
-    }
-
-    .hero p {
-        font-size: 1.1em;
-        margin-bottom: 20px;
-    }
-
-    .button_container {
-        margin-bottom: 30px; /* Adjust spacing for tablet */
-    }
-
-    .cta-button1 {
-        padding: 12px 25px;
-        font-size: 1em;
-        margin-right: 10px;
-        margin-bottom: 10px; /* Add some bottom margin for better spacing on smaller tablets */
-    }
-
-    .cta-button2 {
-        padding: 12px 25px;
-        font-size: 1em;
-        margin-left: 10px;
-        margin-bottom: 10px; /* Add some bottom margin */
-    }
-
-    .divider {
-        margin: 50px auto;
-    }
-
-    /* Responsive adjustments for auth pop-up on tablet */
-    .auth-popup {
-        top: 70px;
-        width: 70%;
-        max-width: 450px;
-    }
-
-    .auth-tabs button {
-        padding: 10px 18px;
-        font-size: 0.95em;
-    }
-
-    .auth-forms h2 {
-        font-size: 1.9em;
-        margin-bottom: 15px;
-    }
-
-    .input-group label {
-        font-size: 0.85em;
-    }
-
-    .input-group input[type="email"],
-    .input-group input[type="password"],
-    .input-group input[type="text"],
-    .input-group select {
-        padding: 10px;
-        font-size: 0.9em;
-    }
-
-    .auth-button,
-    .google-auth-button {
-        padding: 12px 18px;
-        font-size: 0.95em;
-    }
-
-    /* Show bottom nav on tablet */
-    .bottom-nav {
-        display: flex;
-    }
-
-    /* Adjust badge position for tablet */
-    .bottom-nav a .notification-badge {
-        top: -6px;
-        right: -7px;
-        padding: 4px 7px;
-        font-size: 0.65em;
-    }
-
-    .hero h1 {
-        font-size: 2.6em;
-        margin-bottom: 15px;
-        text-align: center; /* Center the text */
-        padding: 0 30px; /* Add some horizontal padding if needed */
-      }
-    
-
-}
-
-/* Mobile View */
-@media (max-width: 768px) {
-    nav .nav-links {
-        display: none;
-    }
-
-    .hamburger {
-        display: block;
-    }
-
-    .side-nav {
-        display: block;
-    }
-
-    nav {
-        justify-content: space-between;
-    }
-
-    main {
-        padding-top: 72px;
-    }
-
-    .hero {
-        margin-top: 72px;
-        padding: 30px 15px;
-        overflow: hidden; /* Prevent vertical scrollbar */
-    }
-
-    .hero-content {
-        padding: 20px;
-    }
-
-    .hero h1 {
-        font-size: 2.2em;
-        margin-bottom: 12px;
-    }
-
-    .hero p {
-        font-size: 0.95em;
-        margin-bottom: 18px;
-    }
-
-    .button_container {
-        flex-direction: column; /* Stack buttons on smaller mobiles */
-        align-items: center; /* Center them */
-        margin-bottom: 30px;
-        gap: 10px; /* Reduced gap */
-    }
-
-    .cta-button1 {
-        padding: 10px 20px;
-        font-size: 0.9em;
-        margin-right: 0;
-        margin-left: 0;
-        width: 80%; /* Make buttons wider on mobile */
-        box-sizing: border-box;
-    }
-
-    .cta-button2 {
-        padding: 10px 20px;
-        font-size: 0.9em;
-        margin-left: 0;
-        margin-right: 0;
-        width: 80%; /* Make buttons wider on mobile */
-        box-sizing: border-box;
-    }
-
-    .divider {
-        margin: 40px auto;
-    }
-
-    /* Responsive adjustments for auth pop-up on mobile */
-    .auth-popup {
-        top: 60px;
-        width: 95%;
-        max-width: 320px;
-    }
-
-    .auth-tabs button {
-        padding: 8px 12px;
-        font-size: 0.85em;
-    }
-
-    .auth-forms h2 {
-        font-size: 1.8em;
-        margin-bottom: 12px;
-        text-align: left;
-    }
-
-    .input-group label {
-        font-size: 0.8em;
-    }
-
-    .input-group input[type="email"],
-    .input-group input[type="password"],
-    .input-group input[type="text"],
-    .input-group select {
-        padding: 8px;
-        font-size: 0.85em;
-    }
-
-    .auth-button,
-    .google-auth-button {
-        padding: 10px 15px;
-        font-size: 0.85em;
-    }
-
-    /* Show bottom nav on mobile */
-    .bottom-nav {
-        display: flex;
-    }
-
-    /* Adjust badge position for mobile */
-    .bottom-nav a .notification-badge {
-        top: -5px;
-        right: -5px;
-        padding: 3px 6px;
-        font-size: 0.6em;}
-
-        /* My Class Pop-up adjustments for mobile */
-        .my-class-popup {
-            width: 95%;
-            padding: 20px;
-        }
-    
-        .my-class-popup h2 {
-            font-size: 1.6em;
-            margin-bottom: 15px;
-        }
-    
-        .close-my-class-popup {
-            top: 10px;
-            right: 15px;
-            font-size: 1.6em;
-        }
-    
-        #my-class-form {
-            gap: 15px;
-        }
-    
-        .input-group label {
-            font-size: 0.8em;
-        }
-    
-        .input-group input[type="text"],
-        .input-group input[type="number"] {
-            padding: 10px;
-            font-size: 0.9em;
-        }
-    
-        #my-class-form button.action-button {
-            padding: 12px 20px;
-            font-size: 0.95em;
-        }
-
-        .hero h1 {
-            font-size: 2.2em;
-            margin-bottom: 12px;
-            text-align: center; /* Center the text */
-            padding: 0 15px; /* Add some horizontal padding if needed */
-          }
-
-    }
-    
-    /* Overlay for pop-ups */
-    .overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-        z-index: 999;
-        display: none;
-        opacity: 0;
-        transition: opacity 0.3s ease;
-    }
-    
-    .overlay.active {
-        display: block;
-        opacity: 1;
-    }
-    
-    .popup-open {
-        overflow: hidden; /* Prevent scrolling of the body when the pop-up is open */
-    }
-    
-    /* Styles for the musical notes container */
-    .notes-container {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        pointer-events: none;
-        z-index: -1;
-        overflow: hidden; /* Ensure notes don't cause scroll */
-    }
-    
-    /* FAQ Section */
-    .faq-section {
-        padding: 60px 20px;
-        max-width: 960px;
-        margin: 0 auto;
-        box-sizing: border-box;
-    }
-    
-    .faq-section h2 {
-        font-family: 'Playfair Display', serif;
-        font-size: 2.5em;
-        text-align: center;
-        margin-bottom: 40px;
-        color: gold;
-    }
-    
-    .faq-item {
-        background-color: rgba(0, 0, 0, 0.5);
-        border-radius: 8px;
-        margin-bottom: 15px;
-        overflow: hidden;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-    
-    .faq-item.active h3 i {
-        transform: rotate(180deg);
-    }
-    
-    .faq-item h3 {
-        padding: 15px 20px;
-        margin: 0;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        font-size: 1.1em;
-        font-weight: 600;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-    }
-    
-    .faq-item h3:hover {
-        background-color: rgba(0, 0, 0, 0.7);
-    }
-    
-    .faq-item h3 i {
-        font-size: 1.2em;
-        transition: transform 0.3s ease-in-out;
-    }
-    
-    .faq-item p {
-        padding: 0 20px;
-        margin-bottom: 15px;
-        font-size: 0.95em;
-        line-height: 1.6;
-        display: none; /* Initially hidden */
-    }
-    
-    /* Resource Folder Section */
-    .resource-folder-section {
-        padding: 60px 20px;
-        max-width: 960px;
-        margin: 0 auto;
-        box-sizing: border-box;
-        text-align: center;
-    }
-    
-    .resource-folder-section h2 {
-        font-family: 'Playfair Display', serif;
-        font-size: 2.5em;
-        margin-bottom: 40px;
-        color: lightcoral;
-    }
-    
-    .resource-folders-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-        gap: 20px;
-        margin-top: 20px;
-    }
-    
-    .resource-folder {
-        background-color: rgba(0, 0, 0, 0.5);
-        border-radius: 8px;
-        padding: 20px;
-        text-align: center;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        cursor: pointer;
-    }
-    
-    .resource-folder:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    }
-    
-    .resource-folder img {
-        max-width: 80px;
-        margin-bottom: 10px;
-    }
-    
-    .resource-folder h3 {
-        font-size: 1em;
-        margin-top: 0;
-        margin-bottom: 5px;
-        font-weight: 600;
-    }
-    
-    .resource-folder p {
-        font-size: 0.85em;
-        color: #ccc;
-        margin-bottom: 0;
-    }
-    
-    .resource-folder.interactive {
-        cursor: pointer;
-    }
-    
-    /* --- Media Queries for FAQ and Resources --- */
-    @media (max-width: 768px) {
-
-        .hero h1 {
-            font-size: 2.2em;
-            margin-bottom: 12px;
-            text-align: center; /* Center the text */
-            padding: 0 15px; /* Add some horizontal padding if needed */
-          }
-
-        .faq-section h2,
-        .resource-folder-section h2 {
-            font-size: 2em;
-            margin-bottom: 30px;
-        }
-    
-        .faq-item h3 {
-            font-size: 1em;
-            padding: 12px 15px;
-        }
-    
-        .faq-item p {
-            font-size: 0.9em;
-            padding: 0 15px 10px;
-        }
-    
-        .resource-folders-grid {
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 15px;
-        }
-    
-        .resource-folder {
-            padding: 15px;
-        }
-    
-        .resource-folder img {
-            max-width: 60px;
-            margin-bottom: 8px;
-        }
-    
-        .resource-folder h3 {
-            font-size: 0.9em;
-        }
-    
-        .resource-folder p {
-            font-size: 0.8em;
-        }
-    }
