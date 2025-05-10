@@ -248,50 +248,42 @@
 
         <div id="video-player-container">
             <iframe
-              id="video-player"
-              width="100%"
-              height="100%"
-              src="https://www.youtube.com/embed/yvmaq9QIFAI?si=SAKrGcJwSSkH-6z6"
-              title="YouTube video player"
-              frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowfullscreen
+                id="video-player"
+                width="100%"
+                height="100%"
+                src="https://www.youtube.com/embed/yvmaq9QIFAI?si=SAKrGcJwSSkH-6z6"
+                title="YouTube video player"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen
             >
             </iframe>
             <button id="fullscreen-button">Fullscreen</button>
         </div>
-        <a href="https://your-google-drive-link" target="_blank">
+        <!-- <a href="https://your-google-drive-link" target="_blank">
             <button id="notes-button">Notes</button>
-        </a>
+        </a> -->
 
         <div class="notes-section">
-            <h2>Course Summary</h2>
-            <p>
-                Welcome to the Indian Classical Music Course! Here are some important notes to help you understand the videos:
-            </p>
+            <h2>Video Summary</h2>
+            <p>यह वीडियो भारतीय शास्त्रीय संगीत में राग वर्गीकरण की अवधारणा पर केंद्रित है। रागों को व्यवस्थित करने की मुख्य प्रणालियाँ हैं:</p>
             <ul>
-                <li><strong>Episode 1: Introduction to Indian Classical Music</strong><br>
-                    Learn about the rich history and traditions of Indian Classical Music, its unique elements, and its significance in Indian culture.
+                <li><strong>जाति वर्गीकरण:</strong>
+                    <ul>
+                        <li>रागों को उनके आरोह (आरोही क्रम) और अवरोह (अवरोही क्रम) में प्रयुक्त स्वरों की संख्या के आधार पर वर्गीकृत किया जाता है।</li>
+                        <li>उदाहरण: औडव (5 स्वर), षाडव (6 स्वर), संपूर्ण (7 स्वर)।</li>
+                        <li>रागों को उनकी आरोह और अवरोह जातियों के संयोजन से वर्णित किया जा सकता है, जैसे औडव-षाडव।</li>
+                    </ul>
                 </li>
-                <li><strong>Episode 2: What is Swar? How to sing Swar?</strong><br>
-                    Understand the concept of Swar (musical notes), their types, and how to produce them accurately.  Practice exercises for singing Swar.
-                </li>
-                <li><strong>Episode 3: What is Alankaar? How to sing Alankaar?</strong><br>
-                    Discover Alankaars (ornamentations), their importance in adding beauty to the music, and techniques for singing them effectively.
-                </li>
-                <li><strong>Episode 4: What is Raag? Characteristics of Raag</strong><br>
-                    Explore the concept of Raag, the melodic framework in Indian Classical Music, and its essential characteristics.
-                </li>
-                <li><strong>Episode 5: What is Raag Vargikaran?</strong><br>
-                    Learn about the classification of Raags into different Thaats (scales) and understand the relationships between them.
-                </li>
-                <li><strong>Episode 6: What is Taal? All About Teen-taal</strong><br>
-                    Understand the concept of Taal (rhythm), learn about Teen-taal (a common rhythmic cycle), and practice counting and clapping Taals.
+                <li><strong>थाट वर्गीकरण:</strong>
+                    <ul>
+                        <li>रागों को 10 मूलभूत थाटों (मेलॉडिक स्केल) के सापेक्ष वर्गीकृत किया जाता है।</li>
+                        <li>प्रत्येक थाट में सात स्वर होते हैं और यह उन रागों के लिए एक ढाँचा प्रदान करता है जो उस थाट के स्वरों का उपयोग करते हैं।</li>
+                        <li>एक राग को उस थाट के तहत समूहीकृत किया जाता है जिसके स्वरों से वह सबसे अधिक मेल खाता है।</li>
+                    </ul>
                 </li>
             </ul>
-            <p>
-                For more detailed notes and exercises, please refer to the <a href="#" target="_blank">full course materials</a>.
-            </p>
+            <p>राग वर्गीकरण संगीतकारों और छात्रों को रागों को समझने, उनका विश्लेषण करने और उनके बीच संबंध पहचानने में मदद करता है। जाति स्वरों की संख्या पर ध्यान केंद्रित करती है, जबकि थाट उनके मूल मेलोडिक स्केल पर आधारित एक व्यापक प्रणाली है।</p>
         </div>
     </div>
 
@@ -341,9 +333,39 @@
         });
 
         // Notes button functionality (open in new tab)
-        notesButton.addEventListener('click', () => {
-            const googleDriveLink = "https://your-google-drive-link"; // Replace with your actual link
-            window.open(googleDriveLink, '_blank');
+        // notesButton.addEventListener('click', () => {
+        //     const googleDriveLink = "https://your-google-drive-link"; // Replace with your actual link
+        //     window.open(googleDriveLink, '_blank');
+        // });
+
+        window.addEventListener('orientationchange', () => {
+            if (window.orientation === 90 || window.orientation === -90) { // Landscape orientation
+                if (!document.fullscreenElement) {
+                    if (videoContainer.requestFullscreen) {
+                        videoContainer.requestFullscreen();
+                    } else if (videoContainer.mozRequestFullScreen) {
+                        videoContainer.mozRequestFullScreen();
+                    } else if (videoContainer.webkitRequestFullscreen) {
+                        videoContainer.webkitRequestFullscreen();
+                    } else if (videoContainer.msRequestFullscreen) {
+                        videoContainer.msRequestFullscreen();
+                    }
+                    fullscreenButton.textContent = 'Exit Fullscreen';
+                }
+            } else { // Portrait orientation
+                if (document.fullscreenElement) {
+                    if (document.exitFullscreen) {
+                        document.exitFullscreen();
+                    } else if (document.mozCancelFullScreen) {
+                        document.mozCancelFullScreen();
+                    } else if (document.webkitExitFullscreen) {
+                        document.webkitExitFullscreen();
+                    } else if (document.msExitFullscreen) {
+                        document.msExitFullscreen();
+                    }
+                    fullscreenButton.textContent = 'Fullscreen';
+                }
+            }
         });
 
     </script>

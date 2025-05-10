@@ -369,14 +369,16 @@
         });
 
         window.addEventListener('orientationchange', () => {
-            if (window.innerWidth < window.innerHeight && document.fullscreenElement) {
-                exitFullscreen();
-                fullscreenButton.textContent = 'Fullscreen';
-            } else if (window.innerWidth > window.innerHeight && !document.fullscreenElement) {
-                requestFullscreen(videoContainer);
-                fullscreenButton.textContent = 'Exit Fullscreen';
-            } else if (window.innerWidth > window.innerHeight && document.fullscreenElement) {
-                fullscreenButton.textContent = 'Exit Fullscreen';
+            if (window.orientation === 90 || window.orientation === -90) { // Landscape orientation
+                if (!document.fullscreenElement) {
+                    requestFullscreen(videoContainer);
+                    fullscreenButton.textContent = 'Fullscreen';
+                }
+            } else { // Portrait orientation
+                if (document.fullscreenElement) {
+                    exitFullscreen();
+                    fullscreenButton.textContent = 'Fullscreen';
+                }
             }
         });
 
