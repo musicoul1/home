@@ -37,13 +37,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Create a container for the musical notes
     const notesContainer = document.createElement('div');
     notesContainer.classList.add('notes-container');
-    notesContainer.style.position = 'absolute';
-    notesContainer.style.top = '0';
-    notesContainer.style.left = '0';
-    notesContainer.style.width = '100%';
-    notesContainer.style.height = '100%';
-    notesContainer.style.pointerEvents = 'none';
-    notesContainer.style.zIndex = '-1'; // Ensure it's behind the hero content
     if (heroSection) {
         heroSection.insertBefore(notesContainer, heroContent);
     } else {
@@ -51,57 +44,51 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Function to show notification
-    // function showNotification(message) {
-    //     const notificationDiv = document.createElement('div');
-    //     notificationDiv.classList.add('notification');
-    //     notificationDiv.textContent = message;
-    //     document.body.appendChild(notificationDiv);
-    //     setTimeout(() => {
-    //         notificationDiv.remove();
-    //     }, 3000);
-    // }
+    function showNotification(message) {
+        const notificationDiv = document.createElement('div');
+        notificationDiv.classList.add('notification');
+        notificationDiv.textContent = message;
+        document.body.appendChild(notificationDiv);
+        setTimeout(() => {
+            notificationDiv.remove();
+        }, 3000);
+    }
 
-    // function updateLoggedInUI(user) {
-    //     console.log("Logged in as:", user ? (user.displayName || user.email) : null);
-    //     if (loginBtn) loginBtn.style.display = 'none';
-    //     if (sideNavLoginBtn) sideNavLoginBtn.style.display = 'none';
-    //     if (logoutBtn) {
-    //         logoutBtn.style.display = 'inline-block';
-    //     } else {
-    //         // If logout button doesn't exist in main nav, ensure side nav is updated
-    //         const tempLogoutBtn = document.getElementById('logout-btn');
-    //         if (tempLogoutBtn) tempLogoutBtn.style.display = 'inline-block';
-    //     }
-    //     if (sideNavLogoutBtn) sideNavLogoutBtn.style.display = 'inline-block';
+    function updateLoggedInUI(user) {
+        console.log("Logged in as:", user ? (user.displayName || user.email) : null);
+        // Assuming you might add login/logout buttons later, keep these placeholders
+        // if (loginBtn) loginBtn.style.display = 'none';
+        // if (sideNavLoginBtn) sideNavLoginBtn.style.display = 'none';
+        // if (logoutBtn) {
+        //     logoutBtn.style.display = 'inline-block';
+        // }
+        // if (sideNavLogoutBtn) sideNavLogoutBtn.style.display = 'inline-block';
 
-    //     if (user) {
-    //         showNotification(`Logged in as ${user.email}`);
-    //         // You might want to redirect to a user dashboard here eventually
-    //     }
-    // }
+        if (user) {
+            showNotification(`Logged in as ${user.email}`);
+            // You might want to redirect to a user dashboard here eventually
+        }
+    }
 
-    // function updateLoggedOutUI() {
-    //     console.log("Logged out");
-    //     if (loginBtn) loginBtn.style.display = 'inline-block';
-    //     if (sideNavLoginBtn) sideNavLoginBtn.style.display = 'inline-block';
-    //     if (logoutBtn) {
-    //         logoutBtn.style.display = 'none';
-    //     } else {
-    //         const tempLogoutBtn = document.getElementById('logout-btn');
-    //         if (tempLogoutBtn) tempLogoutBtn.style.display = 'none';
-    //     }
-    //     if (sideNavLogoutBtn) sideNavLogoutBtn.style.display = 'none';
-    //     showNotification("Logged out successfully.");
-    // }
+    function updateLoggedOutUI() {
+        console.log("Logged out");
+        // if (loginBtn) loginBtn.style.display = 'inline-block';
+        // if (sideNavLoginBtn) sideNavLoginBtn.style.display = 'inline-block';
+        // if (logoutBtn) {
+        //     logoutBtn.style.display = 'none';
+        // }
+        // if (sideNavLogoutBtn) sideNavLogoutBtn.style.display = 'none';
+        showNotification("Logged out successfully.");
+    }
 
-    // auth.onAuthStateChanged((user) => {
-    //     if (user) {
-    //         updateLoggedInUI(user);
-    //         // Optionally, fetch user-specific data here
-    //     } else {
-    //         updateLoggedOutUI();
-    //     }
-    // });
+    auth.onAuthStateChanged((user) => {
+        if (user) {
+            updateLoggedInUI(user);
+            // Optionally, fetch user-specific data here
+        } else {
+            updateLoggedOutUI();
+        }
+    });
 
     // Event listener for Login form submission
     if (loginForm) {
@@ -409,27 +396,29 @@ document.addEventListener('DOMContentLoaded', function() {
         lastScrollTop = scrollTop;
     });
 
-    // --- Add musical notes to the background (Fewer notes, smoother, random, varied size, glow) ---
-    const numberOfNotes = 15; // Slightly increased number of notes
+    // --- Add musical notes to the background (Smooth movement, glow, varied size, responsive) ---
+    const numberOfNotes = 15;
     const musicalSymbols = ['♫', '♪', '♩', '♬', '♭', '♯'];
+    const noteColor = 'lightblue';
 
     for (let i = 0; i < numberOfNotes; i++) {
         const note = document.createElement('div');
         note.classList.add('musical-note');
-        note.textContent= musicalSymbols[Math.floor(Math.random() * musicalSymbols.length)];
-        note.style.left = `${Math.random() * 100}vw`; // Ensure it starts within the viewport
+        note.textContent = musicalSymbols[Math.floor(Math.random() * musicalSymbols.length)];
+        note.style.left = `${Math.random() * 100}vw`;
         note.style.top = `${Math.random() * 100}vh`;
-        // More varied font sizes, ensuring smaller ones are still decent
-        const size = Math.random() * 20 + 14; // Size between 14px and 34px
+        const size = Math.random() * 18 + 12; // Varied size
         note.style.fontSize = `${size}px`;
-        note.style.animationDelay = `${Math.random() * 12}s`; // More varied and longer delay
-        note.style.animationDuration = `${Math.random() * 12 + 18}s`; // Longer, smoother duration
-        note.style.opacity = `${Math.random() * 0.5 + 0.5}`; // Varied opacity
+        note.style.animationDelay = `${Math.random() * 10}s`;
+        note.style.animationDuration = `${Math.random() * 15 + 20}s`; // Longer, smoother animation
+        note.style.opacity = `${Math.random() * 0.5 + 0.5}`;
+        note.style.color = noteColor;
+        note.style.pointerEvents = 'none';
 
-        const animationName = Math.random() > 0.5 ? 'floatNoteSmoothRandom1' : 'floatNoteSmoothRandom2';
+        const animationName = Math.random() > 0.5 ? 'floatNoteSmoothGlow1' : 'floatNoteSmoothGlow2';
         note.style.animationName = animationName;
         note.style.animationIterationCount = 'infinite';
-        note.style.animationTimingFunction = 'ease-in-out'; // Smoother timing
+        note.style.animationTimingFunction = 'linear'; // Even smoother movement
 
         notesContainer.appendChild(note);
     }
@@ -468,3 +457,48 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+// Define the keyframe animations and styles
+const styleSheet = document.createElement("style");
+styleSheet.type = "text/css";
+styleSheet.innerText = `
+@keyframes floatNoteSmoothGlow1 {
+    0% { transform: translateY(0) translateX(0); opacity: 0.6; text-shadow: 0 0 5px transparent; }
+    50% { transform: translateY(-8px) translateX(4px); opacity: 1; text-shadow: 0 0 10px lightblue; }
+    100% { transform: translateY(0) translateX(0); opacity: 0.6; text-shadow: 0 0 5px transparent; }
+}
+
+@keyframes floatNoteSmoothGlow2 {
+    0% { transform: translateY(0) translateX(0); opacity: 0.7; text-shadow: 0 0 5px transparent; }
+    50% { transform: translateY(6px) translateX(-2px); opacity: 1; text-shadow: 0 0 10px lightblue; }
+    100% { transform: translateY(0) translateX(0); opacity: 0.7; text-shadow: 0 0 5px transparent; }
+}
+
+.notes-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1; /* Ensure it's behind the hero content */
+    overflow: hidden; /* Prevent notes from overflowing the container */
+}
+
+.musical-note {
+    position: fixed;
+    color: lightblue;
+    font-size: 20px;
+    opacity: 0.8;
+    pointer-events: none;
+    z-index: -1; /* Ensure it stays behind content */
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+    .musical-note {
+        font-size: 16px; /* Slightly smaller on mobile */
+    }
+}
+`;
+document.head.appendChild(styleSheet);
