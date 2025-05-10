@@ -248,50 +248,43 @@
 
         <div id="video-player-container">
             <iframe
-              id="video-player"
-              width="100%"
-              height="100%"
-              src="https://www.youtube.com/embed/T_TC6CJHrG8?si=Dddofv2cpU4PnaGl"
-              title="YouTube video player"
-              frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowfullscreen
+                id="video-player"
+                width="100%"
+                height="100%"
+                src="https://www.youtube.com/embed/T_TC6CJHrG8?si=Dddofv2cpU4PnaGl"
+                title="YouTube video player"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen
             >
             </iframe>
             <button id="fullscreen-button">Fullscreen</button>
         </div>
-        <a href="https://your-google-drive-link" target="_blank">
-            <button id="notes-button">Notes</button>
-        </a>
 
         <div class="notes-section">
-            <h2>Course Summary</h2>
-            <p>
-                Welcome to the Indian Classical Music Course! Here are some important notes to help you understand the videos:
-            </p>
+            <h2>Video Summary</h2>
             <ul>
-                <li><strong>Episode 1: Introduction to Indian Classical Music</strong><br>
-                    Learn about the rich history and traditions of Indian Classical Music, its unique elements, and its significance in Indian culture.
+                <li><strong>राग की परिभाषा:</strong>
+                    <ul>
+                        <li>'राग' संस्कृत के 'रंज' शब्द से बना है, जिसका अर्थ है मन को रंगना या आनंदित करना।</li>
+                        <li>यह स्वर (नोट) और वर्ण (गीत) का एक संयोजन है जो गाए जाने पर भावनाओं को जगाता है।</li>
+                        <li>भारतीय शास्त्रीय संगीत में अनगिनत राग हैं (कम से कम 100 ज्ञात)।</li>
+                    </ul>
                 </li>
-                <li><strong>Episode 2: What is Swar? How to sing Swar?</strong><br>
-                    Understand the concept of Swar (musical notes), their types, and how to produce them accurately.  Practice exercises for singing Swar.
+                <li><strong>राग की मुख्य विशेषताएं:</strong> (विभिन्न भावनाओं वाले व्यक्ति की सादृश्यता का उपयोग करके समझाया गया)
+                    <ul>
+                        <li><strong>वादी स्वर:</strong> राग का सबसे महत्वपूर्ण स्वर।</li>
+                        <li><strong>संवादी स्वर:</strong> वादी स्वर के बाद दूसरा सबसे महत्वपूर्ण स्वर।</li>
+                        <li><strong>वर्ज्य स्वर:</strong> वे स्वर जिनका उपयोग किसी विशेष राग में नहीं किया जाता है।</li>
+                        <li><strong>अनुवादी स्वर:</strong> वादी, संवादी और वर्ज्य स्वरों के अलावा शेष स्वर।</li>
+                        <li><strong>आरोह और अवरोह:</strong> राग के विशिष्ट नियमों का पालन करते हुए, स्वरों के आरोही और अवरोही क्रम।</li>
+                        <li><strong>गान समय:</strong> दिन का वह विशिष्ट समय जब कोई राग सबसे प्रभावी होता है।</li>
+                        <li><strong>पकड़:</strong> स्वरों का एक समूह जो तुरंत एक राग की पहचान कराता है।</li>
+                    </ul>
                 </li>
-                <li><strong>Episode 3: What is Alankaar? How to sing Alankaar?</strong><br>
-                    Discover Alankaars (ornamentations), their importance in adding beauty to the music, and techniques for singing them effectively.
-                </li>
-                <li><strong>Episode 4: What is Raag? Characteristics of Raag</strong><br>
-                    Explore the concept of Raag, the melodic framework in Indian Classical Music, and its essential characteristics.
-                </li>
-                <li><strong>Episode 5: What is Raag Vargikaran?</strong><br>
-                    Learn about the classification of Raags into different Thaats (scales) and understand the relationships between them.
-                </li>
-                <li><strong>Episode 6: What is Taal? All About Teen-taal</strong><br>
-                    Understand the concept of Taal (rhythm), learn about Teen-taal (a common rhythmic cycle), and practice counting and clapping Taals.
-                </li>
+                <li><strong>उदाहरण:</strong> राग भोपाली का उपयोग करके विशेषताओं को स्पष्ट किया गया (वादी, संवादी, वर्ज्य स्वर और गान समय)।</li>
+                <li><strong>आगामी:</strong> भविष्य के एपिसोड में रागों का वर्गीकरण और थाट व जाति की अवधारणाएँ।</li>
             </ul>
-            <p>
-                For more detailed notes and exercises, please refer to the <a href="#" target="_blank">full course materials</a>.
-            </p>
         </div>
     </div>
 
@@ -340,11 +333,26 @@
             fullscreenButton.textContent = document.msFullscreenElement ? 'Exit Fullscreen' : 'Fullscreen';
         });
 
-        // Notes button functionality (open in new tab)
-        notesButton.addEventListener('click', () => {
-            const googleDriveLink = "https://your-google-drive-link"; // Replace with your actual link
-            window.open(googleDriveLink, '_blank');
+        window.addEventListener('orientationchange', () => {
+            if (window.orientation === 90 || window.orientation === -90) { // Landscape orientation
+                if (!document.fullscreenElement) {
+                    requestFullscreen(videoContainer);
+                    fullscreenButton.textContent = 'Fullscreen';
+                }
+            } else { // Portrait orientation
+                if (document.fullscreenElement) {
+                    exitFullscreen();
+                    fullscreenButton.textContent = 'Fullscreen';
+                }
+            }
         });
+
+        // Notes button functionality (open in new tab)
+        // const notesButtonLink = document.createElement('a');
+        // notesButtonLink.href = "https://your-google-drive-link"; // Replace with your actual link
+        // notesButtonLink.target = "_blank";
+        // notesButtonLink.innerHTML = '<button id="notes-button">Notes</button>';
+        // document.querySelector('.container').appendChild(notesButtonLink);
 
     </script>
 </body>
