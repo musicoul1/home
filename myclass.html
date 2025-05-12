@@ -195,6 +195,7 @@
                         <option value="Singing">Singing</option>
                         <option value="Tabla">Tabla</option>
                         <option value="Piano">Piano</option>
+                        <option value="Sugam-Sangeet">Sugam-Sangeet</option>
                     </select>
                 </div>
             </div>
@@ -241,15 +242,28 @@ subjectLevelForm.addEventListener('submit', (event) => {
     }
 
     let redirectURL = '';
-    if (subject === 'Singing' && level === '1') {
+     if (subject === 'Singing' && level === '1') {
         redirectURL = 'prarambhik.html';
     } else if (subject === 'Singing' && level === '4') {
         redirectURL = 'madhyama-pratham.html';
     } else if (subject === 'Singing' && level === '6') {
         redirectURL = 'visharad-pratham.html';
-    } else if (subject === 'Piano' && level === '1') {
+    } else if (subject === 'Singing' && level === '5') {
+        redirectURL = 'madhyama-purna.html';
+    }
+    else if (subject === 'Piano' && level === '1') {
         redirectURL = 'piano-prarambhik.html';
-    } else {
+    }
+    else if (subject === 'Tabla' && level === '1') {
+        redirectURL = 'tabla-prarambhik.html';
+    }
+    else if (subject === 'Sugam-Sangeet' && level === '1') {
+        redirectURL = 'sugam-prarambhik.html';
+    }
+    else if (subject === 'Piano' && level === '3'){
+        redirectURL = 'piano-praveshikapurna.html';
+    }
+     else {
         alert('No matching page found. Please select a valid Subject and Level combination.');
         return;
     }

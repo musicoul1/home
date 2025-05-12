@@ -54,41 +54,41 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 3000);
     }
 
-    function updateLoggedInUI(user) {
-        console.log("Logged in as:", user ? (user.displayName || user.email) : null);
-        // Assuming you might add login/logout buttons later, keep these placeholders
-        // if (loginBtn) loginBtn.style.display = 'none';
-        // if (sideNavLoginBtn) sideNavLoginBtn.style.display = 'none';
-        // if (logoutBtn) {
-        //     logoutBtn.style.display = 'inline-block';
-        // }
-        // if (sideNavLogoutBtn) sideNavLogoutBtn.style.display = 'inline-block';
+    // function updateLoggedInUI(user) {
+    //     console.log("Logged in as:", user ? (user.displayName || user.email) : null);
+    //     // Assuming you might add login/logout buttons later, keep these placeholders
+    //     // if (loginBtn) loginBtn.style.display = 'none';
+    //     // if (sideNavLoginBtn) sideNavLoginBtn.style.display = 'none';
+    //     // if (logoutBtn) {
+    //     //     logoutBtn.style.display = 'inline-block';
+    //     // }
+    //     // if (sideNavLogoutBtn) sideNavLogoutBtn.style.display = 'inline-block';
 
-        if (user) {
-            showNotification(`Logged in as ${user.email}`);
-            // You might want to redirect to a user dashboard here eventually
-        }
-    }
+    //     if (user) {
+    //         showNotification(`Logged in as ${user.email}`);
+    //         // You might want to redirect to a user dashboard here eventually
+    //     }
+    // }
 
-    function updateLoggedOutUI() {
-        console.log("Logged out");
-        // if (loginBtn) loginBtn.style.display = 'inline-block';
-        // if (sideNavLoginBtn) sideNavLoginBtn.style.display = 'inline-block';
-        // if (logoutBtn) {
-        //     logoutBtn.style.display = 'none';
-        // }
-        // if (sideNavLogoutBtn) sideNavLogoutBtn.style.display = 'none';
-        showNotification("Logged out successfully.");
-    }
+    // function updateLoggedOutUI() {
+    //     console.log("Logged out");
+    //     // if (loginBtn) loginBtn.style.display = 'inline-block';
+    //     // if (sideNavLoginBtn) sideNavLoginBtn.style.display = 'inline-block';
+    //     // if (logoutBtn) {
+    //     //     logoutBtn.style.display = 'none';
+    //     // }
+    //     // if (sideNavLogoutBtn) sideNavLogoutBtn.style.display = 'none';
+    //     showNotification("Logged out successfully.");
+    // }
 
-    auth.onAuthStateChanged((user) => {
-        if (user) {
-            updateLoggedInUI(user);
-            // Optionally, fetch user-specific data here
-        } else {
-            updateLoggedOutUI();
-        }
-    });
+    // auth.onAuthStateChanged((user) => {
+    //     if (user) {
+    //         updateLoggedInUI(user);
+    //         // Optionally, fetch user-specific data here
+    //     } else {
+    //         updateLoggedOutUI();
+    //     }
+    // });
 
     // Event listener for Login form submission
     if (loginForm) {
@@ -190,29 +190,29 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Logout functionality
-    if (logoutBtn) {
-        logoutBtn.addEventListener('click', () => {
-            auth.signOut().then(() => {
-                showNotification("Logged out successfully.");
-                // Update UI
-            }).catch((error) => {
-                showNotification("Error logging out.");
-                console.error("Logout Error:", error);
-            });
-        });
-    }
+    // if (logoutBtn) {
+    //     logoutBtn.addEventListener('click', () => {
+    //         auth.signOut().then(() => {
+    //             showNotification("Logged out successfully.");
+    //             // Update UI
+    //         }).catch((error) => {
+    //             showNotification("Error logging out.");
+    //             console.error("Logout Error:", error);
+    //         });
+    //     });
+    // }
 
-    if (sideNavLogoutBtn) {
-        sideNavLogoutBtn.addEventListener('click', () => {
-            auth.signOut().then(() => {
-                showNotification("Logged out successfully.");
-                // Update UI
-            }).catch((error) => {
-                showNotification("Error logging out.");
-                console.error("Logout Error:", error);
-            });
-        });
-    }
+    // if (sideNavLogoutBtn) {
+    //     sideNavLogoutBtn.addEventListener('click', () => {
+    //         auth.signOut().then(() => {
+    //             showNotification("Logged out successfully.");
+    //             // Update UI
+    //         }).catch((error) => {
+    //             showNotification("Error logging out.");
+    //             console.error("Logout Error:", error);
+    //         });
+    //     });
+    // }
 
     hamburger.addEventListener('click', () => {
         sideNav.style.right = '0px';
