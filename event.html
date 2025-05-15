@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upcoming Events - Musicoul</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <style>
+        body {
+            font-family: 'Raleway', sans-serif;
+            margin: 0;
+            background: linear-gradient(135deg, #000000, #2a0000, #550055, #000000); /* Previous Palette */
+            background-size: 300% 300%;
+            animation: backgroundGradient 15s ease infinite;
+            color: #ffffff;
+            line-height: 1.6;
+            overflow-x: hidden;
+            padding-bottom: 70px;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        @keyframes backgroundGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .notes-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .musical-note {
+            color: yellow; /* Previous Palette */
+            font-size: 1.2rem;
+            opacity: 0.6;
+            animation: float 3s infinite alternate, glowNote 1.5s infinite alternate;
+            position: absolute;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-10px); } /* Adjusted float */
+        }
+
+        @keyframes glowNote {
+            0% { text-shadow: 0 0 3px rgba(255, 255, 0, 0.4); }
+            100% { text-shadow: 0 0 8px rgba(255, 255, 0, 0.7); }
+        }
+
+        .note1 { top: 10%; left: 10%; animation-delay: 0.5s; font-size: 1.4rem; }
+        .note2 { top: 40%; right: 15%; animation-delay: 1.2s; font-size: 1.6rem; }
+        .note3 { bottom: 20%; left: 5%; animation-delay: 0.8s; font-size: 1.3rem; }
+        .note4 { bottom: 35%; right: 10%; animation-delay: 0.3s; font-size: 1.5rem; }
+        .note5 { top: 25%; right: 30%; animation-delay: 1.8s; font-size: 1.7rem; }
+        .note6 { bottom: 10%; left: 20%; animation-delay: 0.1s; font-size: 1.2rem; }
+
+        .container {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            color: #ffffff;
+            font-size: 2.8rem;
+            font-weight: 700;
+            text-align: center;
+            margin-top: -10px;
+            margin-bottom: 50px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+        }
+
+        .underline {
+            height: 4px;
+            width: 120px;
+            background: linear-gradient(270deg, #ff001e, #0000ff, #aa00aa, #ff001e); /* Previous Palette */
+            background-size: 600% 600%;
+            animation: gradientGlow 7s ease infinite;
+            border-radius: 3px;
+            margin: 10px auto 40px auto;
+            box-shadow: 0 2px 8px rgba(255, 0, 30, 0.5);
+        }
+
+        .event-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+        }
+
+        .event-card {
+            background-color: rgba(255, 255, 255, 0.1); /* Slightly adjusted for better visibility with this background */
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+        }
+
+        .event-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.3);
+        }
+
+        .event-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .event-details {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .event-title {
+            font-family: 'Playfair Display', serif;
+            margin-top: 0;
+            font-size: 1.3rem;
+            color: #ffffff;
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .event-date {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+            font-size: 0.9rem;
+            color: #aaa;
+            align-items: center;
+        }
+
+        .event-date svg {
+            fill: #aaa;
+            width: 16px;
+            height: 16px;
+        }
+
+        .event-countdown {
+            color: #fff; /* Previous Palette - adjusted for visibility */
+            margin-bottom: 15px;
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .countdown-segment {
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 10px 15px;
+            border-radius: 7px;
+            font-size: 1rem;
+            min-width: 60px;
+            text-align: center;
+        }
+
+        .countdown-segment span {
+            display: block;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .event-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: auto;
+        }
+
+        .details-btn {
+            flex-grow: 1;
+            padding: 10px 15px;
+            border-radius: 7px;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            transition: background-color 0.2s ease-in-out;
+            font-size: 0.9rem;
+            font-family: 'Raleway', sans-serif;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+        }
+
+        .details-btn:hover {
+            background-color: rgba(0, 0, 0, 0.9);
+        }
+
+        /* Modal Styles */
+        #event-details-modal {
+            display: none;
+            position: fixed;
+            z-index: 20;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.8);
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(15px);
+        }
+
+        #event-details-modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            width: 95%;
+            max-width: 750px;
+            max-height: 95vh;
+            overflow-y: auto;
+            position: relative;
+            animation: fadeIn 0.3s ease-in-out;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            padding: 25px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 15px;
+        }
+
+        .modal-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: #ffffff;
+            margin: 0;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+        }
+
+        .close-modal {
+            color: #fff;
+            font-size: 2rem;
+            cursor: pointer;
+            border: none;
+            background: none;
+            opacity: 0.7;
+            transition: opacity 0.2s ease-in-out;
+        }
+
+        .close-modal:hover {
+            opacity: 1;
+        }
+
+        .modal-body {
+            margin-bottom: 25px;
+        }
+
+        .modal-body img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            object-fit: cover;
+            max-height: 350px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-body .event-date {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            color: #aaa;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .modal-body .event-date svg {
+            fill: #aaa;
+            width: 18px;
+            height: 18px;
+        }
+
+        .modal-body .event-description-container {
+            margin-bottom: 20px;
+            padding: 18px;
+            background-color: rgba(0, 0, 0, 0.4);
+            border-radius: 10px;
+        }
+
+        .modal-body .event-description-container h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            color: #eee;
+            margin-top: 0;
+            margin-bottom: 12px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+        }
+
+        .modal-body .event-description {
+            font-size: 1.05rem;
+            color: #eee;
+            line-height: 1.8;
+            margin-bottom: 0;
+        }
+
+        .modal-body .event-description ul {
+            padding-left: 20px;
+            margin-bottom: 0;
+        }
+
+        .modal-body .event-description li {
+            margin-bottom: 8px;
+        }
+
+        .modal-body .event-countdown {
+            color: #fff; /* Previous Palette */
+            margin-bottom: 20px;
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-body .countdown-segment {
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 10px 15px;
+            border-radius: 7px;
+            font-size: 1rem;
+            min-width: 50px;
+            text-align: center;
+        }
+
+        .modal-body .countdown-segment span {
+            display: block;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .modal-body .eligibility {
+            margin-top: 25px;
+            padding: 18px;
+            background-color: rgba(0, 0, 0, 0.4);
+            border-radius: 10px;
+        }
+
+        .modal-body .eligibility h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            color: #eee;
+            margin-top: 0;
+            margin-bottom: 12px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+        }
+
+        .modal-body .eligibility p {
+            font-size: 1rem;
+            color: #ccc;
+            line-height: 1.7;
+            margin-bottom: 0;
+        }
+
+        .modal-body .eligibility ul {
+            padding-left: 20px;
+        }
+
+        .modal-body .eligibility li {
+            margin-bottom: 5px;
+        }
+
+        .modal-footer {
+            display: flex; /* Enable flexbox */
+            justify-content: center; /* Center the button horizontally */
+            position: relative; /* To position the notification */
+        }
+
+        .join-event-btn {
+            padding: 12px 20px;
+            border-radius: 7px;
+            background: linear-gradient(90deg, #800000, #000080, #800080); /* Previous Palette */
+            color: #fff;
+            font-size: 1.1rem;
+            font-weight: 500;
+            cursor: pointer;
+            border: none;
+            background-size: 200% auto;
+            animation: liveGradient 3s linear infinite;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            font-family: 'Raleway',sans-serif;
+            width: 60%;
+            justify-content: center; /* Center text in button */
+            transition: background-color 0.3s ease;
+        }
+
+        .join-event-btn:hover {
+            background-position: right center;
+        }
+
+        .join-event-btn:disabled {
+            background: #666;
+            cursor: not-allowed;
+            animation: none;
+            box-shadow: none;
+        }
+
+        @keyframes liveGradient {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+
+        .coming-soon {
+            text-align: center;
+            font-size: 1.1rem;
+            color: #aaa;
+            margin-top: 40px;
+        }
+
+        .modal-notification {
+            position: absolute;
+            top: -40px; /* Position above the button */
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(255, 165, 0, 0.8); /* Orange background */
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease-in-out, visibility 0s linear 0.3s;
+        }
+
+        .modal-notification.show {
+            opacity: 1;
+            visibility: visible;
+            transition: opacity 0.3s ease-in-out, visibility 0s linear 0s;
+        }
+
+        /* Responsive adjustments */
+        @media screen and (max-width: 768px) {
+            h1 {
+                font-size: 2.3rem;
+                margin-bottom: 40px;
+            }
+            .event-list {
+                grid-template-columns: 1fr;
+            }
+            .event-card img {
+                height: 180px;
+            }
+            .modal-title {
+                font-size: 1.6rem;
+            }
+            .join-event-btn {
+                width: 80%; /* Adjust width for smaller screens */
+            }
+            .modal-notification {
+                width: 90%; /* Adjust width for smaller screens */
+                left: 50%;
+                transform: translateX(-50%);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="notes-container">
+        <div class="musical-note note1">♫</div>
+        <div class="musical-note note2">♪</div>
+        <div class="musical-note note3">𝄞</div>
+        <div class="musical-note note4">♩</div>
+        <div class="musical-note note5">♬</div>
+        <div class="musical-note note6">♭</div>
+    </div>
+
+    <div class="container">
+        <h1>Upcoming Events</h1>
+        <div class="underline"></div>
+        <div id="event-list" class="event-list">
+            </div>
+
+        <div id="event-details-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title">Event Details</h2>
+                    <button id="close-modal" class="close-modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <img id="modal-image" src="Resources/Events/Quiz-Battle1.png" alt="Quiz Battle Competition">
+                    <h3 id="modal-modal-title" class="event-title">Quiz Battle Competition</h3>
+                    <div class="event-date">
+                        <svg viewBox="0 0 24 24"><path fill="currentColor"
+                        d="M19 3H5C3.9 3 3 3.9 3 5V19C3 20.1 3.9 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3M19 19H5V8H19V19M12 13C10.9 13 10 12.1 10 11C10 9.9 10.9 9 12 9C13.1 9 14 9.9 14 11C14 12.1 13.1 13 12 13M16 15H8V17H16V15Z"/></svg>
+                        <span id="modal-date-text">June 14, 8:00 PM</span>
+                    </div>
+
+                    <div class="event-countdown" id="modal-countdown"></div>
+
+                    <div class="event-description-container">
+                        <h4>Description</h4>
+                        <p id="modal-description" class="event-description">
+                            </div>
+
+                    <div class="eligibility">
+                        <h4>Eligibility</h4>
+                        <p id="modal-eligibility">
+                            </p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div id="modal-join-notification" class="modal-notification">Event is not live yet!</div>
+                    <a id="modal-join-btn" href="https://meet.google.com/improv" class="join-event-btn" target="_blank" rel="noopener noreferrer">
+                        <svg viewBox="0 0 24 24"><path fill="currentColor" d="M17 10.5V7C17 6.45 16.55 6 16 6H8C7.45 6 7 6.45 7 7V10.5C7 11.05 7.45 11.5 8 11.5H9.5L8 13H16L14.5 11.5H16C16.55 11.5 17 11.05 17 10.5M12 16C10.9 16 10 15.1 10 14C10 12.9 10.9 12 12 12C13.1 12 14 12.9 14 14C14 15.1 13.1 16 12 16M6 17H18V19H6V17Z"/></svg>
+                        Join Event
+                    </a>
+                </div>
+            </div>
+        </div>
+        <p class="coming-soon">More events coming soon!</p>
+    </div>
+
+    <script>
+        const notesContainer = document.querySelector('.notes-container');
+        const numberOfNotes = 6;
+        const musicalSymbols = ['♫', '♪', '𝄞', '♩', '♬', '♭'];
+
+        for (let i = 1; i <= numberOfNotes; i++) {
+            const note = document.createElement('div');
+            note.classList.add('musical-note', `note${i}`);
+            note.textContent = musicalSymbols[i - 1];
+            notesContainer.appendChild(note);
+        }
+
+        const events = [
+            {
+                title: "Quiz Battle Competition",
+                date: "2025-06-14T20:00:00+05:30",
+                description: "Join the Ultimate Quiz Battle! Get ready for an electrifying Quiz Competition on 14th June, 2025. Compete for a cash prize pool of 1500+ rupees and more exciting rewards. Test your knowledge, challenge your peers, and prove you're the quiz champion!",
+                imageUrl: "Resources/Events/Quiz-Battle1.png",
+                meetLink: "https://meet.google.com/improv",
+                eligibility: "Intermediate level musicians.",
+                descriptionBullets: [
+                    "Join the Ultimate Quiz Battle!",
+                    "Get ready for an electrifying Quiz Competition on 14th June, 2025.",
+                    "Compete for a cash prize pool of 1500+ rupees and more exciting rewards.",
+                    "Test your knowledge, challenge your peers, and prove you're the quiz champion!",
+                ],
+                eligibilityBullets: [
+                    "80%+ Attendance in Class", "Atleast Attended 3 Workshops", "Class Fees Paid"
+                ]
+            },
+            // {
+            //     title: "Songwriting Session",
+            //     date: "2025-05-20T16:00:00+05:30",
+            //     description: "Collaborate and write a song together online.",
+            //     imageUrl: "https://images.unsplash.com/photo-1507838235634-da9aa7ca9ef9?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG0dby1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+            //     meetLink: "https://meet.google.com/songwrite",
+            //     eligibility: "Anyone interested in songwriting.",
+            //     descriptionBullets: [
+            //         "Collaborate and write a song together online."
+            //     ],
+            //     eligibilityBullets: [
+            //         "Anyone interested in songwriting."
+            //     ]
+            // },
+            // {
+            //     title: "Music Production Basics",
+            //     date: "2025-05-25T11:00:00+05:30",
+            //     description: "An introductory session to music production software.",
+            //     imageUrl: "https://images.unsplash.com/photo-1598515889764-a618a7e39384?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG0dby1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+            //     meetLink: "https://meet.google.com/production",
+            //     eligibility: "No prior experience needed.",
+            //     descriptionBullets: [
+            //         "An introductory session to music production software."
+            //     ],
+            //     eligibilityBullets: [
+            //         "No prior experience needed."
+            //     ]
+            // },
+        ];
+
+        const eventListDiv = document.getElementById("event-list");
+        const modal = document.getElementById("event-details-modal");
+        const closeModalBtn = document.getElementById("close-modal");
+        const modalImage = document.getElementById("modal-image");
+        const modalTitle = document.getElementById("modal-modal-title");
+        const modalDate = document.getElementById("modal-date-text");
+        const modalDescription = document.getElementById("modal-description");
+        const modalCountdownDiv = document.getElementById("modal-countdown");
+        const modalJoinBtn = document.getElementById("modal-join-btn");
+        const modalEligibility = document.getElementById("modal-eligibility");
+        const modalJoinNotification = document.getElementById("modal-join-notification");
+        let countdownInterval;
+        let modalOpenEventIndex = -1; // To keep track of the currently open event in the modal
+
+        function displayEvents() {
+            events.forEach((event, index) => {
+                const eventCard = document.createElement("div");
+                eventCard.classList.add("event-card");
+
+                const eventContent = `
+                    <img src="${event.imageUrl}" alt="${event.title}">
+                    <div class="event-details">
+                        <h3 class="event-title">${event.title}</h3>
+                        <div class="event-date">
+                            <svg viewBox="0 0 24 24"><path fill="currentColor" d="M19 3H5C3.9 3 3 3.9 3 5V19C3 20.1 3.9 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3M19 19H5V8H19V19M12 13C10.9 13 10 12.1 10 11C10 9.9 10.9 9 12 9C13.1 9 14 9.9 14 11C14 12.1 13.1 13 12 13M16 15H8V17H16V15Z"/></svg>
+                            <span>${moment(event.date).format("MMMM DD, h:mm A")}</span>
+                        </div>
+                        <div class="event-countdown" id="countdown-${index}"></div>
+                        <div class="event-actions">
+                            <button class="details-btn" data-index="${index}">Details</button>
+                        </div>
+                    </div>
+                `;
+                eventCard.innerHTML = eventContent;
+                eventListDiv.appendChild(eventCard);
+
+                const countdownDiv = document.getElementById(`countdown-${index}`);
+                updateCardCountdown(event.date, countdownDiv);
+            });
+
+            document.querySelectorAll('.details-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const index = this.dataset.index;
+                    showEventDetails(index);
+                });
+            });
+        }
+
+        function formatCountdown(duration) {
+            const days = Math.floor(duration.asDays());
+            const hours = Math.floor(duration.hours());
+            const minutes = Math.floor(duration.minutes());
+            const seconds = Math.floor(duration.seconds());
+
+            return `
+                <div class="countdown-segment"><span>${days}</span>d</div>
+                <div class="countdown-segment"><span>${hours}</span>h</div>
+                <div class="countdown-segment"><span>${minutes}</span>m</div>
+                <div class="countdown-segment"><span>${seconds}</span>s</div>
+            `;
+        }
+
+        function updateCardCountdown(eventDateString, countdownDiv) {
+            const eventDate = moment(eventDateString);
+            const now = moment();
+
+            if (eventDate.isAfter(now)) {
+                const interval = setInterval(() => {
+                    const now = moment();
+                    const diff = moment.duration(eventDate.diff(now));
+                    countdownDiv.innerHTML = formatCountdown(diff);
+                    if (eventDate.isSameOrBefore(now)) {
+                        clearInterval(interval);
+                        countdownDiv.textContent = "Event Started!";
+                    }
+                }, 1000);
+            } else {
+                countdownDiv.textContent = "Event Started!";
+            }
+        }
+
+        function showEventDetails(index) {
+            const event = events[index];
+            modalImage.src = event.imageUrl;
+            modalTitle.textContent = event.title;
+            modalDate.textContent = moment(event.date).format("MMMM DD, h:mm A");
+
+            let descriptionHTML = '<p>';
+            if (event.descriptionBullets && Array.isArray(event.descriptionBullets)) {
+                descriptionHTML = '<ul>';
+                event.descriptionBullets.forEach(bullet => {
+                    descriptionHTML += `<li>${bullet}</li>`;
+                });
+                descriptionHTML += '</ul>';
+            } else if (event.description) {
+                descriptionHTML = `<p>${event.description}</p>`;
+            } else {
+                descriptionHTML = '';
+            }
+            modalDescription.innerHTML = descriptionHTML;
+
+            let eligibilityHTML = '<p>';
+            if (event.eligibilityBullets && Array.isArray(event.eligibilityBullets)) {
+                eligibilityHTML = '<ul>';
+                event.eligibilityBullets.forEach(bullet => {
+                    eligibilityHTML += `<li>${bullet}</li>`;
+                });
+                eligibilityHTML += '</ul>';
+            } else if (event.eligibility) {
+                eligibilityHTML = `<p>${event.eligibility}</p>`;
+            } else {
+                eligibilityHTML = '';
+            }
+            modalEligibility.innerHTML = eligibilityHTML;
+
+            modalJoinBtn.href = event.meetLink;
+
+            const eventMoment = moment(event.date);
+            const now = moment();
+            const isFutureEvent = eventMoment.isAfter(now);
+            modalJoinBtn.disabled = !isFutureEvent;
+            modalJoinBtn.textContent = isFutureEvent ? "Join Event" : "Join Event (Started)";
+
+            // Set the initial onclick behavior
+            modalJoinBtn.onclick = () => {
+                if (isFutureEvent) {
+                    modalJoinNotification.textContent = "Event is not live yet!";
+                    modalJoinNotification.classList.add("show");
+                    setTimeout(() => {
+                        modalJoinNotification.classList.remove("show");
+                    }, 3000);
+                } else {
+                    window.open(event.meetLink, '_blank');
+                }
+            };
+            modalOpenEventIndex = index; // Store the index of the open event
+
+            updateModalCountdown(event.date, modalCountdownDiv, index);
+            modal.classList.add("show");
+            document.body.style.overflow = 'hidden';
+        }
+
+        function updateModalCountdown(eventDateString, countdownDiv, index) {
+            const eventDate = moment(eventDateString);
+            const now = moment();
+            if (countdownInterval) {
+                clearInterval(countdownInterval);
+            }
+            if (eventDate.isAfter(now)) {
+                countdownInterval = setInterval(() => {
+                    const now = moment();
+                    const diff = moment.duration(eventDate.diff(now));
+                    countdownDiv.innerHTML = formatCountdown(diff);
+                    const isFuture = eventDate.isAfter(now);
+                    modalJoinBtn.disabled = !isFuture;
+                    modalJoinBtn.textContent = isFuture ? "Join Event" : "Join Event (Started)";
+                    modalJoinBtn.onclick = () => {
+                        if (isFuture) {
+                            modalJoinNotification.textContent = "Event is not live yet!";
+                            modalJoinNotification.classList.add("show");
+                            setTimeout(() => {
+                                modalJoinNotification.classList.remove("show");
+                            }, 3000);
+                        } else {
+                            window.open(events[index].meetLink, '_blank');
+                        }
+                    };
+                    if (eventDate.isSameOrBefore(now)) {
+                        clearInterval(countdownInterval);
+                        countdownDiv.innerHTML = '<div class="countdown-segment"><span>0</span>d</div><div class="countdown-segment"><span>0</span>h</div><div class="countdown-segment"><span>0</span>m</div><div class="countdown-segment"><span>0</span>s</div>';
+                        modalJoinBtn.textContent = "Join Event (Started)";
+                        modalJoinBtn.disabled = false;
+                        modalJoinBtn.onclick = () => {
+                            window.open(events[index].meetLink, '_blank');
+                        };
+                    }
+                }, 1000);
+            } else {
+                countdownDiv.innerHTML = '<div class="countdown-segment"><span>0</span>d</div><div class="countdown-segment"><span>0</span>h</div><div class="countdown-segment"><span>0</span>m</div><div class="countdown-segment"><span>0</span>s</div>';
+                modalJoinBtn.textContent = "Join Event (Started)";
+                modalJoinBtn.disabled = false;
+                modalJoinBtn.onclick = () => {
+                    window.open(events[index].meetLink, '_blank');
+                };
+            }
+        }
+
+        closeModalBtn.addEventListener("click", () => {
+            modal.classList.remove("show");
+            document.body.style.overflow = '';
+            if (countdownInterval) {
+                clearInterval(countdownInterval);
+            }
+            // Reset onclick when modal is closed
+            modalJoinBtn.onclick = () => {
+                // Default behavior if modal is closed without event starting
+            };
+            modalOpenEventIndex = -1;
+        });
+
+        window.addEventListener('click', (event) => {
+            if (event.target === modal) {
+                modal.classList.remove("show");
+                document.body.style.overflow = '';
+                if (countdownInterval) {
+                    clearInterval(countdownInterval);
+                }
+                // Reset onclick when modal is closed
+                modalJoinBtn.onclick = () => {
+                    // Default behavior if modal is closed without event starting
+                };
+                modalOpenEventIndex = -1;
+            }
+        });
+
+        displayEvents();
+    </script>
+</body>
+</html>
