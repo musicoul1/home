@@ -73,13 +73,42 @@
             z-index: 1;
         }
 
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.6); /* Slightly darker background */
+            color: white;
+            border: none;
+            padding: 8px 12px; /* Slightly smaller padding */
+            border-radius: 5px; /* Less rounded */
+            cursor: pointer;
+            font-size: 0.85rem; /* Slightly smaller font */
+            z-index: 30; /* Ensure it's above the modal */
+            transition: background-color 0.2s ease-in-out;
+            font-family: 'Raleway', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .back-button svg {
+            width: 18px;
+            height: 18px;
+            fill: white;
+        }
+
+        .back-button:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
         h1 {
             font-family: 'Playfair Display', serif;
             color: #ffffff;
             font-size: 2.8rem;
             font-weight: 700;
             text-align: center;
-            margin-top: -10px;
+            margin-top: 10px; /* Adjusted margin to accommodate back button */
             margin-bottom: 50px;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
         }
@@ -414,7 +443,7 @@
             align-items: center;
             gap: 8px;
             text-decoration: none;
-            font-family: 'Raleway',sans-serif;
+            font-family: 'Raleway', sans-serif;
             width: 60%;
             justify-content: center; /* Center text in button */
             transition: background-color 0.3s ease;
@@ -466,8 +495,13 @@
 
         /* Responsive adjustments */
         @media screen and (max-width: 768px) {
+            .back-button {
+                top: 15px;
+                left: 15px;
+            }
             h1 {
                 font-size: 2.3rem;
+                margin-top: 50px; /* Adjusted margin */
                 margin-bottom: 40px;
             }
             .event-list {
@@ -491,6 +525,12 @@
     </style>
 </head>
 <body>
+    <button class="back-button" onclick="window.history.back()">
+        <svg style="width:20px;height:20px" viewBox="0 0 24 24">
+            <path fill="currentColor" d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" />
+        </svg>
+        Back
+    </button>
     <div class="notes-container">
         <div class="musical-note note1">♫</div>
         <div class="musical-note note2">♪</div>
