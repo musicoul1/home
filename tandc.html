@@ -10,13 +10,13 @@
             font-family: 'Raleway', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #000; /* Changed to black */
+            background-color: #000;
             color: #fff;
             line-height: 1.6;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
-            overflow: hidden;
+            overflow-x: hidden;  /* Prevent horizontal scrollbar */
         }
         .terms-container {
             max-width: 960px;
@@ -29,6 +29,8 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             position: relative;
             z-index: 2;
+            overflow-y: auto; /* Enable vertical scrolling */
+            max-height: calc(100vh - 160px); /* Limit height and subtract top/bottom margins */
         }
         h1 {
             font-family: 'Playfair Display', serif;
@@ -74,6 +76,7 @@
                 margin: 20px;
                 padding: 20px;
                 border-radius: 12px;
+                max-height: calc(100vh - 130px);
             }
             h1 {
                 font-size: 2.5em;
