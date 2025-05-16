@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Musicoul - Shipping and Returns</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: 'Raleway', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+            color: #fff;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+        .policy-container {
+            max-width: 960px;
+            margin: 40px auto;
+            padding: 30px;
+            background-color: rgba(255, 255, 255, 0.06);
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            z-index: 2;
+        }
+        h1, h2 {
+            font-family: 'Playfair Display', serif;
+            color: #ffdb58;
+            margin-top: 0;
+            margin-bottom: 30px;
+            border-bottom: 3px solid rgba(255, 255, 255, 0.2);
+            padding-bottom: 15px;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        h2 {
+            font-size: 1.8em;
+            margin-top: 25px;
+            margin-bottom: 10px;
+        }
+        p {
+            margin-bottom: 15px;
+            color: #eee;
+        }
+        ul {
+            padding-left: 20px;
+            margin-bottom: 20px;
+            list-style-type: disc;
+        }
+        li {
+            margin-bottom: 10px;
+            color: #eee;
+        }
+        a {
+            color: #ffdb58;
+            text-decoration: none;
+            font-weight: 500;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        @media (max-width: 768px) {
+            .policy-container {
+                margin: 20px;
+                padding: 20px;
+                border-radius: 12px;
+            }
+            h1 {
+                font-size: 2.5em;
+                margin-bottom: 20px;
+                padding-bottom: 10px;
+            }
+            h2 {
+                font-size: 1.8em;
+                margin-top: 20px;
+            }
+            p, li {
+                font-size: 1em;
+            }
+        }
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 3;
+            padding: 10px 15px;
+            border-radius: 8px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #ffdb58;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            font-family: 'Raleway', sans-serif;
+            font-weight: 600;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        .back-button:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: scale(1.05);
+        }
+        .back-button:active {
+            transform: scale(0.95);
+        }
+        footer {
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            padding: 30px 0;
+            text-align: center;
+            margin-top: 50px;
+            z-index: 2;
+            position: relative;
+        }
+        .footer-content {
+            max-width: 960px;
+            margin: 0 auto;
+        }
+        .footer-links {
+            padding: 0;
+            margin-bottom: 20px;
+        }
+        .footer-links li {
+            display: inline;
+            margin: 0 15px;
+        }
+        .footer-links a {
+            color: #fff;
+            text-decoration: none;
+        }
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+        .footer-logo img {
+            height: 30px;
+            margin-right: 10px;
+        }
+        .footer-logo span {
+            font-family: 'Playfair Display', serif;
+            font-weight: bold;
+            font-size: 1.5em;
+            color: #fff;
+        }
+        .footer-content p {
+            margin-bottom: 0;
+            font-size: 0.9em;
+            color: #ccc;
+        }
+        @media (max-width: 600px) {
+            .footer-links li {
+                display: block;
+                margin: 10px 0;
+            }
+        }
+        #gradient-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="gradient-canvas"></canvas>
+    <div class="policy-container">
+        <button class="back-button" onclick="window.history.back();">Back</button>
+        <h1>Shipping and Refund Policy</h1>
+
+        <h2>Shipping Policy</h2>
+        <p><strong>Fulfillment by Amazon (FBA) or Myntra</strong></p>
+        <p>We've partnered with Amazon and Myntra to provide efficient and reliable shipping services. Your orders will be fulfilled directly by these platforms, ensuring a seamless shopping experience.</p>
+
+        <h3>Order Processing</h3>
+        <p>Orders are typically processed within [Number] business days. Please note that processing times may vary during peak seasons or holidays.</p>
+
+        <h3>Shipping Methods and Costs</h3>
+        <p>Shipping costs and delivery times will be determined by Amazon or Myntra based on your shipping address and chosen shipping method. You can view the specific shipping options and costs during the checkout process.</p>
+
+        <h3>Order Tracking</h3>
+        <p>Once your order is shipped, you will receive a tracking number via email from Amazon or Myntra. You can use this number to track your package on their respective websites.</p>
+
+        <h3>Lost or Damaged Packages</h3>
+        <p>If your package is lost or damaged during shipping, please contact Amazon or Myntra directly. They will handle the issue and provide appropriate solutions.</p>
+
+        <h3>International Shipping</h3>
+        <p>International shipping policies will be determined by Amazon or Myntra and may vary depending on the specific platform and destination country. Please refer to their respective websites for more information.</p>
+        <p>By partnering with Amazon and Myntra, we aim to provide you with a convenient and hassle-free shipping experience.</p>
+
+        <h2>Refund Policy</h2>
+        <p><strong>Our Commitment to Customer Satisfaction</strong></p>
+        <p>We strive to provide high-quality products and services. However, we understand that there may be instances where you may need a refund. Please review our refund policy below:</p>
+
+        <h3>Eligible for Refund</h3>
+        <ul>
+            <li><strong>Incorrect or Damaged Products:</strong> If you receive an incorrect or damaged product, please contact our customer support within 2 days of receiving the order. We will arrange for a replacement or refund.</li>
+            <li><strong>Unfulfilled Orders:</strong> If your order is not fulfilled within the specified timeframe, we will issue a full refund.</li>
+        </ul>
+
+        <h3>Not Eligible for Refund</h3>
+        <ul>
+            <li><strong>Change of Mind:</strong> Once an order is placed and processed, we cannot accept returns or refunds due to a change of mind.</li>
+            <li><strong>Digital Products:</strong> Digital products, such as online courses or downloadable content, are non-refundable.</li>
+        </ul>
+
+        <h3>Refund Process</h3>
+        <ol>
+            <li><strong>Contact Customer Support:</strong> Please contact our customer support team at <a href="mailto:musicoul1@gmail.com">musicoul1@gmail.com</a> to initiate the refund process.</li>
+            <li><strong>Provide Order Information:</strong> Provide your order number and a brief explanation for the refund request.</li>
+            <li><strong>Verification:</strong> We will verify your order details and the reason for the refund.</li>
+            <li><strong>Refund Processing:</strong> Once your refund request is approved, we will process the refund to your original payment method.</li>
+        </ol>
+
+        <p>Please note: Refund processing times may vary depending on your payment method and bank processing times.</p>
+        <p>For further assistance or specific inquiries, please contact our customer support team.</p>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <img src="Resources/Favicon/1.png" alt="Musicoul Footer Logo">
+                <span>Musicoul</span>
+            </div>
+            <ul class="footer-links">
+                <li><a href="index.html" aria-label="Go to Home page">Home</a></li>
+                <li><a href="courses.html" aria-label="View our Courses">Courses</a></li>
+                <li><a href="coming-soon.html" aria-label="See upcoming Events">Events</a></li>
+                <li><a href="coming-soon.html" aria-label="Learn more About Us">About Us</a></li>
+                <li><a href="coming-soon.html" aria-label="Contact Us">Contact</a></li>
+            </ul>
+            <p>&copy; 2025 Musicoul. All rights reserved.</p>
+        </div>
+    </footer>
+        <script>
+        window.onload = function () {
+            const gradientCanvas = new GradientCanvas({
+                id: 'gradient-canvas',
+                width: window.innerWidth,
+                height: window.innerHeight,
+                colors: [
+                    '#000000',
+                    '#000000',
+                ],
+                transitionSpeed: 4000,
+                loop: true,
+                autoPlay: true,
+            });
+            window.addEventListener('resize', () => {
+                gradientCanvas.resize();
+            });
+        }
+    </script>
+</body>
+</html>

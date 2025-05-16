@@ -1,150 +1,210 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Musicoul</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="shortcut icon" href="Resources/Favicon/1.png" type="image/x-icon">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="icon" href="Resources/Homepage/favicon.ico" type="image/x-icon">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UycXc4nPnrQdqTqpVnVHmaq6mTlnNrAstQlQRgG1IvANxxgdoJzPhnM0waKwtTRzjBYJP3nwstb/ShVYw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="shortcut icon"
+      href="Resources/Favicon/1.png"
+      type="image/x-icon"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link
+      rel="icon"
+      href="Resources/Homepage/favicon.ico"
+      type="image/x-icon"
+    />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+      integrity="sha512-v2CJ7UycXc4nPnrQdqTqpVnVHmaq6mTlnNrAstQlQRgG1IvANxxgdoJzPhnM0waKwtTRzjBYJP3nwstb/ShVYw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.5.2/velocity.min.js"></script>
-</head>
-<body>
+  </head>
+  <body>
     <nav>
-        <div class="nav-brand">
-            <img src="Resources/Homepage/Logo.png" class="logo" alt="Musicoul Logo - Online Music Teaching Institute">
-            <span class="musicoul-name">Musicoul</span>
-        </div>
-        <div class="nav-links">
-            <a href="index.html" aria-label="Go to Home page" data-page="home"   class="active">Home</a>
-            <a href="courses.html" aria-label="View our Courses" data-page="courses">Courses</a>
-            <a href="coming-soon.html" aria-label="Learn more About Us" data-page="about">Events</a>
-            <a href="coming-soon.html" aria-label="Contact Us" data-page="contact">Contact</a>
-             </div>
-        <div class="hamburger">
-            <i class="fas fa-bars"></i>
-        </div>
+      <div class="nav-brand">
+        <img
+          src="Resources/Homepage/Logo.png"
+          class="logo"
+          alt="Musicoul Logo - Online Music Teaching Institute"
+        />
+        <span class="musicoul-name">Musicoul</span>
+      </div>
+      <div class="nav-links">
+        <a
+          href="index.html"
+          aria-label="Go to Home page"
+          data-page="home"
+          class="active"
+          >Home</a
+        >
+        <a href="courses.html" aria-label="View our Courses" data-page="courses"
+          >Courses</a
+        >
+        <a
+          href="coming-soon.html"
+          aria-label="Learn more About Us"
+          data-page="about"
+          >Events</a
+        >
+        <a href="coming-soon.html" aria-label="Contact Us" data-page="contact"
+          >Contact</a
+        >
+      </div>
+      <div class="hamburger">
+        <i class="fas fa-bars"></i>
+      </div>
     </nav>
     <div class="side-nav">
-        <span class="close-btn">&times;</span>
-        <a href="index.html" aria-label="Go to Home page" data-page="home" class="active">Home</a>
-        <a href="courses.html" aria-label="View our Courses" data-page="courses">Courses</a>
-        <a href="coming-soon.html" aria-label="Learn more About Us" data-page="about">Events</a>
-        <a href="coming-soon.html" aria-label="Contact Us" data-page="contact">Contact</a>
+      <span class="close-btn">&times;</span>
+      <a
+        href="index.html"
+        aria-label="Go to Home page"
+        data-page="home"
+        class="active"
+        >Home</a
+      >
+      <a href="courses.html" aria-label="View our Courses" data-page="courses"
+        >Courses</a
+      >
+      <a
+        href="coming-soon.html"
+        aria-label="Learn more About Us"
+        data-page="about"
+        >Events</a
+      >
+      <a href="coming-soon.html" aria-label="Contact Us" data-page="contact"
+        >Contact</a
+      >
     </div>
     <main>
-        <section class="hero">
-            <div class="hero-content">
-                <h1>Unleash Your Inner Musician!</h1>
-                <p>Where passion meets melody. Begin your musical journey today.</p>
-                <div class="button_container">
-                    <a href="myclass.html" class="cta-button1">M-Class</a>
-                    <a href="m-youtube.html" class="cta-button2">M-Youtube</a>
-                </div>
-            </div>
-        </section>
-
-        <div class="divider"></div>
-
-        <div id="auth-popup" class="auth-popup">
-            <div class="auth-container">
-                <span class="close-popup">&times;</span>
-                <div class="auth-tabs">
-                    <button class="tab active" data-tab="login">Login</button>
-                    <button class="tab" data-tab="signup">Sign Up</button>
-                </div>
-                <div class="auth-forms">
-                    <form id="login-form" class="active">
-                        <h2 class="heading">Login</h2>
-                        <div class="input-group">
-                            <label for="login-email">Email:</label>
-                            <input type="email" id="login-email" name="login-email" class="placeholder" required>
-                        </div>
-                        <div class="input-group">
-                            <label for="login-password">Password:</label>
-                            <input type="password" id="login-password" name="login-password" class="placeholder" required>
-                        </div>
-                        <button type="submit" class="auth-button">Login</button>
-                        <button class="google-auth-button"><i class="fab fa-google"></i> Sign in with Google</button>
-                    </form>
-
-                    <form id="signup-form">
-                        <h2 class="heading">Sign Up</h2>
-                        <div class="input-group">
-                            <label for="signup-name">Name:</label>
-                            <input type="text" id="signup-name" name="signup-name" class="placeholder" required>
-                        </div>
-                        <div class="input-group">
-                            <label for="signup-email">Email:</label>
-                            <input type="email" id="signup-email" name="signup-email" class="placeholder" required>
-                        </div>
-                        <div class="input-group">
-                            <label for="signup-password">Password:</label>
-                            <input type="password" id="signup-password" name="signup-password" class="placeholder" required>
-                        </div>
-                        <div class="input-group">
-                            <label for="signup-subject">Subject:</label>
-                            <select id="signup-subject" name="signup-subject" required>
-                                <option value="">Select Subject</option>
-                                <option value="Singing">Singing</option>
-                                <option value="Piano">Piano</option>
-                                <option value="Tabla">Tabla</option>
-                            </select>
-                        </div>
-                        <div class="input-group">
-                            <label for="signup-exam-no">Exam No.:</label>
-                            <select id="signup-exam-no" name="signup-exam-no" required>
-                                <option value="">Select Exam No.</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                                <option value="6">6</option>
-                                <option value="7">7</option>
-                            </select>
-                        </div>
-                        <button type="submit" class="auth-button">Sign Up</button>
-                        <button class="google-auth-button"><i class="fab fa-google"></i> Sign up with Google</button>
-                    </form>
-                </div>
-            </div>
+      <section class="hero">
+        <div class="hero-content">
+          <h1>Unleash Your Inner Musician!</h1>
+          <p>Where passion meets melody. Begin your musical journey today.</p>
+          <div class="button_container">
+            <a href="myclass.html" class="cta-button1">M-Class</a>
+            <a href="m-youtube.html" class="cta-button2">M-Youtube</a>
+          </div>
         </div>
+      </section>
+
+      <div class="divider"></div>
+
+      <div id="auth-popup" class="auth-popup">
+        <div class="auth-container">
+          <span class="close-popup">&times;</span>
+          <div class="auth-tabs">
+            <button class="tab active" data-tab="login">Login</button>
+            <button class="tab" data-tab="signup">Sign Up</button>
+          </div>
+          <div class="auth-forms">
+            <form id="login-form" class="active">
+              <h2 class="heading">Login</h2>
+              <div class="input-group">
+                <label for="login-email">Email:</label>
+                <input
+                  type="email"
+                  id="login-email"
+                  name="login-email"
+                  class="placeholder"
+                  required
+                />
+              </div>
+              <div class="input-group">
+                <label for="login-password">Password:</label>
+                <input
+                  type="password"
+                  id="login-password"
+                  name="login-password"
+                  class="placeholder"
+                  required
+                />
+              </div>
+              <button type="submit" class="auth-button">Login</button>
+            </form>
+
+            <form id="signup-form" class="signup-form">
+              <h2>Sign Up</h2>
+              <div class="input-group">
+                <label for="signup-name">Name</label>
+                <input
+                  type="text"
+                  id="signup-name"
+                  name="signup-name"
+                  required
+                />
+              </div>
+              <div class="input-group">
+                <label for="signup-email">Email</label>
+                <input
+                  type="email"
+                  id="signup-email"
+                  name="signup-email"
+                  required
+                />
+              </div>
+              <div class="input-group">
+                <label for="signup-password">Password</label>
+                <input
+                  type="password"
+                  id="signup-password"
+                  name="signup-password"
+                  required
+                />
+              </div>
+              <button type="submit" class="auth-button">Sign Up</button>
+            </form>
+          </div>
+        </div>
+      </div>
     </main>
 
     <footer>
-        <div class="footer-content">
-            <p>&copy; 2025 Musicoul. All rights reserved.</p>
-            <ul class="footer-links">
-                <li><a href="privacy-policy.html">Privacy Policy</a></li>
-                <li><a href="terms-of-service.html">Terms of Service</a></li>
-                <li><a href="#">Social Media</a></li>
-            </ul>
-        </div>
+      <div class="footer-content">
+        <p>&copy; 2025 Musicoul. All rights reserved.</p>
+        <ul class="footer-links">
+          <li><a href="privacy-policy.html">Privacy Policy</a></li>
+          <li><a href="tandc.html">Terms & Conditions</a></li>
+          <li><a href="sandr.html">Shipping & Returns Policy</a></li>
+        </ul>
+      </div>
     </footer>
 
     <div class="bottom-nav">
-        <a href="event.html" aria-label="View Events">
-            <i class="fas fa-calendar-alt"></i>
-            <span>Events</span>
-        </a>
-        <a href="courses.html" aria-label="View Courses">
-            <i class="fas fa-book-open"></i>
-            <span>Courses</span>
-        </a>
-        <a href="coming-soon.html" id="bottom-nav-whats-new" aria-label="What's New">
-            <i class="fas fa-bullhorn"></i>
-            <span>What's New </span>
-        </a>
+      <a href="event.html" aria-label="View Events">
+        <i class="fas fa-calendar-alt"></i>
+        <span>Events</span>
+      </a>
+      <a href="courses.html" aria-label="View Courses">
+        <i class="fas fa-book-open"></i>
+        <span>Courses</span>
+      </a>
+      <a href="#" id="bottom-nav-chat-btn" aria-label="Chat">
+        <i class="fas fa-comment-dots"></i>
+        <span>Chat</span>
+      </a>
+      <a href="#" id="bottom-nav-login-btn" aria-label="Login or Sign Up">
+        <i class="fas fa-user"></i>
+        <span>Login/Signup</span>
+      </a>
     </div>
 
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
     <script src="script.js"></script>
-    </body>
+  </body>
 </html>

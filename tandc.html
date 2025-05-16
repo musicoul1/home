@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Musicoul - Terms and Conditions</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: 'Raleway', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #000; /* Changed to black */
+            color: #fff;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+        .terms-container {
+            max-width: 960px;
+            margin: 40px auto;
+            padding: 30px;
+            background-color: rgba(255, 255, 255, 0.06);
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            z-index: 2;
+        }
+        h1 {
+            font-family: 'Playfair Display', serif;
+            color: #ffdb58;
+            margin-top: 0;
+            margin-bottom: 30px;
+            border-bottom: 3px solid rgba(255, 255, 255, 0.2);
+            padding-bottom: 15px;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        h2 {
+            font-family: 'Playfair Display', serif;
+            color: #ffdb58;
+            margin-top: 25px;
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        p {
+            margin-bottom: 15px;
+            color: #eee;
+        }
+        ul {
+            padding-left: 20px;
+            margin-bottom: 20px;
+            list-style-type: disc;
+        }
+        li {
+            margin-bottom: 10px;
+            color: #eee;
+        }
+        a {
+            color: #ffdb58;
+            text-decoration: none;
+            font-weight: 500;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        @media (max-width: 768px) {
+            .terms-container {
+                margin: 20px;
+                padding: 20px;
+                border-radius: 12px;
+            }
+            h1 {
+                font-size: 2.5em;
+                margin-bottom: 20px;
+                padding-bottom: 10px;
+            }
+            h2 {
+                font-size: 1.8em;
+                margin-top: 20px;
+            }
+            p, li {
+                font-size: 1em;
+            }
+        }
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 3;
+            padding: 10px 15px;
+            border-radius: 8px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #ffdb58;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            font-family: 'Raleway', sans-serif;
+            font-weight: 600;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        .back-button:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: scale(1.05);
+        }
+        .back-button:active {
+            transform: scale(0.95);
+        }
+        footer {
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            padding: 30px 0;
+            text-align: center;
+            margin-top: 50px;
+            z-index: 2;
+            position: relative;
+        }
+        .footer-content {
+            max-width: 960px;
+            margin: 0 auto;
+        }
+        .footer-links {
+            padding: 0;
+            margin-bottom: 20px;
+        }
+        .footer-links li {
+            display: inline;
+            margin: 0 15px;
+        }
+        .footer-links a {
+            color: #fff;
+            text-decoration: none;
+        }
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+        .footer-logo img {
+            height: 30px;
+            margin-right: 10px;
+        }
+        .footer-logo span {
+            font-family: 'Playfair Display', serif;
+            font-weight: bold;
+            font-size: 1.5em;
+            color: #fff;
+        }
+        .footer-content p {
+            margin-bottom: 0;
+            font-size: 0.9em;
+            color: #ccc;
+        }
+        @media (max-width: 600px) {
+            .footer-links li {
+                display: block;
+                margin: 10px 0;
+            }
+        }
+        #gradient-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="gradient-canvas"></canvas>
+    <div class="terms-container">
+        <button class="back-button" onclick="window.history.back();">Back</button>
+        <h1>Terms & Conditions</h1>
+        <p>Welcome to Musicoul, the premier institute for learning Indian Classical Music, Tabla, Harmonium, and various other Instruments. Our terms and conditions (“Terms”) outline the rules and regulations for the use of Musicoul's website.</p>
+        <p>By accessing this website, we assume you accept these terms and conditions. Do not continue to use Musicoul if you do not agree to take all of the terms and conditions stated on this page.</p>
+
+        <h2>1. Acceptance of Terms</h2>
+        <p>By accessing or using our website, you agree to be bound by these Terms and Conditions. If you disagree with any part of these Terms and Conditions, please do not use our website.</p>
+
+        <h2>2. User Account</h2>
+        <ul>
+            <li><strong>Account Creation:</strong> You may be required to create an account to access certain features of our website.</li>
+            <li><strong>Account Security:</strong> You are responsible for maintaining the confidentiality of your account information and for all activities that occur under your account.</li>
+        </ul>
+
+        <h2>3. Course Purchases and Access</h2>
+        <ul>
+            <li><strong>Payment:</strong> You agree to pay all fees associated with your course purchases.</li>
+            <li><strong>Course Access:</strong> Upon successful payment, you will be granted access to the course materials and live classes.</li>
+            <li><strong>Course Materials:</strong> Course materials are licensed, not sold. You may not share, distribute, or sell course materials.</li>
+            <li><strong>Live Classes:</strong> You agree to attend live classes as scheduled. Recording or sharing live class content without explicit permission is prohibited.</li>
+        </ul>
+
+        <h2>4. Intellectual Property</h2>
+        <p>All content on our website, including but not limited to text, images, videos, software, and course materials, is the property of Musicoul and is protected by copyright laws. You may not use, reproduce, distribute, or modify any content without our prior written consent.</p>
+
+        <h2>5. Limitation of Liability</h2>
+        <p>Musicoul shall not be liable for any damages arising from the use or inability to use our website or its services, including but not limited to direct, indirect, incidental, special, or consequential damages.</p>
+
+        <h2>6. Indemnification</h2>
+        <p>You agree to indemnify and hold harmless Musicoul and its affiliates, officers, directors, employees, and agents from and against any claims, damages, liabilities, costs, and expenses, including reasonable attorneys' fees, arising out of your use of the website or violation of these Terms and Conditions.</p>
+
+        <h2>7. Modification of Terms</h2>
+        <p>We reserve the right to modify these Terms and Conditions at any time. Any changes will be effective immediately upon posting on our website.</p>
+
+        <h2>8. Termination</h2>
+        <p>We may terminate your access to our website or services at any time, with or without notice, for any reason, including violation of these Terms and Conditions.</p>
+
+        <h2>9. Governing Law</h2>
+        <p>These Terms and Conditions shall be governed by and construed in accordance with the laws of [Your Jurisdiction].</p>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <img src="Resources/Favicon/1.png" alt="Musicoul Footer Logo">
+                <span>Musicoul</span>
+            </div>
+            <ul class="footer-links">
+                <li><a href="index.html" aria-label="Go to Home page">Home</a></li>
+                <li><a href="courses.html" aria-label="View our Courses">Courses</a></li>
+                <li><a href="coming-soon.html" aria-label="See upcoming Events">Events</a></li>
+                <li><a href="coming-soon.html" aria-label="Learn more About Us">About Us</a></li>
+                <li><a href="coming-soon.html" aria-label="Contact Us">Contact</a></li>
+            </ul>
+            <p>&copy; 2025 Musicoul. All rights reserved.</p>
+        </div>
+    </footer>
+    <script>
+        window.onload = function () {
+            const gradientCanvas = new GradientCanvas({
+                id: 'gradient-canvas',
+                width: window.innerWidth,
+                height: window.innerHeight,
+                colors: [
+                    '#000000',
+                    '#000000',
+                ],
+                transitionSpeed: 4000,
+                loop: true,
+                autoPlay: true,
+            });
+            window.addEventListener('resize', () => {
+                gradientCanvas.resize();
+            });
+        }
+    </script>
+</body>
+</html>
