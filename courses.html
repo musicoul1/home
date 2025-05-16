@@ -11,6 +11,32 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://www.gstatic.com/firebasejs/9.x.x/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.x.x/firebase-auth-compat.js"></script>
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyBaDBLoe2Wi2WgmJfPRXoEP-ZSgkVhMxVI",
+            authDomain: "musicoul-15025.firebaseapp.com",
+            databaseURL: "https://musicoul-15025-default-rtdb.firebaseio.com",
+            projectId: "musicoul-15025",
+            storageBucket: "musicoul-15025.firebasestorage.app",
+            messagingSenderId: "863099041367",
+            appId: "1:863099041367:web:c3d61399489a219611d512",
+            measurementId: "G-WBPE697N9Q"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+
+        auth.onAuthStateChanged(user => {
+            if (!user) {
+                // Redirect to the homepage if the user is not authenticated
+                window.location.href = 'index.html';
+         }
+        });
+    </script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 </head>
 <body>
     <nav>
@@ -89,7 +115,7 @@
                 </div>
             </div>
             <div class="course-grid">
-                <div class="course-card" data-pricing="Paid" data-type="Recorded" data-exam="1" data-subject="Singing">
+                <div class="course-card" data-pricing="Paid" data-type="Recorded" data-exam="1" data-subject="Singing" data-course-id="singing-exam1">
                     <img src="Resources/Courses/e1.jpeg" alt="Prarambhik [Exam-1]">
                     <div class="course-tags">
                         <span class="tag paid">Paid</span>
@@ -105,7 +131,7 @@
                     </div>
                     <div class="button-container">
                         <button class="read-more" data-course="1">All Features</button>
-                        <a href="prarambhik.html" class="enter-button"><button class="view-button">Enter</button></a>
+                        <a href="prarambhik.html" class="enter-button"><button class="view-button">Buy Now</button></a>
                     </div>
                     <div class="course-details" id="course-details-1">
                         <p class="course-features-title"><strong>Features:</strong></p>
@@ -180,7 +206,7 @@
                         </ul>
                     </div>
                 </div> -->
-                <div class="course-card" data-pricing="Paid" data-type="Live" data-exam="4" data-subject="Singing">
+                <div class="course-card" data-pricing="Paid" data-type="Live" data-exam="4" data-subject="Singing" data-course-id="singing-exam4">
                     <img src="Resources/Courses/e4.jpeg" alt="Madhyama Pratham [Exam-4]">
                     <div class="course-tags">
                         <span class="tag paid">Paid</span>
@@ -196,7 +222,7 @@
                     </div>
                     <div class="button-container">
                         <button class="read-more" data-course="4">All Features</button>
-                        <a href="madhyama-pratham.html" class="enter-button"><button class="view-button">Enter</button></a>
+                        <a href="madhyama-pratham.html" class="enter-button"><button class="view-button">Buy Now</button></a>
                     </div>
                     <div class="course-details" id="course-details-4">
                         <p class="course-features-title"><strong>Features:</strong></p>
@@ -239,7 +265,7 @@
                         </ul>
                     </div>
                 </div> -->
-                <div class="course-card" data-pricing="Paid" data-type="Live" data-exam="6" data-subject="Tabla">
+                <div class="course-card" data-pricing="Paid" data-type="Live" data-exam="6" data-subject="Singing" data-course-id="singing-exam6">
                     <img src="Resources/Courses/e6.jpeg" alt="Visharad Pratham [Exam-6]">
                     <div class="course-tags">
                         <span class="tag paid">Paid</span>
@@ -255,7 +281,7 @@
                     </div>
                     <div class="button-container">
                         <button class="read-more" data-course="6">All Features</button>
-                        <a href="visharad-pratham.html" class="enter-button"><button class="view-button">Enter</button></a>
+                        <a href="visharad-pratham.html" class="enter-button"><button class="view-button">Buy Now</button></a>
                     </div>
                     <div class="course-details" id="course-details-6">
                         <p class="course-features-title"><strong>Features:</strong></p>
@@ -297,7 +323,7 @@
                         </ul>
                     </div>
                 </div> -->
-                <div class="course-card" data-pricing="Free" data-type="Recorded" data-exam="1" data-subject="Piano/Harmonium">
+                <div class="course-card" data-pricing="Free" data-type="Recorded" data-exam="1" data-subject="Piano/Harmonium" data-course-id="piano-exam1">
                     <img src="Resources/Courses/e8.jpg" alt="Piano [Exam-1]">
                     <div class="course-tags">
                         <span class="tag paid">Paid</span>
@@ -313,7 +339,7 @@
                     </div>
                     <div class="button-container">
                         <button class="read-more" data-course="8">All Features</button>
-                        <a href="piano-prarambhik.html" class="enter-button"><button class="view-button">Enter</button></a>
+                        <a href="piano-prarambhik.html" class="enter-button"><button class="view-button">Buy Now</button></a>
                     </div>
                     <div class="course-details" id="course-details-8">
                         <p class="course-features-title"><strong>Features:</strong></p>

@@ -1,3 +1,83 @@
+// --- Firebase and Razorpay Integration ---
+import { getFunctions, httpsCallable } from 'firebase/functions';
+import { getAuth } from 'firebase/auth';
+import { initializeApp } from 'firebase/app'; // Import initializeApp
+// import Razorpay from 'razorpay'; // You might need to adjust this based on how you include the Razorpay SDK
+
+// Initialize Firebase
+const firebaseConfig = {
+    apiKey: "AIzaSyBaDBLoe2Wi2WgmJfPRXoEP-ZSgkVhMxVI",
+    authDomain: "musicoul-15025.firebaseapp.com",
+    databaseURL: "https://musicoul-15025-default-rtdb.firebaseio.com",
+    projectId: "musicoul-15025",
+    storageBucket: "musicoul-15025.firebasestorage.app",
+    messagingSenderId: "863099041367",
+    appId: "1:863099041367:web:c3d61399489a219611d512",
+    measurementId: "G-WBPE697N9Q"
+};
+
+const app = initializeApp(firebaseConfig);
+const functions = getFunctions(app);
+const auth = getAuth(app);
+
+async function initiateSubscription(courseId) {
+    if (!auth.currentUser) {
+        alert('Please sign in to subscribe.');
+        return;
+    }
+    try {
+        const createSubscription = httpsCallable(functions, 'createSubscription');
+        const result = await createSubscription({ courseId: courseId });
+        const subscriptionId = result.data.subscriptionId;
+        console.log('Razorpay Subscription ID:', subscriptionId);
+        openRazorpayPayment(subscriptionId, courseId);
+    } catch (error) {
+        console.error('Error creating subscription:', error);
+        alert('Failed to initiate subscription.');
+    }
+}
+
+function openRazorpayPayment(subscriptionId, courseId) {
+    const options = {
+        key: 'rzp_live_ogpa2pelBwJPA3', // Your Razorpay Key ID
+        subscription_id: subscriptionId,
+        name: 'Musicoul Course Subscription',
+        description: 'Monthly access to the course',
+        theme: {
+            color: '#3399cc'
+        },
+        handler: async function (response) {
+            console.log('Payment successful:', response);
+            alert('Subscription successful!');
+            const status = await getSubscriptionStatusForCourse(courseId);
+            console.log('Subscription Status:', status);
+            // You might want to update the UI here to reflect the subscription status
+        },
+        prefill: {
+            name: auth.currentUser?.displayName || '',
+            email: auth.currentUser?.email || '',
+        },
+        modal: {
+            ondismiss: function () {
+                console.log('Payment modal dismissed');
+            }
+        }
+    };
+    const rzp1 = new Razorpay(options);
+    rzp1.open();
+}
+
+async function getSubscriptionStatusForCourse(courseId) {
+    const getStatus = httpsCallable(functions, 'getSubscriptionStatus');
+    try {
+        const result = await getStatus({ courseId: courseId });
+        return result.data.status;
+    } catch (error) {
+        console.error('Error getting subscription status:', error);
+        return 'inactive'; // Default if error
+    }
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     let lastScrollTop = 0;
     const navbar = document.querySelector('nav');
@@ -251,17 +331,8 @@ document.addEventListener('DOMContentLoaded', function() {
     if (filterButton) {
         filterButton.addEventListener('click', filterCoursesByTags);
     }
-});
 
-document.addEventListener('DOMContentLoaded', function() {
-    const courseCards = document.querySelectorAll('.course-card');
-    const subjectFilter = document.getElementById('subjectFilter');
-    const pricingFilter = document.getElementById('pricingFilter');
-    const typeFilter = document.getElementById('typeFilter');
-    const examFilter = document.getElementById('examFilter');
-    const filterButton = document.getElementById('filterButton');
-    const courseSearchInput = document.getElementById('courseSearch');
-
+    const courseCardsForFiltering = document.querySelectorAll('.course-card');
     function filterCourses() {
         const selectedSubject = subjectFilter.value.toLowerCase();
         const selectedPricing = pricingFilter.value.toLowerCase();
@@ -269,7 +340,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const selectedExam = examFilter.value.toLowerCase();
         const searchTerm = courseSearchInput.value.toLowerCase();
 
-        courseCards.forEach(card => {
+        courseCardsForFiltering.forEach(card => {
             const cardSubject = card.dataset.subject.toLowerCase();
             const cardPricing = card.dataset.pricing.toLowerCase();
             const cardType = card.dataset.type.toLowerCase();
@@ -294,53 +365,34 @@ document.addEventListener('DOMContentLoaded', function() {
     if (filterButton) {
         filterButton.addEventListener('click', filterCourses);
     }
-
     if (subjectFilter) {
         subjectFilter.addEventListener('change', filterCourses);
     }
-
     if (pricingFilter) {
         pricingFilter.addEventListener('change', filterCourses);
     }
-
     if (typeFilter) {
         typeFilter.addEventListener('change', filterCourses);
     }
-
     if (examFilter) {
         examFilter.addEventListener('change', filterCourses);
     }
-
     if (courseSearchInput) {
         courseSearchInput.addEventListener('input', filterCourses);
     }
 
-    // Function to handle initial filtering based on URL parameters
-    function applyInitialFilters() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const subjectParam = urlParams.get('subject');
-        const examParam = urlParams.get('exam');
-
-        if (subjectParam) {
-            const normalizedSubject = subjectParam.trim().toLowerCase();
-            subjectFilter.value = normalizedSubject.includes('singing') ? 'Singing' :
-                                normalizedSubject.includes('piano') || normalizedSubject.includes('harmonium') ? 'Piano/Harmonium' :
-                                normalizedSubject.includes('tabla') ? 'Tabla' : '';
-        }
-
-        if (examParam) {
-            examFilter.value = examParam.trim();
-        }
-
-        // Trigger the filter after setting the select values
-        filterCourses();
-
-        // Optionally, scroll to the courses section to make the filtered results visible
-        const courseSection = document.querySelector('.course-section');
-        if (courseSection) {
-            courseSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-    }
-
-    applyInitialFilters();
+    // --- Event listeners for "Buy Now" buttons (to initiate subscription) ---
+    const buyNowButtons = document.querySelectorAll('.course-card[data-pricing="Paid"] .view-button');
+    buyNowButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const courseCard = this.closest('.course-card');
+            const courseId = courseCard?.dataset?.courseId;
+            if (courseId) {
+                initiateSubscription(courseId);
+            } else {
+                console.error('Course ID not found for this course.');
+                alert('Could not initiate subscription. Course ID missing.');
+            }
+        });
+    });
 });
