@@ -14,6 +14,7 @@ import {
   setDoc
 } from 'https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js';
 
+// Firebase Config
 const firebaseConfig = {
   apiKey: "AIzaSyBaDBLoe2Wi2WgmJfPRXoEP-ZSgkVhMxVI",
   authDomain: "musicoul-15025.firebaseapp.com",
@@ -26,9 +27,10 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-export const auth = getAuth(app);
+const auth = getAuth(app);
 const db = getFirestore(app);
 
+// === Protected Page Redirection ===
 const protectedPages = ['/prarambhik.html'];
 const currentPath = window.location.pathname;
 
@@ -43,17 +45,9 @@ if (protectedPages.includes(currentPath)) {
   });
 }
 
-document.addEventListener('DOMContentLoaded', function () {
-  const hamburger = document.querySelector('.hamburger');
-  const sideNav = document.querySelector('.side-nav');
-  const closeSideNavBtn = document.querySelector('.close-btn');
+document.addEventListener('DOMContentLoaded', () => {
   const body = document.body;
   const authPopup = document.getElementById('auth-popup');
-  const closePopupBtns = document.querySelectorAll('.close-popup');
-  const authTabs = document.querySelectorAll('.auth-tabs .tab');
-  const authForms = document.querySelectorAll('.auth-forms form');
-  const loginForm = document.getElementById('login-form');
-  const signupForm = document.getElementById('signup-form');
   const notificationDiv = document.querySelector('.notification');
 
   const topAuthBtn = document.getElementById('top-auth-btn');
@@ -62,17 +56,22 @@ document.addEventListener('DOMContentLoaded', function () {
   const sideNavLogoutBtn = document.getElementById('side-nav-logout-btn');
   const bottomAuthBtn = document.getElementById('bottom-nav-auth-btn');
 
+  // === Show Notification ===
   function showNotification(message) {
     if (!notificationDiv) return;
     notificationDiv.textContent = message;
     notificationDiv.classList.add('show');
-    setTimeout(() => {
-      notificationDiv.classList.remove('show');
-    }, 3000);
+    setTimeout(() => notificationDiv.classList.remove('show'), 3000);
+  }
+
+  // === First Visit Notification ===
+  if (!localStorage.getItem('visitedOnce')) {
+    showNotification("Please Login/Signup First");
+    localStorage.setItem('visitedOnce', 'true');
   }
 
   if (localStorage.getItem('showLoginMessage') === 'true') {
-    showNotification('Please log in to access that page.');
+    showNotification("Please log in to access that page.");
     localStorage.removeItem('showLoginMessage');
   }
 
@@ -82,18 +81,14 @@ document.addEventListener('DOMContentLoaded', function () {
     localStorage.removeItem('triggerAuthPopup');
   }
 
+  // === Auth UI ===
   function updateAuthUI(user) {
-    if (!topAuthBtn || !topLogoutBtn || !sideNavLoginBtn || !sideNavLogoutBtn || !bottomAuthBtn) return;
-
     if (user) {
       topAuthBtn.style.display = 'none';
       topLogoutBtn.style.display = 'inline-block';
       sideNavLoginBtn.style.display = 'none';
       sideNavLogoutBtn.style.display = 'inline-block';
       bottomAuthBtn.innerHTML = '<i class="fas fa-sign-out-alt"></i><span>Logout</span>';
-      bottomAuthBtn.style.display = 'flex';
-      bottomAuthBtn.style.flexDirection = 'column';
-      bottomAuthBtn.style.alignItems = 'center';
       bottomAuthBtn.onclick = handleLogout;
     } else {
       topAuthBtn.style.display = 'inline-block';
@@ -101,32 +96,26 @@ document.addEventListener('DOMContentLoaded', function () {
       sideNavLoginBtn.style.display = 'inline-block';
       sideNavLogoutBtn.style.display = 'none';
       bottomAuthBtn.innerHTML = '<i class="fas fa-user"></i><span>Login/Signup</span>';
-      bottomAuthBtn.onclick = openBottomAuthPopup;
+      bottomAuthBtn.onclick = openAuthPopup;
     }
   }
 
   onAuthStateChanged(auth, (user) => {
     updateAuthUI(user);
 
-    if (!user && (window.location.pathname === '/index.html' || window.location.pathname === '/')) {
-      showNotification("Please Login/Signin First!");
-    }
-
-    if (user) {
-      if (window.location.pathname === '/index.html' || window.location.pathname === '/') {
-        const redirectUrl = localStorage.getItem('redirectAfterLogin');
-        if (redirectUrl) {
-          localStorage.removeItem('redirectAfterLogin');
-          window.location.href = redirectUrl;
-        }
-      }
+    if (user && localStorage.getItem('redirectAfterLogin')) {
+      const redirectUrl = localStorage.getItem('redirectAfterLogin');
+      localStorage.removeItem('redirectAfterLogin');
+      window.location.href = redirectUrl;
     }
   });
 
+  // === Popup Handlers ===
   function openAuthPopup() {
     if (!authPopup) return;
     authPopup.style.display = 'flex';
     body.classList.add('popup-open');
+
     let overlay = document.querySelector('.overlay');
     if (!overlay) {
       overlay = document.createElement('div');
@@ -147,199 +136,113 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function switchAuthTab(tabName) {
-    authTabs.forEach(tab => tab.classList.remove('active'));
-    authForms.forEach(form => form.classList.remove('active'));
+    document.querySelectorAll('.auth-tabs .tab').forEach(tab => tab.classList.remove('active'));
+    document.querySelectorAll('.auth-forms form').forEach(form => form.classList.remove('active'));
+
     const targetTab = document.querySelector(`.auth-tabs .tab[data-tab="${tabName}"]`);
     const targetForm = document.getElementById(`${tabName}-form`);
     if (targetTab) targetTab.classList.add('active');
     if (targetForm) targetForm.classList.add('active');
   }
 
-  function openTopAuthPopup(e) {
-    e.preventDefault();
-    openAuthPopup();
-    switchAuthTab('login');
-  }
-
-  function openBottomAuthPopup(e) {
-    e.preventDefault();
-    openAuthPopup();
-    switchAuthTab('login');
-  }
-
+  // === Logout ===
   function handleLogout() {
-    signOut(auth)
-      .then(() => {
-        showNotification("Logged out Successfully!");
-      })
-      .catch((error) => {
-        showNotification("Error logging out.");
-        console.error("Logout Error:", error);
-      });
-  }
-
-  if (topAuthBtn) topAuthBtn.addEventListener('click', openTopAuthPopup);
-  if (bottomAuthBtn) bottomAuthBtn.addEventListener('click', openBottomAuthPopup);
-  if (topLogoutBtn) topLogoutBtn.addEventListener('click', handleLogout);
-  if (sideNavLoginBtn) sideNavLoginBtn.addEventListener('click', openTopAuthPopup);
-  if (sideNavLogoutBtn) sideNavLogoutBtn.addEventListener('click', handleLogout);
-
-  if (loginForm) {
-    loginForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const email = loginForm.querySelector('#login-email').value;
-      const password = loginForm.querySelector('#login-password').value;
-
-      signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-          const user = userCredential.user;
-          closeAuthPopup();
-          showNotification(`Logged in as ${user.email} Successfully!`);
-        })
-        .catch((error) => {
-          let errorMessage = 'Login failed.';
-          if (error.code === 'auth/user-not-found') errorMessage = 'User not found.';
-          else if (error.code === 'auth/wrong-password') errorMessage = 'Incorrect password.';
-          showNotification(errorMessage);
-          console.error("Login Error:", error);
-        });
+    signOut(auth).then(() => {
+      showNotification("Logged out successfully.");
+    }).catch(error => {
+      showNotification("Error logging out.");
+      console.error("Logout Error:", error);
     });
   }
 
-  if (signupForm) {
-    signupForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const name = signupForm.querySelector('#signup-name').value;
-      const email = signupForm.querySelector('#signup-email').value;
-      const password = signupForm.querySelector('#signup-password').value;
+  // === Event Listeners ===
+  topAuthBtn?.addEventListener('click', (e) => { e.preventDefault(); openAuthPopup(); switchAuthTab('login'); });
+  sideNavLoginBtn?.addEventListener('click', (e) => { e.preventDefault(); openAuthPopup(); switchAuthTab('login'); });
+  bottomAuthBtn?.addEventListener('click', (e) => { e.preventDefault(); openAuthPopup(); switchAuthTab('login'); });
+  topLogoutBtn?.addEventListener('click', handleLogout);
+  sideNavLogoutBtn?.addEventListener('click', handleLogout);
 
-      try {
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        const user = userCredential.user;
-
-        await updateProfile(user, { displayName: name });
-
-        await setDoc(doc(db, "users", user.uid), {
-          name: name,
-          email: email
-        });
-
-        closeAuthPopup();
-        showNotification(`Successfully signed up as ${name}!`);
-      } catch (error) {
-        let errorMessage = 'Signup failed.';
-        if (error.code === 'auth/email-already-in-use') {
-          errorMessage = 'Email address is already in use.';
-        } else if (error.code === 'auth/invalid-email') {
-          errorMessage = 'Invalid email address.';
-        } else if (error.code === 'auth/weak-password') {
-          errorMessage = 'Password should be at least 6 characters.';
-        }
-        showNotification(errorMessage);
-        console.error("Signup Error:", error);
-      }
-    });
-  }
-
-  if (hamburger) {
-    hamburger.addEventListener('click', () => {
-      sideNav.style.right = '0px';
-    });
-  }
-
-  if (closeSideNavBtn) {
-    closeSideNavBtn.addEventListener('click', () => {
-      sideNav.style.right = '-250px';
-    });
-  }
-
-  closePopupBtns.forEach(btn => {
+  document.querySelectorAll('.close-popup').forEach(btn => {
     btn.addEventListener('click', closeAuthPopup);
   });
 
-  authTabs.forEach(tab => {
+  document.querySelectorAll('.auth-tabs .tab').forEach(tab => {
     tab.addEventListener('click', function () {
       switchAuthTab(this.dataset.tab);
     });
   });
 
+  // === Auth Forms ===
+  const loginForm = document.getElementById('login-form');
+  loginForm?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const email = loginForm.querySelector('#login-email').value;
+    const password = loginForm.querySelector('#login-password').value;
+
+    signInWithEmailAndPassword(auth, email, password)
+      .then(userCredential => {
+        closeAuthPopup();
+        showNotification(`Welcome back, ${userCredential.user.email}`);
+      })
+      .catch(error => {
+        let errorMessage = 'Login failed.';
+        if (error.code === 'auth/user-not-found') errorMessage = 'User not found.';
+        else if (error.code === 'auth/wrong-password') errorMessage = 'Incorrect password.';
+        showNotification(errorMessage);
+        console.error("Login Error:", error);
+      });
+  });
+
+  const signupForm = document.getElementById('signup-form');
+  signupForm?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const name = signupForm.querySelector('#signup-name').value;
+    const email = signupForm.querySelector('#signup-email').value;
+    const password = signupForm.querySelector('#signup-password').value;
+
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+      await updateProfile(user, { displayName: name });
+
+      await setDoc(doc(db, "users", user.uid), { name, email });
+
+      closeAuthPopup();
+      showNotification(`Welcome to Musicoul, ${name}!`);
+    } catch (error) {
+      let errorMessage = 'Signup failed.';
+      if (error.code === 'auth/email-already-in-use') errorMessage = 'Email already in use.';
+      else if (error.code === 'auth/invalid-email') errorMessage = 'Invalid email.';
+      else if (error.code === 'auth/weak-password') errorMessage = 'Password too weak.';
+      showNotification(errorMessage);
+      console.error("Signup Error:", error);
+    }
+  });
+
+  // === Hamburger Menu ===
+  const hamburger = document.querySelector('.hamburger');
+  const sideNav = document.querySelector('.side-nav');
+  const closeSideNavBtn = document.querySelector('.close-btn');
+
+  hamburger?.addEventListener('click', () => {
+    if (sideNav) sideNav.style.right = '0px';
+  });
+
+  closeSideNavBtn?.addEventListener('click', () => {
+    if (sideNav) sideNav.style.right = '-250px';
+  });
+
+  // === Navbar Hide on Scroll ===
   let lastScrollTop = 0;
   const navbar = document.querySelector('nav');
-  window.addEventListener('scroll', function () {
-    let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    if (scrollTop > lastScrollTop && navbar) {
-      if (scrollTop > navbar.offsetHeight) {
-        navbar.style.transform = 'translateY(-100%)';
-      } else {
-        navbar.style.transform = 'translateY(0)';
-      }
-    } else if (navbar) {
-      navbar.style.transform = 'translateY(0)';
+
+  window.addEventListener('scroll', () => {
+    const scrollTop = window.scrollY;
+    if (navbar) {
+      navbar.style.transform = scrollTop > lastScrollTop && scrollTop > navbar.offsetHeight
+        ? 'translateY(-100%)'
+        : 'translateY(0)';
     }
     lastScrollTop = scrollTop;
   });
 });
-
-const styleSheet = document.createElement("style");
-styleSheet.type = "text/css";
-styleSheet.innerText = `
-@keyframes floatNoteSmoothGlow1 {
-  0% { transform: translateY(0) translateX(0); opacity: 0.6; text-shadow: 0 0 5px transparent; }
-  50% { transform: translateY(-8px) translateX(4px); opacity: 1; text-shadow: 0 0 10px lightblue; }
-  100% { transform: translateY(0) translateX(0); opacity: 0.6; text-shadow: 0 0 5px transparent; }
-}
-
-@keyframes floatNoteSmoothGlow2 {
-  0% { transform: translateY(0) translateX(0); opacity: 0.7; text-shadow: 0 0 5px transparent; }
-  50% { transform: translateY(6px) translateX(-2px); opacity: 1; text-shadow: 0 0 10px lightblue; }
-  100% { transform: translateY(0) translateX(0); opacity: 0.7; text-shadow: 0 0 5px transparent; }
-}
-
-.notes-container {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: -1;
-  overflow: hidden;
-}
-
-.musical-note {
-  position: fixed;
-  color: lightblue;
-  font-size: 20px;
-  opacity: 0.8;
-  pointer-events: none;
-  z-index: -1;
-}
-
-.notification.show {
-  opacity: 1;
-  transform: translateX(-50%) translateY(20px);
-}
-
-.notification {
-  position: fixed;
-  top: 75px;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: rgba(0, 0, 0, 0.7);
-  color: white;
-  padding: 10px 15px;
-  border-radius: 5px;
-  z-index: 1001;
-  opacity: 0;
-  text-align: center;
-  font-size: 0.9em;
-  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
-}
-
-@media (max-width: 768px) {
-  .musical-note {
-    font-size: 16px;
-  }
-}
-`;
-document.head.appendChild(styleSheet);

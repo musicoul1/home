@@ -219,7 +219,7 @@ main {
     max-width: 90%; /* Slightly narrower on desktop */
     background-color: rgba(0, 0, 0, 0.6);
     backdrop-filter: blur(10px);
-    padding: 50px; /* More padding on desktop */
+    padding: 20px; /* More padding on desktop */
     border-radius: 10px;
     box-sizing: border-box;
 }
@@ -290,6 +290,33 @@ main {
     border: 2px solid red;
     box-shadow: 0 0 14px red;
 }
+
+/* This is the typing styling */
+.typing-text-container {
+    display: inline-flex;
+    align-items: center;
+    font-size: inherit;
+    font-weight: inherit;
+  }
+
+  .cursor {
+    margin-left: 5px;
+    color: white;
+    animation: blink 1s infinite;
+    font-weight: bold;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+
+  .gradient-text {
+    background: linear-gradient(45deg, #ff416c, #9933ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 700;
+  }
 
 /* Divider */
 .divider {
@@ -894,8 +921,8 @@ footer {
     }
 
     .hero {
-        margin-top: 72px;
-        padding: 30px 15px;
+        margin-top: 50px;
+        padding: 40px 15px;
         overflow: hidden; /* Prevent vertical scrollbar */
     }
 
@@ -904,12 +931,12 @@ footer {
     }
 
     .hero .hero-content h1 {
-        font-size: 2.2em;
+        font-size: 3em;
         margin-bottom: 12px;
     }
 
     .hero .hero-content p {
-        font-size: 1em;
+        font-size: 1.1em;
         margin-bottom: 18px;
     }
 
@@ -1149,56 +1176,7 @@ footer {
 
     .resource-folder.interactive {
         cursor: pointer;
-    }
-
-    /* --- Media Queries for FAQ and Resources --- */
-    @media (max-width: 768px) {
-
-        .hero h1 {
-            font-size: 2.2em;
-            margin-bottom: 12px;
-            text-align: center; /* Center the text */
-            padding: 0 15px; /* Add some horizontal padding if needed */
-        }
-
-        .faq-section h2,
-        .resource-folder-section h2 {
-            font-size: 2em;
-            margin-bottom: 30px;
-        }
-
-        .faq-item h3 {
-            font-size: 1em;
-            padding: 12px 15px;
-        }
-
-        .faq-item p {
-            font-size: 0.9em;
-            padding: 0 15px 10px;
-        }
-
-        .resource-folders-grid {
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 15px;
-        }
-
-        .resource-folder {
-            padding: 15px;
-        }
-
-        .resource-folder img {
-            max-width: 60px;
-            margin-bottom: 8px;
-        }
-
-        .resource-folder h3 {
-            font-size: 0.9em;
-        }
-
-        .resource-folder p {
-            font-size: 0.8em;
-        }
-    }
+    }    
 
     @media (max-width: 400px) {
 
@@ -1208,7 +1186,7 @@ footer {
 
         .hero .hero-content h1 {
             margin-top: 10px;
-            font-size: 2em;
+            font-size: 1.7em;
             margin-bottom: 20px;
             text-align: center; /* Center the text */
             padding: 0 10px; /* Add some horizontal padding if needed */
