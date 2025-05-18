@@ -103,7 +103,7 @@
                         </div>
                     <div class="button-container">
                         <button class="read-more" data-course="1">All Features</button>
-                        <button class="view-button" onclick="startSubscription('prarambhik')">Buy Now</button>
+                        <button class="view-button" id="subscribe-prarambhik">Buy Now</button>
 
                     </div>
                     <div class="course-details" id="course-details-1">
@@ -292,15 +292,16 @@
   const firebaseConfig = {
     apiKey: "AIzaSyBaDBLoe2Wi2WgmJfPRXoEP-ZSgkVhMxVI",
     authDomain: "musicoul-15025.firebaseapp.com",
-    projectId: "musicoul-15025",
+    projectId: "musicoul-15025"
   };
 
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
   const functions = getFunctions(app);
 
-  // ✅ Make globally accessible
-  window.startSubscription = async function (courseId) {
+  const btn = document.getElementById("subscribe-prarambhik");
+
+  btn?.addEventListener("click", async () => {
     console.log("Buy Now clicked");
 
     const user = auth.currentUser;
@@ -320,7 +321,7 @@
       const subscriptionId = data.subscriptionId;
 
       const options = {
-        key: "rzp_live_ogpa2pelBwJPA3", // Razorpay Key ID
+        key: "rzp_live_ogpa2pelBwJPA3",
         subscription_id: subscriptionId,
         name: "Musicoul",
         description: "Monthly Access - Prarambhik",
@@ -332,9 +333,7 @@
           name: user.displayName,
           email: user.email
         },
-        theme: {
-          color: "#f44336"
-        }
+        theme: { color: "#f44336" }
       };
 
       const rzp = new Razorpay(options);
@@ -343,8 +342,9 @@
       console.error("Subscription error:", err);
       alert("Subscription failed.");
     }
-  };
+  });
 </script>
+
 
 
 </body>
