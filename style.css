@@ -231,6 +231,7 @@ main {
     line-height: 1.2;
     font-weight: 700;
     padding: 0px 50px 0px 50px; /* More horizontal padding */
+    font-family: "Playfair Display", serif;
 }
 
 .hero .hero-content p{

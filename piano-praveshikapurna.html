@@ -6,6 +6,31 @@
     <title>Piano - Level 3</title>
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script type="module">
+  import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js';
+  import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js';
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBaDBLoe2Wi2WgmJfPRXoEP-ZSgkVhMxVI",
+    authDomain: "musicoul-15025.firebaseapp.com",
+    projectId: "musicoul-15025",
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  // A flag to prevent multiple redirects
+  let redirecting = false;
+
+  onAuthStateChanged(auth, (user) => {
+    if (!user && !redirecting) {
+      redirecting = true;  // prevent multiple redirects
+      localStorage.setItem('redirectAfterLogin', window.location.href);
+      localStorage.setItem('showLoginMessage', 'true');
+      window.location.href = '/index.html';
+    }
+  });
+</script>
     <style>
         body {
             font-family: 'Raleway', sans-serif;
