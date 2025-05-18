@@ -1,4 +1,108 @@
+// --- Firebase and Razorpay Integration ---
+import { getFunctions, httpsCallable } from 'firebase/functions';
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth';
+import { initializeApp } from 'firebase/app'; // Import initializeApp
+
+// Initialize Firebase
+const firebaseConfig = {
+    apiKey: "AIzaSyBaDBLoe2Wi2WgmJfPRXoEP-ZSgkVhMxVI",
+    authDomain: "musicoul-15025.firebaseapp.com",
+    databaseURL: "https://musicoul-15025-default-rtdb.firebaseio.com",
+    projectId: "musicoul-15025",
+    storageBucket: "musicoul-15025.firebasestorage.app",
+    messagingSenderId: "863099041367",
+    appId: "1:863099041367:web:c3d61399489a219611d512",
+    measurementId: "G-WBPE697N9Q"
+};
+
+const app = initializeApp(firebaseConfig);
+const functions = getFunctions(app);
+const auth = getAuth(app);
+const googleAuthProvider = new GoogleAuthProvider();
+
+async function initiateSubscription(courseId) {
+    if (!auth.currentUser) {
+        alert('Please sign in to subscribe.');
+        return;
+    }
+    try {
+        const createSubscription = httpsCallable(functions, 'createSubscription');
+        const result = await createSubscription({ courseId: courseId });
+        const paymentData = result.data;
+        console.log('Cloud Function Result:', paymentData);
+
+        if (paymentData?.subscriptionId) {
+            console.log('Razorpay Subscription ID:', paymentData.subscriptionId);
+            openRazorpayPayment(paymentData.subscriptionId, paymentData.razorpayOrderId, courseId);
+        } else if (paymentData?.freeEnrollment) {
+            alert('You are now enrolled in this free course.');
+            // TODO: Update UI for free enrollment
+            const status = await getSubscriptionStatusForCourse(courseId);
+            console.log('Subscription Status:', status);
+            // Example UI update:
+            // const buyButton = document.querySelector(`.course-card[data-course-id="${courseId}"] .view-button`);
+            // if (buyButton) {
+            //     buyButton.textContent = 'Enrolled';
+            //     buyButton.disabled = true;
+            // }
+        } else {
+            console.log('No subscription needed or an issue occurred.');
+            alert('Enrollment processed.');
+            // Handle other scenarios if needed
+        }
+    } catch (error) {
+        console.error('Error initiating subscription:', error);
+        alert('Failed to initiate subscription.');
+    }
+}
+
+function openRazorpayPayment(subscriptionId, razorpayOrderId, courseId) {
+    const options = {
+        key: 'YOUR_RAZORPAY_KEY_ID', // Placeholder - Ideally fetched server-side
+        subscription_id: subscriptionId,
+        order_id: razorpayOrderId, // Include the order ID
+        name: 'Musicoul Course Subscription',
+        description: 'Monthly access to the course',
+        theme: {
+            color: '#3399cc'
+        },
+        handler: async function (response) {
+            console.log('Payment successful:', response);
+            alert('Subscription successful!');
+            const status = await getSubscriptionStatusForCourse(courseId);
+            console.log('Subscription Status:', status);
+            // TODO: Update UI to reflect successful subscription
+            // Example: Change button to "Enrolled" or redirect
+        },
+        prefill: {
+            name: auth.currentUser?.displayName || '',
+            email: auth.currentUser?.email || '',
+        },
+        modal: {
+            ondismiss: function () {
+                console.log('Payment modal dismissed');
+                alert('Payment was cancelled or failed.');
+            }
+        }
+    };
+    const rzp1 = new Razorpay(options);
+    rzp1.open();
+}
+
+async function getSubscriptionStatusForCourse(courseId) {
+    const getStatus = httpsCallable(functions, 'getSubscriptionStatus');
+    try {
+        const result = await getStatus({ courseId: courseId });
+        return result.data?.status || 'inactive';
+    } catch (error) {
+        console.error('Error getting subscription status:', error);
+        return 'error'; // Indicate an error occurred
+    }
+}
+
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM is loaded.'); // Added for debugging
+
     let lastScrollTop = 0;
     const navbar = document.querySelector('nav');
     const hamburger = document.querySelector('.hamburger');
@@ -11,12 +115,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const sideNavLogoutBtn = document.getElementById('side-nav-logout-btn');
     const authPopup = document.querySelector('.auth-popup');
     const closePopupBtn = document.querySelector('.close-popup');
-    const authTabs = document.querySelectorAll('.auth-tabs .tab');
+    const authTabs = document.querySelectorAll('.auth-tabs button');
     const authForms = document.querySelectorAll('.auth-forms form');
     const loginForm = document.querySelector('.login-form');
     const signupForm = document.querySelector('.signup-form');
-    const googleLoginBtn = document.querySelector('#login-form .google-auth-button');
-    const googleSignupBtn = document.querySelector('#signup-form .google-auth-button');
+    const googleLoginBtn = document.querySelector('.login-form .google-auth-button');
+    const googleSignupBtn = document.querySelector('.signup-form .google-auth-button');
     const readMoreButtons = document.querySelectorAll('.read-more');
 
     const courseGrid = document.querySelector('.course-grid');
@@ -44,6 +148,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (sideNavLogoutBtn) { if (sideNavLogoutBtn.style) sideNavLogoutBtn.style.display = 'inline-block'; }
         console.log("Logged in as:", user ? (user.displayName || user.email) : 'User Data Unavailable');
         showNotification(`Logged in as ${user ? (user.displayName || user.email) : 'User'}`);
+        if (authPopup) authPopup.style.display = 'none'; // Close popup after login
     }
 
     function updateLoggedOutUI() {
@@ -51,66 +156,104 @@ document.addEventListener('DOMContentLoaded', function() {
         if (sideNavLoginBtn) sideNavLoginBtn.style.display = 'inline-block';
         if (logoutBtn) { if (logoutBtn.style) logoutBtn.style.display = 'none'; }
         if (sideNavLogoutBtn) { if (sideNavLogoutBtn.style) sideNavLogoutBtn.style.display = 'none'; }
+        showNotification("Logged out.");
     }
 
     if (loginForm) {
-        loginForm.addEventListener('submit', (e) => {
+        loginForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const email = loginForm.querySelector('#loginEmail').value;
             const password = loginForm.querySelector('#loginPassword').value;
             console.log("Login attempted with:", email, password);
-            const fakeUser = { email: email };
-            updateLoggedInUI(fakeUser);
-            showNotification(`Logged in as ${fakeUser.email}`);
+            try {
+                const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+                updateLoggedInUI(user);
+                showNotification(`Logged in as ${user.email}`);
+            } catch (error) {
+                console.error("Login failed:", error.message);
+                showNotification(`Login failed: ${error.message}`);
+            }
         });
     }
 
     if (signupForm) {
-        signupForm.addEventListener('submit', (e) => {
+        signupForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const name = signupForm.querySelector('#signupName').value;
             const email = signupForm.querySelector('#signupEmail').value;
             const password = signupForm.querySelector('#signupPassword').value;
-            console.log("Signup attempted with:", name, email, password);
-            const fakeUser = { displayName: name, email: email };
-            updateLoggedInUI(fakeUser);
-            showNotification(`Signed up as ${name}`);
+            try {
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+                await user.updateProfile({ displayName: name });
+                updateLoggedInUI(user);
+                showNotification(`Signed up as ${name}`);
+            } catch (error) {
+                console.error("Signup failed:", error.message);
+                showNotification(`Signup failed: ${error.message}`);
+            }
         });
     }
 
     if (googleLoginBtn) {
-        googleLoginBtn.addEventListener('click', () => {
+        googleLoginBtn.addEventListener('click', async () => {
             console.log("Google login attempted.");
-            const fakeUser = { displayName: "Google User", email: "google@example.com" };
-            updateLoggedInUI(fakeUser);
-            showNotification(`Logged in with Google as ${fakeUser.displayName}`);
+            try {
+                const result = await signInWithPopup(auth, googleAuthProvider);
+                const user = result.user;
+                updateLoggedInUI(user);
+                showNotification(`Logged in with Google as ${user.displayName || user.email}`);
+            } catch (error) {
+                console.error("Google login failed:", error.message);
+                showNotification(`Google login failed: ${error.message}`);
+            }
         });
     }
 
     if (googleSignupBtn) {
-        googleSignupBtn.addEventListener('click', () => {
+        googleSignupBtn.addEventListener('click', async () => {
             console.log("Google signup attempted.");
-            const fakeUser = { displayName: "New Google User", email: "newgoogle@example.com" };
-            updateLoggedInUI(fakeUser);
-            showNotification(`Signed up with Google as ${fakeUser.displayName}`);
+            try {
+                const result = await signInWithPopup(auth, googleAuthProvider);
+                const user = result.user;
+                await user.updateProfile({ displayName: user.email.split('@')[0] }); // Default display name
+                updateLoggedInUI(user);
+                showNotification(`Signed up with Google as ${user.displayName || user.email}`);
+            } catch (error) {
+                console.error("Google signup failed:", error.message);
+                showNotification(`Google signup failed: ${error.message}`);
+            }
         });
     }
 
     if (logoutBtn) {
-        logoutBtn.addEventListener('click', (e) => {
+        logoutBtn.addEventListener('click', async (e) => {
             e.preventDefault();
-            console.log("User logged out.");
-            updateLoggedOutUI();
-            showNotification("Logged out successfully.");
+            try {
+                await signOut(auth);
+                console.log("User logged out.");
+                updateLoggedOutUI();
+                showNotification("Logged out successfully.");
+            } catch (error) {
+                console.error("Logout error:", error.message);
+                showNotification(`Logout failed: ${error.message}`);
+            }
         });
     }
 
     if (sideNavLogoutBtn) {
-        sideNavLogoutBtn.addEventListener('click', (e) => {
+        sideNavLogoutBtn.addEventListener('click', async (e) => {
             e.preventDefault();
-            console.log("User logged out from side nav.");
-            updateLoggedOutUI();
-            showNotification("Logged out successfully.");
+            try {
+                await signOut(auth);
+                console.log("User logged out from side nav.");
+                updateLoggedOutUI();
+                showNotification("Logged out successfully.");
+            } catch (error) {
+                console.error("Logout error from side nav:", error.message);
+                showNotification(`Logout failed: ${error.message}`);
+            }
         });
     }
 
@@ -148,6 +291,26 @@ document.addEventListener('DOMContentLoaded', function() {
         authPopup.style.display = 'none';
     }
 
+    if (closePopupBtn && authPopup) {
+        closePopupBtn.addEventListener('click', () => {
+            authPopup.style.display = 'none';
+        });
+    }
+
+    if (authTabs) {
+        authTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                authTabs.forEach(t => t.classList.remove('active'));
+                authForms.forEach(form => form.classList.remove('active'));
+                tab.classList.add('active');
+                const targetForm = document.querySelector(`.${tab.textContent.toLowerCase()}-form`);
+                if (targetForm) {
+                    targetForm.classList.add('active');
+                }
+            });
+        });
+    }
+
     readMoreButtons.forEach(button => {
         button.addEventListener('click', function(e) {
             const courseCard = this.closest('.course-card');
@@ -169,99 +332,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // --- Filtering Logic Based on Tags ---
-    function filterCoursesByTags() {
-        const searchTerm = courseSearchInput.value.toLowerCase();
-        const selectedSubject = subjectFilter.value.toLowerCase();
-        const selectedPricing = pricingFilter.value.toLowerCase();
-        const selectedType = typeFilter.value.toLowerCase();
-        const selectedExam = examFilter.value.toLowerCase();
-
-        const courseCards = document.querySelectorAll('.course-card');
-
-        courseCards.forEach(card => {
-            const title = card.querySelector('h3').textContent.toLowerCase();
-            const description = card.querySelector('p').textContent.toLowerCase();
-            const tags = card.querySelectorAll('.course-tags span');
-            let subjectMatch = selectedSubject === '';
-            let pricingMatch = selectedPricing === '';
-            let typeMatch = selectedType === '';
-            let examMatch = selectedExam === '';
-
-            tags.forEach(tag => {
-                const tagClass = tag.classList[1] ? tag.classList[1].toLowerCase() : ''; // Get the second class
-
-                if (selectedSubject !== '') {
-                    if (selectedSubject === 'piano/harmonium' && tagClass === 'piano-harmonium') {
-                        subjectMatch = true;
-                    } else if (selectedSubject !== 'piano/harmonium' && tagClass === selectedSubject) {
-                        subjectMatch = true;
-                    }
-                } else {
-                    subjectMatch = true; // If 'All' is selected
-                }
-
-                if (selectedPricing !== '' && tagClass === selectedPricing) {
-                    pricingMatch = true;
-                } else if (selectedPricing === '') {
-                    pricingMatch = true; // If 'All' is selected
-                }
-
-                if (selectedType !== '' && tagClass === selectedType) {
-                    typeMatch = true;
-                } else if (selectedType === '') {
-                    typeMatch = true; // If 'All' is selected
-                }
-
-                if (selectedExam !== '') {
-                    if (tagClass.includes(selectedExam.replace('exam ', 'exam-'))) {
-                        examMatch = true;
-                    }
-                } else {
-                    examMatch = true; // If 'All' is selected
-                }
-            });
-
-            const searchMatch = searchTerm === '' || title.includes(searchTerm) || description.includes(searchTerm);
-
-            if (searchMatch && subjectMatch && pricingMatch && typeMatch && examMatch) {
-                card.style.display = 'block';
-            } else {
-                card.style.display = 'none';
-            }
-        });
-    }
-
-    // Event listeners for filter and search
-    if (courseSearchInput) {
-        courseSearchInput.addEventListener('input', filterCoursesByTags);
-    }
-    if (subjectFilter) {
-        subjectFilter.addEventListener('change', filterCoursesByTags);
-    }
-    if (pricingFilter) {
-        pricingFilter.addEventListener('change', filterCoursesByTags);
-    }
-    if (typeFilter) {
-        typeFilter.addEventListener('change', filterCoursesByTags);
-    }
-    if (examFilter) {
-        examFilter.addEventListener('change', filterCoursesByTags);
-    }
-    if (filterButton) {
-        filterButton.addEventListener('click', filterCoursesByTags);
-    }
-});
-
-document.addEventListener('DOMContentLoaded', function() {
-    const courseCards = document.querySelectorAll('.course-card');
-    const subjectFilter = document.getElementById('subjectFilter');
-    const pricingFilter = document.getElementById('pricingFilter');
-    const typeFilter = document.getElementById('typeFilter');
-    const examFilter = document.getElementById('examFilter');
-    const filterButton = document.getElementById('filterButton');
-    const courseSearchInput = document.getElementById('courseSearch');
-
+    // --- Filtering Logic ---
+    const courseCardsForFiltering = document.querySelectorAll('.course-card');
     function filterCourses() {
         const selectedSubject = subjectFilter.value.toLowerCase();
         const selectedPricing = pricingFilter.value.toLowerCase();
@@ -269,7 +341,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const selectedExam = examFilter.value.toLowerCase();
         const searchTerm = courseSearchInput.value.toLowerCase();
 
-        courseCards.forEach(card => {
+        courseCardsForFiltering.forEach(card => {
             const cardSubject = card.dataset.subject.toLowerCase();
             const cardPricing = card.dataset.pricing.toLowerCase();
             const cardType = card.dataset.type.toLowerCase();
@@ -294,53 +366,72 @@ document.addEventListener('DOMContentLoaded', function() {
     if (filterButton) {
         filterButton.addEventListener('click', filterCourses);
     }
-
     if (subjectFilter) {
         subjectFilter.addEventListener('change', filterCourses);
     }
-
     if (pricingFilter) {
         pricingFilter.addEventListener('change', filterCourses);
     }
-
     if (typeFilter) {
         typeFilter.addEventListener('change', filterCourses);
     }
-
     if (examFilter) {
         examFilter.addEventListener('change', filterCourses);
     }
-
     if (courseSearchInput) {
         courseSearchInput.addEventListener('input', filterCourses);
     }
 
-    // Function to handle initial filtering based on URL parameters
-    function applyInitialFilters() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const subjectParam = urlParams.get('subject');
-        const examParam = urlParams.get('exam');
+    // --- Event listeners for "Buy Now" buttons ---
+    const buyNowButtons = document.querySelectorAll('.course-card .view-button');
+    buyNowButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            console.log('Buy Now button clicked.'); // Debugging log
+            const courseCard = this.closest('.course-card');
+            const courseId = courseCard?.dataset?.courseId;
+            console.log('Course ID:', courseId); // Debugging log
+            if (courseId) {
+                initiateSubscription(courseId);
+            } else {
+                console.error('Course ID not found for this course.');
+                alert('Could not initiate subscription. Course ID missing.');
+            }
+        });
+    });
 
-        if (subjectParam) {
-            const normalizedSubject = subjectParam.trim().toLowerCase();
-            subjectFilter.value = normalizedSubject.includes('singing') ? 'Singing' :
-                                normalizedSubject.includes('piano') || normalizedSubject.includes('harmonium') ? 'Piano/Harmonium' :
-                                normalizedSubject.includes('tabla') ? 'Tabla' : '';
-        }
-
-        if (examParam) {
-            examFilter.value = examParam.trim();
-        }
-
-        // Trigger the filter after setting the select values
-        filterCourses();
-
-        // Optionally, scroll to the courses section to make the filtered results visible
-        const courseSection = document.querySelector('.course-section');
-        if (courseSection) {
-            courseSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
+    // --- Auth Popup Logic
+    const authTriggers = document.querySelectorAll('.auth-trigger');
+    if (authTriggers && authPopup) {
+        authTriggers.forEach(trigger => {
+            trigger.addEventListener('click', (e) => {
+                e.preventDefault();
+                authPopup.style.display = 'flex';
+                // Optionally, determine if it's a login or signup trigger
+                // and switch the active tab accordingly if needed.
+                const page = trigger.dataset.page;
+                if (page === 'login') {
+                    const loginTab = document.querySelector('.auth-tabs .login-tab');
+                    if (loginTab) loginTab.click();
+                }
+            });
+        });
     }
 
-    applyInitialFilters();
+    // Initialize the UI based on the current authentication state
+    auth.onAuthStateChanged((user) => {
+        if (user) {
+            updateLoggedInUI(user);
+            // Optionally, check subscription status on load
+            document.querySelectorAll('.course-card').forEach(async card => {
+                const courseId = card.dataset.courseId;
+                if (courseId) {
+                    const status = await getSubscriptionStatusForCourse(courseId);
+                    console.log(`Subscription status for ${courseId}:`, status);
+                    // TODO: Update UI based on subscription status (e.g., change "Buy Now" to "View Course")
+                }
+            });
+        } else {
+            updateLoggedOutUI();
+        }
+    });
 });

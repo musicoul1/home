@@ -17,6 +17,7 @@
             flex-direction: column;
             min-height: 100vh;
             overflow-x: hidden;
+            overflow-y: auto; /* Make the body scrollable */
         }
         .policy-container {
             max-width: 960px;
@@ -29,8 +30,7 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             position: relative;
             z-index: 2;
-            overflow-y: auto;
-            max-height: calc(100vh - 160px);
+            min-height: 100vh; /* Ensure container is at least the height of the viewport */
         }
         h1, h2 {
             font-family: 'Playfair Display', serif;
@@ -74,7 +74,6 @@
                 margin: 20px;
                 padding: 20px;
                 border-radius: 12px;
-                max-height: calc(100vh - 130px);
             }
             h1 {
                 font-size: 2.5em;

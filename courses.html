@@ -11,6 +11,33 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js";
+        // Import other Firebase services you might be using
+        // import { getFirestore } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js";
+        // import { getFunctions, httpsCallable } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-functions.js";
+
+        // Your Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBaDBLoe2Wi2WgmJfPRXoEP-ZSgkVhMxVI",
+            authDomain: "musicoul-15025.firebaseapp.com",
+            databaseURL: "https://musicoul-15025-default-rtdb.firebaseio.com",
+            projectId: "musicoul-15025",
+            storageBucket: "musicoul-15025.firebasestorage.app",
+            messagingSenderId: "863099041367",
+            appId: "1:863099041367:web:c3d61399489a219611d512",
+            measurementId: "G-WBPE697N9Q"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        export const auth = getAuth(app);
+        // Export other services if used
+        // export const db = getFirestore(app);
+        // export const functions = getFunctions(app);
+    </script>
 </head>
 <body>
     <nav>
@@ -24,8 +51,7 @@
             <a href="myclass.html" aria-label="See upcoming Events" data-page="events">My Class</a>
             <a href="coming-soon.html" aria-label="Learn more About Us" data-page="about">Events</a>
             <a href="coming-soon.html" aria-label="Contact Us" data-page="contact">Contact</a>
-            <!-- <a href="coming-soon.html" aria-label="Login to your account" data-page="login" class="auth-trigger">Login</a> -->
-        </div>
+            </div>
         <div class="hamburger" aria-label="Toggle navigation menu" role="button" tabindex="0">
             <i class="fas fa-bars"></i>
         </div>
@@ -37,8 +63,7 @@
         <a href="myclass.html" aria-label="See upcoming Events" data-page="events">My Class</a>
         <a href="coming-soon.html" aria-label="Learn more About Us" data-page="about">Events</a>
         <a href="coming-soon.html" aria-label="Contact Us" data-page="contact">Contact</a>
-        <!-- <a href="coming-soon.html" aria-label="Login to your account" data-page="login" class="auth-trigger">Login</a> -->
-    </div>
+        </div>
 
     <main>
         <section class="course-section">
@@ -89,7 +114,7 @@
                 </div>
             </div>
             <div class="course-grid">
-                <div class="course-card" data-pricing="Paid" data-type="Recorded" data-exam="1" data-subject="Singing">
+                <div class="course-card" data-pricing="Paid" data-type="Recorded" data-exam="1" data-subject="Singing" data-course-id="singing-exam1">
                     <img src="Resources/Courses/e1.jpeg" alt="Prarambhik [Exam-1]">
                     <div class="course-tags">
                         <span class="tag paid">Paid</span>
@@ -100,12 +125,10 @@
                     <h3>Prarambhik <br>[Exam-1]</h3>
                     <p>The foundational course for aspiring singers.</p>
                     <div class="course-price">
-                        <!-- <span class="discounted-price">₹499</span>
-                        <span class="original-price">₹999</span> -->
-                    </div>
+                        </div>
                     <div class="button-container">
                         <button class="read-more" data-course="1">All Features</button>
-                        <a href="prarambhik.html" class="enter-button"><button class="view-button">Enter</button></a>
+                        <a href="prarambhik.html" class="enter-button"><button class="view-button">Enter Class</button></a>
                     </div>
                     <div class="course-details" id="course-details-1">
                         <p class="course-features-title"><strong>Features:</strong></p>
@@ -120,67 +143,7 @@
                         </ul>
                     </div>
                 </div>
-                <!-- <div class="course-card" data-pricing="Paid" data-type="Live" data-exam="2" data-subject="Piano/Harmonium">
-                    <img src="Resources/Courses/e3.jpeg" alt="Praveshika Pratham [Exam-2]">
-                    <div class="course-tags">
-                        <span class="tag paid">Paid</span>
-                        <span class="tag live">Live</span>
-                        <span class="tag exam-2">Exam 2</span>
-                        <span class="tag piano-harmonium">Piano/Harmonium</span>
-                    </div>
-                    <h3>Praveshika Pratham <br>[Exam-2]</h3>
-                    <p>Building upon the basics, this live piano/harmonium course delves deeper.</p>
-                    <div class="course-price">
-                        <span class="discounted-price">₹799</span>
-                        <span class="original-price">₹1299</span>
-                    </div>
-                    <div class="button-container">
-                        <button class="read-more" data-course="2">All Features</button>
-                        <button class="view-button">Enter</button>
-                    </div>
-                    <div class="course-details" id="course-details-2">
-                        <p class="course-features-title"><strong>Features:</strong></p>
-                        <ul>
-                            <li>Live Sessions</li>
-                            <li>Interactive Practice</li>
-                            <li>Personalized Feedback</li>
-                            <li>Sheet Music</li>
-                            <li>Doubt Clearing</li>
-                            <li>Performance Opportunities</li>
-                            <li>Assessments</li>
-                        </ul>
-                    </div>
-                </div> -->
-                <!-- <div class="course-card" data-pricing="Free" data-type="Recorded" data-exam="3" data-subject="Tabla">
-                    <img src="Resources/Courses/e3.jpeg" alt="Praveshika Purna [Exam-3]">
-                    <div class="course-tags">
-                        <span class="tag free">Free</span>
-                        <span class="tag recorded">Recorded</span>
-                        <span class="tag exam-3">Exam 3</span>
-                        <span class="tag tabla">Tabla</span>
-                    </div>
-                    <h3>Praveshika Purna <br>[Exam-3]</h3>
-                    <p>A comprehensive recorded tabla course exploring rhythm and beats.</p>
-                    <div class="course-price">
-                        <span class="discounted-price">Free</span>
-                        <span class="original-price"></span>
-                    </div>
-                    <div class="button-container">
-                        <button class="read-more" data-course="3">All Features</button>
-                        <button class="view-button">Enter</button>
-                    </div>
-                    <div class="course-details" id="course-details-3">
-                        <p class="course-features-title"><strong>Features:</strong></p>
-                        <ul>
-                            <li>Video Lessons</li>
-                            <li>Practice Tracks</li>
-                            <li>Notation Guides</li>
-                            <li>Rhythmic Exercises</li>
-                            <li>Self-Assessment Quizzes</li>
-                        </ul>
-                    </div>
-                </div> -->
-                <div class="course-card" data-pricing="Paid" data-type="Live" data-exam="4" data-subject="Singing">
+                <div class="course-card" data-pricing="Paid" data-type="Live" data-exam="4" data-subject="Singing" data-course-id="singing-exam4">
                     <img src="Resources/Courses/e4.jpeg" alt="Madhyama Pratham [Exam-4]">
                     <div class="course-tags">
                         <span class="tag paid">Paid</span>
@@ -191,12 +154,10 @@
                     <h3>Madhyama Pratham <br>[Exam-4]</h3>
                     <p>Intermediate level live singing course for advanced techniques.</p>
                     <div class="course-price">
-                        <!-- <span class="discounted-price">₹999</span>
-                        <span class="original-price">₹1499</span> -->
-                    </div>
+                        </div>
                     <div class="button-container">
                         <button class="read-more" data-course="4">All Features</button>
-                        <a href="madhyama-pratham.html" class="enter-button"><button class="view-button">Enter</button></a>
+                        <a href="madhyama-pratham.html" class="enter-button"><button class="view-button">Enter Class</button></a>
                     </div>
                     <div class="course-details" id="course-details-4">
                         <p class="course-features-title"><strong>Features:</strong></p>
@@ -211,35 +172,7 @@
                         </ul>
                     </div>
                 </div>
-                <!-- <div class="course-card" data-pricing="Paid" data-type="Recorded" data-exam="5" data-subject="Piano/Harmonium">
-                    <img src="Resources/Courses/e5.jpeg" alt="Madhyama Purna [Exam-5]">
-                    <div class="course-tags">
-                        <span class="tag paid">Paid</span>
-                        <span class="tag recorded">Recorded</span>
-                        <span class="tag exam-5">Exam 5</span>
-                        <span class="tag piano-harmonium">Piano/Harmonium</span>
-                    </div>
-                    <h3>Madhyama Purna <br>[Exam-5]</h3>
-                    <p>A comprehensive recorded piano/harmonium course for skilled players.</p>
-                    <div class="course-price">
-                        <span class="discounted-price">₹699</span>
-                        <span class="original-price">₹1199</span>
-                    </div>
-                    <div class="button-container">
-                        <button class="read-more" data-course="5">All Features</button>
-                        <button class="view-button">Enter</button>
-                    </div>
-                    <div class="course-details" id="course-details-5">
-                        <p class="course-features-title"><strong>Features:</strong></p>
-                        <ul>
-                            <li>Complex Musical Pieces</li>
-                            <li>Advanced Theory</li>
-                            <li>Composition Techniques</li>
-                            <li>Virtual Keyboard Practice</li>
-                        </ul>
-                    </div>
-                </div> -->
-                <div class="course-card" data-pricing="Paid" data-type="Live" data-exam="6" data-subject="Tabla">
+                <div class="course-card" data-pricing="Paid" data-type="Live" data-exam="6" data-subject="Singing" data-course-id="singing-exam6">
                     <img src="Resources/Courses/e6.jpeg" alt="Visharad Pratham [Exam-6]">
                     <div class="course-tags">
                         <span class="tag paid">Paid</span>
@@ -250,12 +183,10 @@
                     <h3>Visharad Pratham <br>[Exam-6]</h3>
                     <p>The advanced live tabla course for rhythmic mastery.</p>
                     <div class="course-price">
-                        <!-- <span class="discounted-price">₹1299</span>
-                        <span class="original-price">₹1799</span> -->
-                    </div>
+                        </div>
                     <div class="button-container">
                         <button class="read-more" data-course="6">All Features</button>
-                        <a href="visharad-pratham.html" class="enter-button"><button class="view-button">Enter</button></a>
+                        <a href="visharad-pratham.html" class="enter-button"><button class="view-button">Enter Class</button></a>
                     </div>
                     <div class="course-details" id="course-details-6">
                         <p class="course-features-title"><strong>Features:</strong></p>
@@ -270,34 +201,7 @@
                         </ul>
                     </div>
                 </div>
-                <!-- <div class="course-card" data-pricing="Paid" data-type="Recorded" data-exam="7" data-subject="Singing">
-                    <img src="Resources/Courses/e6.jpeg" alt="Visharad Purna [Exam-7]">
-                    <div class="course-tags">
-                        <span class="tag paid">Paid</span>
-                        <span class="tag recorded">Recorded</span>
-                        <span class="tag exam-7">Exam 7</span>
-                        <span class="tag singing">Singing</span>
-                    </div>
-                    <h3>Visharad Purna <br>[Exam-7]</h3>
-                    <p>The pinnacle recorded singing course for ultimate vocal proficiency.</p>
-                    <div class="course-price">
-                        <span class="discounted-price">₹899</span>
-                        <span class="original-price">₹1399</span>
-                    </div>
-                    <div class="button-container">
-                        <button class="read-more" data-course="7">All Features</button>
-                        <button class="view-button">Enter</button>
-                    </div>
-                    <div class="course-details" id="course-details-7">
-                        <p class="course-features-title"><strong>Features:</strong></p>
-                        <ul>
-                            <li>Masterclass Level Content</li>
-                            <li>Advanced Raaga Theory and Practice</li>
-                            <li>Performance Analysis</li>
-                        </ul>
-                    </div>
-                </div> -->
-                <div class="course-card" data-pricing="Free" data-type="Recorded" data-exam="1" data-subject="Piano/Harmonium">
+                <div class="course-card" data-pricing="Free" data-type="Recorded" data-exam="1" data-subject="Piano/Harmonium" data-course-id="piano-exam1">
                     <img src="Resources/Courses/e8.jpg" alt="Piano [Exam-1]">
                     <div class="course-tags">
                         <span class="tag paid">Paid</span>
@@ -308,12 +212,10 @@
                     <h3>Piano <br>[Exam-1]</h3>
                     <p>The foundational recorded course for aspiring pianists/harmonists.</p>
                     <div class="course-price">
-                        <!-- <span class="discounted-price">Free</span>
-                        <span class="original-price"></span> -->
-                    </div>
+                        </div>
                     <div class="button-container">
                         <button class="read-more" data-course="8">All Features</button>
-                        <a href="piano-prarambhik.html" class="enter-button"><button class="view-button">Enter</button></a>
+                        <a href="piano-prarambhik.html" class="enter-button"><button class="view-button">Enter Class</button></a>
                     </div>
                     <div class="course-details" id="course-details-8">
                         <p class="course-features-title"><strong>Features:</strong></p>
@@ -404,9 +306,7 @@
             <p>&copy; 2025 Musicoul. All rights reserved.</p>
         </div>
     </footer>
-    <script src="https://www.gstatic.com/firebasejs/9.x.x/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.x.x/firebase-auth-compat.js"></script>
-    <script src="script.js"></script>
-    <script src="courses.js"></script>
+    <script src="script.js" type="module"></script>
+    <script src="courses.js" type="module"></script>
 </body>
 </html>
