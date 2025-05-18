@@ -299,9 +299,11 @@
   const auth = getAuth(app);
   const functions = getFunctions(app);
 
+  // ✅ Make globally accessible
   window.startSubscription = async function (courseId) {
-    const user = auth.currentUser;
+    console.log("Buy Now clicked");
 
+    const user = auth.currentUser;
     if (!user) {
       alert("Please login first to subscribe.");
       return;
@@ -338,11 +340,12 @@
       const rzp = new Razorpay(options);
       rzp.open();
     } catch (err) {
-      console.error("Error during subscription:", err);
-      alert("Subscription failed. Try again.");
+      console.error("Subscription error:", err);
+      alert("Subscription failed.");
     }
   };
 </script>
+
 
 </body>
 </html>
