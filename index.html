@@ -1,233 +1,178 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Musicoul</title>
-    <link rel="stylesheet" href="style.css" />
-    <link
-        rel="shortcut icon"
-        href="Resources/Favicon/1.png"
-        type="image/x-icon"
-    />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@400;500;600&display=swap"
-        rel="stylesheet"
-    />
-    <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-    />
-    <link
-        rel="icon"
-        href="Resources/Homepage/favicon.ico"
-        type="image/x-icon"
-    />
-    <script
-        src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
-        integrity="sha512-v2CJ7UycXc4nPnrQdqTqpVnVHmaq6mTlnNrAstQlQRgG1IvANxxgdoJzPhnM0waKwtTRzjBYJP3nwstb/ShVYw=="
-        crossorigin="anonymous"
-        referrerpolicy="no-referrer"
-    ></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.5.2/velocity.min.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Musicoul</title>
 
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
-    <script type="module" src="script.js"></script>
+  <!-- SEO Meta -->
+  <meta name="description" content="Musicoul - Unleash your inner musician with our online music teaching platform." />
+  <meta name="keywords" content="Musicoul, online music classes, music courses, music learning, music education" />
+  <meta name="author" content="Musicoul" />
+
+  <!-- Favicon -->
+  <link rel="icon" href="Resources/Favicon/1.png" type="image/x-icon" />
+
+  <!-- Fonts and Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Firebase & Scripts -->
+  <script type="module" src="script.js" defer></script>
 </head>
 <body>
-    <nav>
+  <nav>
     <div class="nav-brand">
-        <img
-            src="Resources/Homepage/Logo.png"
-            class="logo"
-            alt="Musicoul Logo - Online Music Teaching Institute"
-        />
-        <span class="musicoul-name">Musicoul</span>
+      <img src="Resources/Homepage/Logo.png" class="logo" alt="Musicoul Logo" />
+      <span class="musicoul-name">Musicoul</span>
     </div>
     <div class="nav-links">
-        <a
-          href="index.html"
-          aria-label="Go to Home page"
-          data-page="home"
-          class="active"
-          >Home</a
-        >
-        <a
-            href="courses.html"
-            aria-label="View our Courses"
-            data-page="courses"
-            >Courses</a
-        >
-        <a
-            href="events.html"
-            aria-label="Learn more About Us"
-            data-page="about"
-            >Events</a
-        >
-        <a href="#" id="top-auth-btn" aria-label="Login/Signup">Login/Signup</a>
-        <a href="#" id="top-logout-btn" style="display: none;" aria-label="Logout">Logout</a>
+      <a href="index.html" class="active">Home</a>
+      <a href="courses.html">Courses</a>
+      <a href="events.html">Events</a>
+      <a href="#" id="top-auth-btn">Login/Signup</a>
+      <a href="#" id="top-logout-btn" style="display: none;">Logout</a>
     </div>
     <div class="hamburger">
-        <i class="fas fa-bars"></i>
+      <i class="fas fa-bars"></i>
     </div>
-</nav>
-    <div class="side-nav">
+  </nav>
+
+  <div class="side-nav">
     <span class="close-btn">&times;</span>
-    <a
-          href="index.html"
-          aria-label="Go to Home page"
-          data-page="home"
-          class="active"
-          >Home</a
-        >
-    <a
-        href="courses.html"
-        aria-label="View our Courses"
-        data-page="courses"
-        >Courses</a
-    >
-    <a
-        href="events.html"
-        aria-label="Learn more About Us"
-        data-page="about"
-        >Events</a
-    >
-    <a href="#" id="side-nav-login-btn" aria-label="Login/Signup">Login/Signup</a>
-    <a href="#" id="side-nav-logout-btn" style="display: none;" aria-label="Logout">Logout</a>
-</div>
-    <main>
-        <section class="hero">
-            <div class="hero-content">
-                <h1>Unleash Your Inner Musician!</h1>
-                <p>Where passion meets melody... Begin your musical journey today!</p>
-                <div class="button_container">
-                    <a href="myclass.html" class="cta-button1">M-Class</a>
-                    <a href="m-youtube.html" class="cta-button2">M-Youtube</a>
-                </div>
+    <a href="index.html" class="active">Home</a>
+    <a href="courses.html">Courses</a>
+    <a href="events.html">Events</a>
+    <a href="#" id="side-nav-login-btn">Login/Signup</a>
+    <a href="#" id="side-nav-logout-btn" style="display: none;">Logout</a>
+  </div>
+
+  <main>
+    <section class="hero">
+  <div class="hero-content">
+    <h1>
+      <span class="static-text">Unleash Your Inner <br></span>
+      <span class="typing-text-container">
+        <span id="typing-text"></span>
+        <span class="cursor">|</span>
+      </span>
+    </h1>
+    <p>Start your Musical journey Now!</p>
+    <div class="button_container">
+      <a href="myclass.html" class="cta-button1">M-Class</a>
+      <a href="m-youtube.html" class="cta-button2">M-Youtube</a>
+    </div>
+  </div>
+</section>
+
+    <div class="divider"></div>
+
+    <!-- Auth Popup -->
+    <div id="auth-popup" class="auth-popup">
+      <div class="auth-container">
+        <span class="close-popup">&times;</span>
+        <div class="auth-tabs">
+          <button class="tab active" data-tab="login">Login</button>
+          <button class="tab" data-tab="signup">Sign Up</button>
+        </div>
+        <div class="auth-forms">
+          <form id="login-form" class="active">
+            <h2 class="heading">Login</h2>
+            <div class="input-group">
+              <label for="login-email">Email:</label>
+              <input type="email" id="login-email" required />
             </div>
-        </section>
-
-        <div class="divider"></div>
-
-        <div id="auth-popup" class="auth-popup">
-            <div class="auth-container">
-                <span class="close-popup">&times;</span>
-                <div class="auth-tabs">
-                    <button class="tab active" data-tab="login">Login</button>
-                    <button class="tab" data-tab="signup">Sign Up</button>
-                </div>
-                <div class="auth-forms">
-                    <form id="login-form" class="active">
-                        <h2 class="heading">Login</h2>
-                        <div class="input-group">
-                            <label for="login-email">Email:</label>
-                            <input
-                                type="email"
-                                id="login-email"
-                                name="login-email"
-                                class="placeholder"
-                                required
-                            />
-                        </div>
-                        <div class="input-group">
-                            <label for="login-password">Password:</label>
-                            <input
-                                type="password"
-                                id="login-password"
-                                name="login-password"
-                                class="placeholder"
-                                required
-                            />
-                        </div>
-                        <button type="submit" class="auth-button">Login</button>
-                    </form>
-
-                    <form id="signup-form" class="signup-form">
-                        <h2>Sign Up</h2>
-                        <div class="input-group">
-                            <label for="signup-name">Name</label>
-                            <input
-                                type="text"
-                                id="signup-name"
-                                name="signup-name"
-                                required
-                            />
-                        </div>
-                        <div class="input-group">
-                            <label for="signup-email">Email</label>
-                            <input
-                                type="email"
-                                id="signup-email"
-                                name="signup-email"
-                                required
-                            />
-                        </div>
-                        <div class="input-group">
-                            <label for="signup-password">Password</label>
-                            <input
-                                type="password"
-                                id="signup-password"
-                                name="signup-password"
-                                required
-                            />
-                        </div>
-                        <button type="submit" class="auth-button">Sign Up</button>
-                    </form>
-                </div>
+            <div class="input-group">
+              <label for="login-password">Password:</label>
+              <input type="password" id="login-password" required />
             </div>
-        </div>
-        <div class="notification"></div>
-    </main>
+            
+            <button type="submit" class="auth-button">Login</button>
+          </form>
 
-    <footer>
-        <div class="footer-content">
-            <p>&copy; 2025 Musicoul. All rights reserved.</p>
-            <ul class="footer-links">
-                <li><a href="privacy-policy.html">Privacy Policy</a></li>
-                <li><a href="tandc.html">Terms & Conditions</a></li>
-                <li><a href="sandr.html">Shipping & Returns Policy</a></li>
-            </ul>
+          <form id="signup-form">
+            <h2>Sign Up</h2>
+            <div class="input-group">
+              <label for="signup-name">Name</label>
+              <input type="text" id="signup-name" required />
+            </div>
+            <div class="input-group">
+              <label for="signup-email">Email</label>
+              <input type="email" id="signup-email" required />
+            </div>
+            <div class="input-group">
+              <label for="signup-password">Password</label>
+              <input type="password" id="signup-password" required />
+            </div>
+            <button type="submit" class="auth-button">Sign Up</button>
+          </form>
         </div>
-    </footer>
-
-    <div class="bottom-nav">
-    <a href="events.html" aria-label="View Events">
-        <i class="fas fa-calendar-alt"></i>
-        <span>Events</span>
-    </a>
-    <a href="courses.html" aria-label="Our Courses">
-        <i class="fas fa-music"></i>
-        <span>Courses</span>
-    </a>
-    <a href="#" id="bottom-nav-auth-btn" aria-label="Login/Signup">
-        <i class="fas fa-user"></i>
-        <span>Login/Signup</span>
-    </a>
-</div>
-
-    <div id="my-class-popup" class="my-class-popup">
-        <div class="my-class-container">
-            <span class="close-my-class-popup">&times;</span>
-            <h2>Enter Class Details</h2>
-            <form id="my-class-form">
-                <div class="input-group">
-                    <label for="class-name">Class Name:</label>
-                    <input type="text" id="class-name" name="class-name" required>
-                </div>
-                <div class="input-group">
-                    <label for="student-limit">Student Limit:</label>
-                    <input type="number" id="student-limit" name="student-limit" min="1" required>
-                </div>
-                <button type="submit" class="auth-button action-button">Create Class</button>
-            </form>
-        </div>
+      </div>
     </div>
 
-    <div class="overlay"></div>
-    <div class="notes-container">
-        </div>
+    <!-- Notification -->
+    <div class="notification"></div>
+  </main>
+
+  <footer>
+    <div class="footer-content">
+      <p>&copy; 2025 Musicoul. All rights reserved.</p>
+      <ul class="footer-links">
+        <li><a href="privacy-policy.html">Privacy Policy</a></li>
+        <li><a href="tandc.html">Terms & Conditions</a></li>
+        <li><a href="sandr.html">Shipping & Returns Policy</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <div class="bottom-nav">
+    <a href="events.html">
+      <i class="fas fa-calendar-alt"></i>
+      <span>Events</span>
+    </a>
+    <a href="courses.html">
+      <i class="fas fa-music"></i>
+      <span>Courses</span>
+    </a>
+    <a href="#" id="bottom-nav-auth-btn">
+      <i class="fas fa-user"></i>
+      <span>Login/Signup</span>
+    </a>
+  </div>
+
+  <!-- Extra UI Containers -->
+  <div class="overlay"></div>
+  <div class="notes-container"></div>
+  <script>
+  const words = ["Musician", "Singer", "Percussionist", "Pianist", "Tabla Player", "Harmonist", "Learner"];
+  let wordIndex = 0;
+  let charIndex = 0;
+  let isDeleting = false;
+  const typingText = document.getElementById("typing-text");
+
+  function type() {
+    const currentWord = words[wordIndex];
+    const currentChars = isDeleting ? currentWord.substring(0, charIndex--) : currentWord.substring(0, charIndex++);
+    typingText.innerHTML = `<span class="gradient-text">${currentChars}</span>`;
+
+    if (!isDeleting && charIndex === currentWord.length + 1) {
+      isDeleting = true;
+      setTimeout(type, 1200);
+    } else if (isDeleting && charIndex === 0) {
+      isDeleting = false;
+      wordIndex = (wordIndex + 1) % words.length;
+      setTimeout(type, 300);
+    } else {
+      setTimeout(type, isDeleting ? 60 : 100);
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", type);
+</script>
 </body>
 </html>

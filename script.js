@@ -7,13 +7,13 @@ import {
   signOut,
   updateProfile
 } from 'https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js';
-
 import {
   getFirestore,
   doc,
   setDoc
 } from 'https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js';
 
+// === Firebase Config ===
 const firebaseConfig = {
   apiKey: "AIzaSyBaDBLoe2Wi2WgmJfPRXoEP-ZSgkVhMxVI",
   authDomain: "musicoul-15025.firebaseapp.com",
@@ -26,34 +26,25 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-export const auth = getAuth(app);
+const auth = getAuth(app);
 const db = getFirestore(app);
 
+// === Redirect if not logged in for protected pages ===
 const protectedPages = ['/prarambhik.html'];
-const currentPath = window.location.pathname;
-
-if (protectedPages.includes(currentPath)) {
+if (protectedPages.includes(location.pathname)) {
   onAuthStateChanged(auth, (user) => {
     if (!user) {
-      localStorage.setItem('redirectAfterLogin', currentPath);
+      localStorage.setItem('redirectAfterLogin', location.pathname);
       localStorage.setItem('showLoginMessage', 'true');
       localStorage.setItem('triggerAuthPopup', 'true');
-      window.location.href = '/index.html';
+      location.href = '/index.html';
     }
   });
 }
 
-document.addEventListener('DOMContentLoaded', function () {
-  const hamburger = document.querySelector('.hamburger');
-  const sideNav = document.querySelector('.side-nav');
-  const closeSideNavBtn = document.querySelector('.close-btn');
+document.addEventListener('DOMContentLoaded', () => {
   const body = document.body;
   const authPopup = document.getElementById('auth-popup');
-  const closePopupBtns = document.querySelectorAll('.close-popup');
-  const authTabs = document.querySelectorAll('.auth-tabs .tab');
-  const authForms = document.querySelectorAll('.auth-forms form');
-  const loginForm = document.getElementById('login-form');
-  const signupForm = document.getElementById('signup-form');
   const notificationDiv = document.querySelector('.notification');
 
   const topAuthBtn = document.getElementById('top-auth-btn');
@@ -61,18 +52,26 @@ document.addEventListener('DOMContentLoaded', function () {
   const sideNavLoginBtn = document.getElementById('side-nav-login-btn');
   const sideNavLogoutBtn = document.getElementById('side-nav-logout-btn');
   const bottomAuthBtn = document.getElementById('bottom-nav-auth-btn');
+  const hamburger = document.querySelector('.hamburger');
+  const sideNav = document.querySelector('.side-nav');
+  const closeSideNavBtn = document.querySelector('.close-btn');
 
+  // === Show Notification ===
   function showNotification(message) {
     if (!notificationDiv) return;
     notificationDiv.textContent = message;
     notificationDiv.classList.add('show');
-    setTimeout(() => {
-      notificationDiv.classList.remove('show');
-    }, 3000);
+    setTimeout(() => notificationDiv.classList.remove('show'), 3000);
+  }
+
+  // === First Visit Notification ===
+  if (!localStorage.getItem('visitedOnce')) {
+    showNotification("Please Login/Signup First");
+    localStorage.setItem('visitedOnce', 'true');
   }
 
   if (localStorage.getItem('showLoginMessage') === 'true') {
-    showNotification('Please log in to access that page.');
+    showNotification("Please log in to access that page.");
     localStorage.removeItem('showLoginMessage');
   }
 
@@ -82,18 +81,14 @@ document.addEventListener('DOMContentLoaded', function () {
     localStorage.removeItem('triggerAuthPopup');
   }
 
+  // === Update UI Based on Auth ===
   function updateAuthUI(user) {
-    if (!topAuthBtn || !topLogoutBtn || !sideNavLoginBtn || !sideNavLogoutBtn || !bottomAuthBtn) return;
-
     if (user) {
       topAuthBtn.style.display = 'none';
       topLogoutBtn.style.display = 'inline-block';
       sideNavLoginBtn.style.display = 'none';
       sideNavLogoutBtn.style.display = 'inline-block';
       bottomAuthBtn.innerHTML = '<i class="fas fa-sign-out-alt"></i><span>Logout</span>';
-      bottomAuthBtn.style.display = 'flex';
-      bottomAuthBtn.style.flexDirection = 'column';
-      bottomAuthBtn.style.alignItems = 'center';
       bottomAuthBtn.onclick = handleLogout;
     } else {
       topAuthBtn.style.display = 'inline-block';
@@ -101,32 +96,25 @@ document.addEventListener('DOMContentLoaded', function () {
       sideNavLoginBtn.style.display = 'inline-block';
       sideNavLogoutBtn.style.display = 'none';
       bottomAuthBtn.innerHTML = '<i class="fas fa-user"></i><span>Login/Signup</span>';
-      bottomAuthBtn.onclick = openBottomAuthPopup;
+      bottomAuthBtn.onclick = openAuthPopup;
     }
   }
 
   onAuthStateChanged(auth, (user) => {
     updateAuthUI(user);
-
-    if (!user && (window.location.pathname === '/index.html' || window.location.pathname === '/')) {
-      showNotification("Please Login/Signin First!");
-    }
-
-    if (user) {
-      if (window.location.pathname === '/index.html' || window.location.pathname === '/') {
-        const redirectUrl = localStorage.getItem('redirectAfterLogin');
-        if (redirectUrl) {
-          localStorage.removeItem('redirectAfterLogin');
-          window.location.href = redirectUrl;
-        }
-      }
+    if (user && localStorage.getItem('redirectAfterLogin')) {
+      const redirectUrl = localStorage.getItem('redirectAfterLogin');
+      localStorage.removeItem('redirectAfterLogin');
+      window.location.href = redirectUrl;
     }
   });
 
+  // === Popup Control ===
   function openAuthPopup() {
     if (!authPopup) return;
     authPopup.style.display = 'flex';
     body.classList.add('popup-open');
+
     let overlay = document.querySelector('.overlay');
     if (!overlay) {
       overlay = document.createElement('div');
@@ -137,7 +125,6 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function closeAuthPopup() {
-    if (!authPopup) return;
     authPopup.style.display = 'none';
     body.classList.remove('popup-open');
     const overlay = document.querySelector('.overlay');
@@ -147,199 +134,167 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function switchAuthTab(tabName) {
-    authTabs.forEach(tab => tab.classList.remove('active'));
-    authForms.forEach(form => form.classList.remove('active'));
+    document.querySelectorAll('.auth-tabs .tab').forEach(tab => tab.classList.remove('active'));
+    document.querySelectorAll('.auth-forms form').forEach(form => form.classList.remove('active'));
+
     const targetTab = document.querySelector(`.auth-tabs .tab[data-tab="${tabName}"]`);
     const targetForm = document.getElementById(`${tabName}-form`);
     if (targetTab) targetTab.classList.add('active');
     if (targetForm) targetForm.classList.add('active');
   }
 
-  function openTopAuthPopup(e) {
-    e.preventDefault();
-    openAuthPopup();
-    switchAuthTab('login');
-  }
-
-  function openBottomAuthPopup(e) {
-    e.preventDefault();
-    openAuthPopup();
-    switchAuthTab('login');
-  }
-
+  // === Logout ===
   function handleLogout() {
-    signOut(auth)
-      .then(() => {
-        showNotification("Logged out Successfully!");
-      })
-      .catch((error) => {
-        showNotification("Error logging out.");
-        console.error("Logout Error:", error);
-      });
+    signOut(auth).then(() => {
+      showNotification("Logged out successfully.");
+    }).catch(err => {
+      showNotification("Error logging out.");
+      console.error("Logout Error:", err);
+    });
   }
 
-  if (topAuthBtn) topAuthBtn.addEventListener('click', openTopAuthPopup);
-  if (bottomAuthBtn) bottomAuthBtn.addEventListener('click', openBottomAuthPopup);
-  if (topLogoutBtn) topLogoutBtn.addEventListener('click', handleLogout);
-  if (sideNavLoginBtn) sideNavLoginBtn.addEventListener('click', openTopAuthPopup);
-  if (sideNavLogoutBtn) sideNavLogoutBtn.addEventListener('click', handleLogout);
+  // === Hamburger ===
+  hamburger?.addEventListener('click', () => sideNav.style.right = '0px');
+  closeSideNavBtn?.addEventListener('click', () => sideNav.style.right = '-250px');
 
+  // === Auth Button Listeners ===
+  topAuthBtn?.addEventListener('click', (e) => { e.preventDefault(); openAuthPopup(); switchAuthTab('login'); });
+  sideNavLoginBtn?.addEventListener('click', (e) => { e.preventDefault(); openAuthPopup(); switchAuthTab('login'); });
+  bottomAuthBtn?.addEventListener('click', (e) => { e.preventDefault(); openAuthPopup(); switchAuthTab('login'); });
+  topLogoutBtn?.addEventListener('click', handleLogout);
+  sideNavLogoutBtn?.addEventListener('click', handleLogout);
+
+  document.querySelectorAll('.close-popup').forEach(btn => btn.addEventListener('click', closeAuthPopup));
+  document.querySelectorAll('.auth-tabs .tab').forEach(tab => tab.addEventListener('click', () => {
+    switchAuthTab(tab.dataset.tab);
+  }));
+
+  // === Remember Me: Login ===
+  const loginForm = document.getElementById('login-form');
   if (loginForm) {
+    const emailInput = loginForm.querySelector('#login-email');
+    const rememberDiv = document.createElement('div');
+    rememberDiv.classList.add('remember-me');
+    rememberDiv.innerHTML = `
+      <input type="checkbox" id="remember-login" />
+      <label for="remember-login">Remember me</label>
+    `;
+    loginForm.insertBefore(rememberDiv, loginForm.querySelector('.auth-button'));
+
+    const savedLoginEmail = localStorage.getItem('rememberedLoginEmail');
+    if (emailInput && savedLoginEmail) {
+      emailInput.value = savedLoginEmail;
+      rememberDiv.querySelector('#remember-login').checked = true;
+    }
+
     loginForm.addEventListener('submit', (e) => {
       e.preventDefault();
-      const email = loginForm.querySelector('#login-email').value;
+      const email = emailInput.value;
       const password = loginForm.querySelector('#login-password').value;
+      const remember = rememberDiv.querySelector('#remember-login').checked;
+
+      if (remember) localStorage.setItem('rememberedLoginEmail', email);
+      else localStorage.removeItem('rememberedLoginEmail');
 
       signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-          const user = userCredential.user;
           closeAuthPopup();
-          showNotification(`Logged in as ${user.email} Successfully!`);
+          showNotification(`Welcome back, ${userCredential.user.email}`);
         })
         .catch((error) => {
-          let errorMessage = 'Login failed.';
-          if (error.code === 'auth/user-not-found') errorMessage = 'User not found.';
-          else if (error.code === 'auth/wrong-password') errorMessage = 'Incorrect password.';
-          showNotification(errorMessage);
+          let msg = 'Login failed.';
+          if (error.code === 'auth/user-not-found') msg = 'User not found.';
+          else if (error.code === 'auth/wrong-password') msg = 'Incorrect password.';
+          showNotification(msg);
           console.error("Login Error:", error);
         });
     });
   }
 
+  // === Remember Me: Signup ===
+  const signupForm = document.getElementById('signup-form');
   if (signupForm) {
+    const nameInput = document.getElementById('signup-name');
+    const emailInput = document.getElementById('signup-email');
+    const passwordInput = document.getElementById('signup-password');
+
+    const rememberDiv = document.createElement('div');
+    rememberDiv.classList.add('remember-me');
+    rememberDiv.innerHTML = `
+      <input type="checkbox" id="remember-signup" />
+      <label for="remember-signup">Remember me</label>
+    `;
+    signupForm.insertBefore(rememberDiv, signupForm.querySelector('.auth-button'));
+
+    const savedSignupEmail = localStorage.getItem('rememberedSignupEmail');
+    if (emailInput && savedSignupEmail) {
+      emailInput.value = savedSignupEmail;
+      rememberDiv.querySelector('#remember-signup').checked = true;
+    }
+
     signupForm.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const name = signupForm.querySelector('#signup-name').value;
-      const email = signupForm.querySelector('#signup-email').value;
-      const password = signupForm.querySelector('#signup-password').value;
+      const name = nameInput.value.trim();
+      const email = emailInput.value.trim();
+      const password = passwordInput.value;
+      const remember = rememberDiv.querySelector('#remember-signup').checked;
+
+      if (!name || !email || !password) {
+        showNotification("Please fill in all fields.");
+        return;
+      }
 
       try {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
-
         await updateProfile(user, { displayName: name });
+        await setDoc(doc(db, "users", user.uid), { name, email });
 
-        await setDoc(doc(db, "users", user.uid), {
-          name: name,
-          email: email
-        });
+        if (remember) localStorage.setItem("rememberedSignupEmail", email);
+        else localStorage.removeItem("rememberedSignupEmail");
 
         closeAuthPopup();
-        showNotification(`Successfully signed up as ${name}!`);
+        showNotification(`Welcome to Musicoul, ${name}!`);
       } catch (error) {
-        let errorMessage = 'Signup failed.';
-        if (error.code === 'auth/email-already-in-use') {
-          errorMessage = 'Email address is already in use.';
-        } else if (error.code === 'auth/invalid-email') {
-          errorMessage = 'Invalid email address.';
-        } else if (error.code === 'auth/weak-password') {
-          errorMessage = 'Password should be at least 6 characters.';
-        }
-        showNotification(errorMessage);
+        let msg = 'Signup failed.';
+        if (error.code === 'auth/email-already-in-use') msg = 'Email already in use.';
+        else if (error.code === 'auth/invalid-email') msg = 'Invalid email.';
+        else if (error.code === 'auth/weak-password') msg = 'Password too weak.';
+        showNotification(msg);
         console.error("Signup Error:", error);
       }
     });
   }
 
-  if (hamburger) {
-    hamburger.addEventListener('click', () => {
-      sideNav.style.right = '0px';
+  // === Block Access to Pages for Unauthenticated Users ===
+  function protectLink(selector) {
+    const link = document.querySelector(selector);
+    if (!link) return;
+    link.addEventListener('click', (e) => {
+      if (!auth.currentUser) {
+        e.preventDefault();
+        showNotification("Please Login/Signup First");
+        openAuthPopup();
+        switchAuthTab('login');
+      }
     });
   }
 
-  if (closeSideNavBtn) {
-    closeSideNavBtn.addEventListener('click', () => {
-      sideNav.style.right = '-250px';
-    });
-  }
+  protectLink('a[href="courses.html"]');
+  protectLink('a[href="events.html"]');
+  protectLink('a[href="myclass.html"]');
+  protectLink('a[href="m-youtube.html"]');
 
-  closePopupBtns.forEach(btn => {
-    btn.addEventListener('click', closeAuthPopup);
-  });
-
-  authTabs.forEach(tab => {
-    tab.addEventListener('click', function () {
-      switchAuthTab(this.dataset.tab);
-    });
-  });
-
+  // === Navbar Scroll Behavior ===
   let lastScrollTop = 0;
   const navbar = document.querySelector('nav');
-  window.addEventListener('scroll', function () {
-    let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    if (scrollTop > lastScrollTop && navbar) {
-      if (scrollTop > navbar.offsetHeight) {
-        navbar.style.transform = 'translateY(-100%)';
-      } else {
-        navbar.style.transform = 'translateY(0)';
-      }
-    } else if (navbar) {
-      navbar.style.transform = 'translateY(0)';
+  window.addEventListener('scroll', () => {
+    const scrollTop = window.scrollY;
+    if (navbar) {
+      navbar.style.transform = scrollTop > lastScrollTop && scrollTop > navbar.offsetHeight
+        ? 'translateY(-100%)'
+        : 'translateY(0)';
     }
     lastScrollTop = scrollTop;
   });
 });
-
-const styleSheet = document.createElement("style");
-styleSheet.type = "text/css";
-styleSheet.innerText = `
-@keyframes floatNoteSmoothGlow1 {
-  0% { transform: translateY(0) translateX(0); opacity: 0.6; text-shadow: 0 0 5px transparent; }
-  50% { transform: translateY(-8px) translateX(4px); opacity: 1; text-shadow: 0 0 10px lightblue; }
-  100% { transform: translateY(0) translateX(0); opacity: 0.6; text-shadow: 0 0 5px transparent; }
-}
-
-@keyframes floatNoteSmoothGlow2 {
-  0% { transform: translateY(0) translateX(0); opacity: 0.7; text-shadow: 0 0 5px transparent; }
-  50% { transform: translateY(6px) translateX(-2px); opacity: 1; text-shadow: 0 0 10px lightblue; }
-  100% { transform: translateY(0) translateX(0); opacity: 0.7; text-shadow: 0 0 5px transparent; }
-}
-
-.notes-container {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: -1;
-  overflow: hidden;
-}
-
-.musical-note {
-  position: fixed;
-  color: lightblue;
-  font-size: 20px;
-  opacity: 0.8;
-  pointer-events: none;
-  z-index: -1;
-}
-
-.notification.show {
-  opacity: 1;
-  transform: translateX(-50%) translateY(20px);
-}
-
-.notification {
-  position: fixed;
-  top: 75px;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: rgba(0, 0, 0, 0.7);
-  color: white;
-  padding: 10px 15px;
-  border-radius: 5px;
-  z-index: 1001;
-  opacity: 0;
-  text-align: center;
-  font-size: 0.9em;
-  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
-}
-
-@media (max-width: 768px) {
-  .musical-note {
-    font-size: 16px;
-  }
-}
-`;
-document.head.appendChild(styleSheet);
