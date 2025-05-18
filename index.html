@@ -1,3 +1,4 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,24 +6,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Musicoul</title>
 
-  <!-- SEO Meta -->
   <meta name="description" content="Musicoul - Unleash your inner musician with our online music teaching platform." />
   <meta name="keywords" content="Musicoul, online music classes, music courses, music learning, music education" />
   <meta name="author" content="Musicoul" />
 
-  <!-- Favicon -->
   <link rel="icon" href="Resources/Favicon/1.png" type="image/x-icon" />
-
-  <!-- Fonts and Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-  <!-- Styles -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" crossorigin="anonymous" />
   <link rel="stylesheet" href="style.css" />
-
-  <!-- Firebase & Scripts -->
   <script type="module" src="script.js" defer></script>
 </head>
 <body>
@@ -54,25 +47,24 @@
 
   <main>
     <section class="hero">
-  <div class="hero-content">
-    <h1>
-      <span class="static-text">Unleash Your Inner <br></span>
-      <span class="typing-text-container">
-        <span id="typing-text"></span>
-        <span class="cursor">|</span>
-      </span>
-    </h1>
-    <p>Start your Musical journey Now!</p>
-    <div class="button_container">
-      <a href="myclass.html" class="cta-button1">M-Class</a>
-      <a href="m-youtube.html" class="cta-button2">M-Youtube</a>
-    </div>
-  </div>
-</section>
+      <div class="hero-content">
+        <h1>
+          <span class="static-text">Unleash Your Inner <br></span>
+          <span class="typing-text-container">
+            <span id="typing-text"></span>
+            <span class="cursor">|</span>
+          </span>
+        </h1>
+        <p>Start your Musical journey Now!</p>
+        <div class="button_container">
+          <a href="#" id="mclass-btn" class="cta-button1">M-Class</a>
+          <a href="m-youtube.html" class="cta-button2">M-Youtube</a>
+        </div>
+      </div>
+    </section>
 
     <div class="divider"></div>
 
-    <!-- Auth Popup -->
     <div id="auth-popup" class="auth-popup">
       <div class="auth-container">
         <span class="close-popup">&times;</span>
@@ -91,7 +83,6 @@
               <label for="login-password">Password:</label>
               <input type="password" id="login-password" required />
             </div>
-            
             <button type="submit" class="auth-button">Login</button>
           </form>
 
@@ -109,13 +100,35 @@
               <label for="signup-password">Password</label>
               <input type="password" id="signup-password" required />
             </div>
+            <div class="input-group">
+              <label for="signup-subject">Subject</label>
+              <select id="signup-subject" required>
+                <option value="">Select Subject</option>
+                <option value="Singing">Singing</option>
+                <option value="Tabla">Tabla</option>
+                <option value="Piano">Piano</option>
+                <option value="Sugam-Sangeet">Sugam-Sangeet</option>
+              </select>
+            </div>
+            <div class="input-group">
+              <label for="signup-exam">Exam</label>
+              <select id="signup-exam" required>
+                <option value="">Select Exam</option>
+                <option value="1">1. Prarambhik</option>
+                <option value="2">2. Praveshika Pratham</option>
+                <option value="3">3. Praveshika Purna</option>
+                <option value="4">4. Madhyama Pratham</option>
+                <option value="5">5. Madhyama Purna</option>
+                <option value="6">6. Visharad Pratham</option>
+                <option value="7">7. Visharad Purna</option>
+              </select>
+            </div>
             <button type="submit" class="auth-button">Sign Up</button>
           </form>
         </div>
       </div>
     </div>
 
-    <!-- Notification -->
     <div class="notification"></div>
   </main>
 
@@ -131,48 +144,27 @@
   </footer>
 
   <div class="bottom-nav">
-    <a href="events.html">
-      <i class="fas fa-calendar-alt"></i>
-      <span>Events</span>
-    </a>
-    <a href="courses.html">
-      <i class="fas fa-music"></i>
-      <span>Courses</span>
-    </a>
-    <a href="#" id="bottom-nav-auth-btn">
-      <i class="fas fa-user"></i>
-      <span>Login/Signup</span>
-    </a>
+    <a href="events.html"><i class="fas fa-calendar-alt"></i><span>Events</span></a>
+    <a href="courses.html"><i class="fas fa-music"></i><span>Courses</span></a>
+    <a href="#" id="bottom-nav-auth-btn"><i class="fas fa-user"></i><span>Login/Signup</span></a>
   </div>
 
-  <!-- Extra UI Containers -->
   <div class="overlay"></div>
   <div class="notes-container"></div>
+
   <script>
-  const words = ["Musician", "Singer", "Percussionist", "Pianist", "Tabla Player", "Harmonist", "Learner"];
-  let wordIndex = 0;
-  let charIndex = 0;
-  let isDeleting = false;
-  const typingText = document.getElementById("typing-text");
-
-  function type() {
-    const currentWord = words[wordIndex];
-    const currentChars = isDeleting ? currentWord.substring(0, charIndex--) : currentWord.substring(0, charIndex++);
-    typingText.innerHTML = `<span class="gradient-text">${currentChars}</span>`;
-
-    if (!isDeleting && charIndex === currentWord.length + 1) {
-      isDeleting = true;
-      setTimeout(type, 1200);
-    } else if (isDeleting && charIndex === 0) {
-      isDeleting = false;
-      wordIndex = (wordIndex + 1) % words.length;
-      setTimeout(type, 300);
-    } else {
-      setTimeout(type, isDeleting ? 60 : 100);
+    const words = ["Musician", "Singer", "Percussionist", "Pianist", "Tabla Player", "Harmonist", "Learner"];
+    let wordIndex = 0, charIndex = 0, isDeleting = false;
+    const typingText = document.getElementById("typing-text");
+    function type() {
+      const currentWord = words[wordIndex];
+      const currentChars = isDeleting ? currentWord.substring(0, charIndex--) : currentWord.substring(0, charIndex++);
+      typingText.innerHTML = `<span class="gradient-text">${currentChars}</span>`;
+      if (!isDeleting && charIndex === currentWord.length + 1) { isDeleting = true; setTimeout(type, 1200); }
+      else if (isDeleting && charIndex === 0) { isDeleting = false; wordIndex = (wordIndex + 1) % words.length; setTimeout(type, 300); }
+      else { setTimeout(type, isDeleting ? 60 : 100); }
     }
-  }
-
-  document.addEventListener("DOMContentLoaded", type);
-</script>
+    document.addEventListener("DOMContentLoaded", type);
+  </script>
 </body>
 </html>
